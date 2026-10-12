@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco Miracles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,600&family=Plus+Jakarta+Sans:wght@700;800;900&family=Space+Grotesk:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo+Black&family=Marck+Script&family=Merriweather:opsz,wdth,wght@18..144,104,300..900&family=Yesteryear&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <a href="#equipe" class="brand-logo" aria-label="Coco Miracles, accueil">COCO MIRACLES</a>
+        <div class="brand-desc">
+            <span class="desc-title">Studio de création événementielle</span>
+            <span class="desc-location">Basé à Paris et en Île-de-France</span>
+        </div>
+        <nav class="nav-menu" aria-label="Navigation principale">
+            <a href="#projects" class="nav-link">Réalisations</a>
+            <a href="#raisons" class="nav-link">Raisons</a>
+            <a href="#raisons" class="nav-link">Services</a>
+            <a href="#raisons" class="nav-link">À propos</a>
+            <a href="#raisons" class="nav-link">Contact</a>
+        </nav>
+        <a href="#raisons" class="connect-link">Contactez-nous</a>
+    </header>
+
+    <main>
+        <video
+            class="home-background-video"
+            src="asset/bg/1.mp4"
+            aria-hidden="true"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto">
+        </video>
+        <!-- SECTION 1 : VIDÉO HERO STICKY AVEC PADDING 0.5CM ET DÉFILEMENT GÉANT SANS ÉTOILES -->
+        <section class="video-hero-section" id="equipe" aria-label="Vidéo Coco Miracles">
+            <div class="hero-content">
+                <!-- Défilement en haut de la section : COCO MIRACLES en grands caractères BOLD -->
+                <div class="section-marquee-top" aria-hidden="true">
+                    <div class="marquee-track">
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                        <span class="marquee-item">COCO MIRACLES</span>
+                    </div>
+                </div>
+
+                <div class="video-frame">
+                    <video
+                        class="hero-video"
+                        src="asset/bg/1.mp4"
+                        aria-label="Vidéo Coco Miracles"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="auto">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-title-section" aria-labelledby="space-title">
+            <h2 class="space-title" id="space-title">
+                <span>ART</span>
+                <span>ROYAL</span>
+            </h2>
+        </section>
+
+        <!-- SECTION 2 : L'ARCHE LUXE IDENTIQUE À L'IMAGE DE RÉFÉRENCE -->
+        <section class="reasons-arch-section" id="raisons" aria-label="Trois raisons de choisir Coco Miracles">
+            <svg class="arch-mobile-title" viewBox="0 0 1000 200" preserveAspectRatio="none" role="img" aria-label="Trois raisons de choisir Coco Miracles">
+                <defs>
+                    <path id="arch-mobile-heading-path" d="M 0,200 C 0,89.5 223.9,0 500,0 C 776.1,0 1000,89.5 1000,200"/>
+                </defs>
+                <text text-anchor="middle" transform="translate(0 70)" fill="#151b2c" font-family="Bodoni Moda, Georgia, serif" font-size="38" font-weight="700" letter-spacing="3">
+                    <textPath href="#arch-mobile-heading-path" startOffset="50%" textLength="900" lengthAdjust="spacingAndGlyphs">TROIS RAISONS DE CHOISIR COCO MIRACLES</textPath>
+                </text>
+            </svg>
+
+            <!-- Indicateur d'étape (gauche comme sur l'image : 1 | 3) -->
+            <div class="arch-step-indicator" aria-hidden="true">
+                <span class="step-num-active">1</span>
+                <div class="step-line"></div>
+                <span class="step-num-total">3</span>
+            </div>
+
+            <!-- Indicateur vertical SCROLL ↓ (bas gauche comme sur l'image) -->
+            <div class="arch-scroll-indicator" aria-hidden="true">
+                <span class="scroll-v-text">DÉFILER</span>
+                <span class="scroll-v-arrow">↓</span>
+            </div>
+
+            <!-- L'Arche Principale Bleue / Poudrée avec Texte Courbé SVG -->
+            <div class="arch-dome-wrapper">
+                <svg class="arch-dome-svg" viewBox="0 0 1600 1000" preserveAspectRatio="none">
+                    <defs>
+                        <!-- Chemin incurvé pour le texte cintré au sommet de l'arche -->
+                        <!-- Même demi-cercle que l'arche, réduit uniformément et décalé vers l'intérieur. -->
+                        <path id="arch-curve-text-path" d="M 0,1000 C 0,500 250,0 800,0 C 1350,0 1600,500 1600,1000" transform="translate(200 150) scale(0.75)" fill="none"/>
+                        <path id="arch-curve-text-path-mobile" d="M 80,560 C 350,440 600,390 800,390 C 1000,390 1250,440 1520,560" fill="none"/>
+                    </defs>
+
+                    <!-- Forme du dôme / arche bleue poudrée -->
+                    <!-- Arche desktop : les contrôles x=250/1350 élargissent et adoucissent le sommet. -->
+                    <path class="arch-dome-fill arch-dome-fill-desktop" d="M 0,1000 C 0,500 250,0 800,0 C 1350,0 1600,500 1600,1000 Z" />
+                    <path class="arch-dome-fill arch-dome-fill-mobile" d="M 0,1000 L 0,850 C 350,810 600,720 800,720 C 1000,720 1250,810 1600,850 L 1600,1000 Z" />
+
+                    <!-- Texte courbé le long de l'arche : TROIS RAISONS DE CHOISIR COCO MIRACLES -->
+                    <text class="arch-curved-title arch-curved-title-desktop" text-anchor="middle">
+                        <textPath class="arch-curved-title-path" href="#arch-curve-text-path" startOffset="50%">
+                            TROIS RAISONS DE CHOISIR COCO MIRACLES
+                        </textPath>
+                    </text>
+                    <text class="arch-curved-title arch-curved-title-mobile" text-anchor="middle">
+                        <textPath href="#arch-curve-text-path-mobile" startOffset="50%">
+                            TROIS RAISONS DE CHOISIR COCO MIRACLES
+                        </textPath>
+                    </text>
+                </svg>
+
+                <!-- Contenu au centre de l'arche (Monogramme, ligne verticale, et 3 raisons) -->
+                <div class="arch-center-content">
+                    <div class="rotating-badge-wrapper" aria-hidden="true">
+                        <div class="rotating-badge-circle">
+                            <svg viewBox="0 0 100 100" class="rotating-badge-svg">
+                                <path id="circle-path" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none"/>
+                                <text class="rotating-badge-text">
+                                    <textPath href="#circle-path" startOffset="0%">
+                                        COCO MIRACLES • CRÉATION ÉVÉNEMENTIELLE • 
+                                    </textPath>
+                                </text>
+                            </svg>
+                            <div class="rotating-badge-center">✦</div>
+                        </div>
+                    </div>
+
+                    <!-- Emblème floral central -->
+                    <div class="arch-monogram-row">
+                        <div class="arch-flower-emblem" aria-hidden="true">
+                            <svg viewBox="0 0 32 32" width="30" height="30" fill="currentColor">
+                                <path d="M16 3 C16 9.5 9.5 16 3 16 C9.5 16 16 22.5 16 29 C16 22.5 22.5 16 29 16 C22.5 16 16 9.5 16 3 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="16" cy="16" r="3" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Ligne verticale fine vers le bas -->
+                    <div class="arch-vertical-line" role="progressbar" aria-label="Progression des raisons" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="carousel-section" aria-label="Galerie de réalisations">
+            <div class="carousel-container">
+                <h2 class="carousel-title">NOTRE COLLECTION</h2>
+
+                <div class="carousel-wrapper">
+                    <div class="carousel-track">
+                        <div class="carousel-slide" data-index="0">
+                            <img src="asset/bg/1.png" alt="Réalisation Coco Miracles 1">
+                        </div>
+                        <div class="carousel-slide" data-index="1">
+                            <img src="asset/bg/2.png" alt="Réalisation Coco Miracles 2">
+                        </div>
+                        <div class="carousel-slide" data-index="2">
+                            <img src="asset/bg/3.png" alt="Réalisation Coco Miracles 3">
+                        </div>
+                        <div class="carousel-slide" data-index="3">
+                            <img src="asset/bg/4.png" alt="Réalisation Coco Miracles 4">
+                        </div>
+                        <div class="carousel-slide" data-index="4">
+                            <img src="asset/bg/5.png" alt="Réalisation Coco Miracles 5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" aria-label="Photo précédente">‹</button>
+                    <div class="carousel-progress-controls">
+                        <span class="carousel-current" aria-live="polite">3</span>
+                        <div class="carousel-progress" role="progressbar" aria-label="Progression du carrousel" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
+                            <span class="carousel-progress-fill"></span>
+                        </div>
+                        <span class="carousel-total">5</span>
+                    </div>
+                    <button class="carousel-btn next" aria-label="Photo suivante">›</button>
+                </div>
+                <p class="carousel-tagline">ON CHANGE VOS ESPACES</p>
+            </div>
+        </section>
+
+        <section class="fourth-image-section" aria-label="Section 4"></section>
+
+        <section class="projects-section" id="projects" aria-labelledby="projects-title">
+            <header class="projects-heading">
+                <span class="projects-eyebrow">COCO MIRACLES</span>
+                <h2 id="projects-title">NOS PROJETS</h2>
+            </header>
+            <div class="projects-list">
+                <article class="project-card">
+                    <p class="project-kicker">ÉVÉNEMENT · 01</p>
+                    <h3>SCÉNOGRAPHIE<br>FLORALE</h3>
+                    <div class="project-media">
+                        <video data-src="asset/bg/2.mp4" muted loop playsinline preload="none"></video>
+                    </div>
+                    <p class="project-caption">L’ART DE RECEVOIR, AUTREMENT</p>
+                </article>
+                <article class="project-card">
+                    <p class="project-kicker">ÉVÉNEMENT · 02</p>
+                    <h3>INSTANTS<br>PRÉCIEUX</h3>
+                    <div class="project-media">
+                        <video data-src="asset/bg/3.mp4" muted loop playsinline preload="none"></video>
+                    </div>
+                    <p class="project-caption">UNE CÉLÉBRATION SUR-MESURE</p>
+                </article>
+                <article class="project-card">
+                    <p class="project-kicker">ÉVÉNEMENT · 03</p>
+                    <h3>ÉLÉGANCE<br>NATURELLE</h3>
+                    <div class="project-media">
+                        <video data-src="asset/bg/4.mp4" muted loop playsinline preload="none"></video>
+                    </div>
+                    <p class="project-caption">MATIÈRES NOBLES &amp; FLEURS DE SAISON</p>
+                </article>
+                <article class="project-card">
+                    <p class="project-kicker">ÉVÉNEMENT · 04</p>
+                    <h3>JOUR<br>DE FÊTE</h3>
+                    <div class="project-media">
+                        <video data-src="asset/bg/5.mp4" muted loop playsinline preload="none"></video>
+                    </div>
+                    <p class="project-caption">DES SOUVENIRS FAITS POUR DURER</p>
+                </article>
+                <article class="project-card">
+                    <p class="project-kicker">ÉVÉNEMENT · 05</p>
+                    <h3>BEAUTÉ<br>ÉPHÉMÈRE</h3>
+                    <div class="project-media">
+                        <video data-src="asset/bg/1.mp4" muted loop playsinline preload="none"></video>
+                    </div>
+                    <p class="project-caption">IMAGINÉ ET CRÉÉ POUR VOUS</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="logo-marquee-section" aria-label="Logos partenaires">
+        <div class="logo-marquee" aria-label="Défilement continu des logos">
+            <div class="logo-marquee-track">
+                <div class="logo-marquee-group">
+                    <img src="asset/logo/logo-coco.png" alt="Logo Coco Miracles">
+                    <img src="asset/logo/logo-coco.png" alt="Logo Coco Miracles">
+                    <img src="asset/logo/logo-coco.png" alt="Logo Coco Miracles">
+                    <img src="asset/logo/logo-coco.png" alt="Logo Coco Miracles">
+                    <img src="asset/logo/logo-coco.png" alt="Logo Coco Miracles">
+                </div>
+                <div class="logo-marquee-group" aria-hidden="true">
+                    <img src="asset/logo/logo-coco.png" alt="">
+                    <img src="asset/logo/logo-coco.png" alt="">
+                    <img src="asset/logo/logo-coco.png" alt="">
+                    <img src="asset/logo/logo-coco.png" alt="">
+                    <img src="asset/logo/logo-coco.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="honorees-section" aria-labelledby="honorees-title">
+        <div class="honorees-copy">
+            <p class="honorees-eyebrow">Hôtes d’Honneur</p>
+            <h2 class="honorees-title" id="honorees-title">Personnalités</h2>
+            <div class="honorees-count">7 personnalités</div>
+
+            <div class="honorees-list">
+                <article class="honoree is-open" data-photo="asset/personality/adebayor.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="true" aria-controls="honoree-adebayor">
+                            <span>Adebayor Sheyi</span>
+                            <span class="honoree-icon" aria-hidden="true">−</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-adebayor">
+                        <p>Icône Internationale du Football</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/santrinos.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-santrinos">
+                            <span>Santrinos Raphaël</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-santrinos" hidden>
+                        <p>Artiste Chanteur Émérite</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/konnie%20toure.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-konnie">
+                            <span>Konnie Touré</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-konnie" hidden>
+                        <p>Animatrice &amp; Productrice Média</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/Suy%20Fatem.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-suy">
+                            <span>Suy Fatem</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-suy" hidden>
+                        <p>Miss Côte d’Ivoire &amp; Entrepreneure</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/hiro.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-hiro">
+                            <span>Hiro</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-hiro" hidden>
+                        <p>Artiste &amp; Auteur-Compositeur</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/images.webp">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-stonebwoy">
+                            <span>Stonebwoy</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-stonebwoy" hidden>
+                        <p>Artiste International</p>
+                    </div>
+                </article>
+                <article class="honoree" data-photo="asset/personality/Enioluwa%20Adeoluwa.jpg">
+                    <h3 class="honoree-heading">
+                        <button class="honoree-toggle" type="button" aria-expanded="false" aria-controls="honoree-enioluwa">
+                            <span>Enioluwa Adeoluwa</span>
+                            <span class="honoree-icon" aria-hidden="true">+</span>
+                        </button>
+                    </h3>
+                    <div class="honoree-details" id="honoree-enioluwa" hidden>
+                        <p>Personnalité Publique &amp; Influenceur</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="honorees-photo-placeholder" aria-hidden="true">
+            <img class="honorees-photo" alt="">
+        </div>
+    </section>
+
+    <section class="scroll-gallery-section" aria-label="Galerie Coco Miracles">
+        <div class="scroll-gallery-stage">
+            <div class="scroll-gallery-row">
+                <img class="scroll-gallery-card" src="asset/beaute/1.jpg" alt="Décoration événementielle Coco Miracles">
+                <img class="scroll-gallery-card" src="asset/beaute/2.jpg" alt="Scénographie Coco Miracles">
+                <div class="scroll-gallery-focus">
+                    <img class="scroll-gallery-card is-focus" src="asset/beaute/3.jpg" alt="Création florale Coco Miracles">
+                </div>
+                <img class="scroll-gallery-card" src="asset/beaute/4.jpg" alt="Réception imaginée par Coco Miracles">
+                <img class="scroll-gallery-card" src="asset/beaute/5.jpg" alt="Ambiance événementielle Coco Miracles">
+            </div>
+            <p class="scroll-gallery-title" aria-label="Univers de beauté">
+                <span class="scroll-gallery-word" aria-hidden="true"><span>U</span><span>N</span><span>I</span><span>V</span><span>E</span><span>R</span><span>S</span></span>
+                <span class="scroll-gallery-word" aria-hidden="true"><span>D</span><span>E</span></span>
+                <span class="scroll-gallery-word" aria-hidden="true"><span>B</span><span>E</span><span>A</span><span>U</span><span>T</span><span>É</span></span>
+            </p>
+        </div>
+    </section>
+
+    <section class="video-showcase-section" aria-labelledby="video-showcase-title">
+        <div class="video-showcase-container">
+            <p class="video-showcase-eyebrow">COCO MIRACLES</p>
+            <h2 class="video-showcase-title" id="video-showcase-title">NOS CRÉATIONS EN VIDÉO</h2>
+            <div class="video-showcase-track" aria-live="polite">
+                <div class="video-showcase-slide is-active" data-video-index="0">
+                    <video data-src="asset/beaute/1.mp4" poster="asset/beaute/1.jpg" muted loop playsinline preload="none" aria-label="Création Coco Miracles, vidéo 1"></video>
+                </div>
+                <div class="video-showcase-slide" data-video-index="1">
+                    <video data-src="asset/beaute/2.mp4" poster="asset/beaute/2.jpg" muted loop playsinline preload="none" aria-label="Création Coco Miracles, vidéo 2"></video>
+                </div>
+                <div class="video-showcase-slide" data-video-index="2">
+                    <video data-src="asset/beaute/3.mp4" poster="asset/beaute/3.jpg" muted loop playsinline preload="none" aria-label="Création Coco Miracles, vidéo 3"></video>
+                </div>
+                <div class="video-showcase-slide" data-video-index="3">
+                    <video data-src="asset/beaute/4.mp4" poster="asset/beaute/4.jpg" muted loop playsinline preload="none" aria-label="Création Coco Miracles, vidéo 4"></video>
+                </div>
+            </div>
+            <div class="video-showcase-controls">
+                <button class="video-showcase-button prev" type="button" aria-label="Vidéo précédente">‹</button>
+                <div class="video-showcase-counter">
+                    <span class="video-showcase-current" aria-live="polite">1</span>
+                    <span aria-hidden="true">/</span>
+                    <span>4</span>
+                </div>
+                <button class="video-showcase-button next" type="button" aria-label="Vidéo suivante">›</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer" aria-labelledby="footer-name">
+        <img class="site-footer-image" src="asset/bg/footer.png" alt="" aria-hidden="true">
+        <p class="site-footer-prompt">Et si nous imaginions une réussite dont tout le monde parlera&nbsp;?</p>
+        <div class="site-footer-word site-footer-word-maison">MAISON</div>
+        <p class="site-footer-caption site-footer-caption-maison">Création événementielle<br>imaginée pour vous</p>
+        <div class="site-footer-word site-footer-word-miracles">MIRACLES</div>
+        <p class="site-footer-caption site-footer-caption-miracles">Des instants uniques<br>signés Coco Miracles</p>
+        <div class="site-footer-content">
+            <h2 class="site-footer-name" id="footer-name">Coco Dope</h2>
+            <p class="site-footer-role">CEO</p>
+            <a class="site-footer-contact" href="#navbar" aria-label="Get in Touch — accéder aux coordonnées de Coco Miracles">
+                <span aria-hidden="true">↳</span> Get In Touch
+            </a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
