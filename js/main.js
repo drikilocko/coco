@@ -182,65 +182,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const homeBackgroundVideo = document.querySelector('.home-background-video');
-    const spaceTitleSection = document.querySelector('.space-title-section');
-    const heroVideo = document.querySelector('.hero-video');
-
-    if (heroVideo instanceof HTMLVideoElement && 'IntersectionObserver' in window) {
-        const heroVideoObserver = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                heroVideo.play().catch(error => {
-                    console.error('Impossible de lire la vidéo principale de l’accueil.', error);
-                });
-            } else {
-                heroVideo.pause();
-            }
-        });
-
-        heroVideoObserver.observe(heroVideo);
-    }
-
-    if (homeBackgroundVideo instanceof HTMLVideoElement && spaceTitleSection) {
-        let heroFadeUpdateScheduled = false;
-        let backgroundPlayRequested = !homeBackgroundVideo.paused;
-
-        const updateHomeBackgroundFade = () => {
-            const sectionTop = spaceTitleSection.getBoundingClientRect().top;
-            const stickyTop = parseFloat(getComputedStyle(spaceTitleSection).top) || 0;
-            const fadeRange = Math.max(1, window.innerHeight - stickyTop);
-            const progress = Math.min(1, Math.max(0, (window.innerHeight - sectionTop) / fadeRange));
-            const easedProgress = progress * progress * (3 - 2 * progress);
-            const videoOpacity = 1 - easedProgress;
-
-            document.documentElement.style.setProperty('--home-background-opacity', videoOpacity.toFixed(3));
-            spaceTitleSection.style.setProperty('--space-title-white-opacity', easedProgress.toFixed(3));
-
-            if (videoOpacity > 0 && homeBackgroundVideo.paused && !backgroundPlayRequested) {
-                backgroundPlayRequested = true;
-                homeBackgroundVideo.play().catch(error => {
-                    console.error('Impossible de lire la vidéo de fond de l’accueil.', error);
-                });
-            } else if (videoOpacity === 0) {
-                if (!homeBackgroundVideo.paused) homeBackgroundVideo.pause();
-                backgroundPlayRequested = false;
-            }
-        };
-
-        const scheduleHomeBackgroundFade = () => {
-            if (heroFadeUpdateScheduled) return;
-
-            heroFadeUpdateScheduled = true;
-            window.requestAnimationFrame(() => {
-                updateHomeBackgroundFade();
-                heroFadeUpdateScheduled = false;
-            });
-        };
-
-        window.addEventListener('scroll', scheduleHomeBackgroundFade, { passive: true });
-        window.addEventListener('resize', scheduleHomeBackgroundFade);
-        updateHomeBackgroundFade();
-    }
-
     const projectVideos = document.querySelectorAll('.project-media video[data-src]');
     if ('IntersectionObserver' in window) {
         const projectVideoObserver = new IntersectionObserver(entries => {
@@ -337,6 +278,7 @@ window.addEventListener('DOMContentLoaded', () => {
         updateVideoShowcase();
     }
 
+    const spaceTitleSection = document.querySelector('.space-title-section');
     const reasonsSection = document.getElementById('raisons');
 
     if (spaceTitleSection && reasonsSection) {

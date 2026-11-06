@@ -6,13 +6,21 @@
     <title>Coco Miracles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,600&family=Plus+Jakarta+Sans:wght@700;800;900&family=Space+Grotesk:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo+Black&family=Marck+Script&family=Merriweather:opsz,wdth,wght@18..144,104,300..900&family=Yesteryear&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=nav-transition-v2">
+    <script>
+        try {
+            if (sessionStorage.getItem('coco-miracles-nav-transition')) {
+                document.documentElement.classList.add('nav-transition-pending');
+            }
+        } catch (error) {
+            console.error('Impossible de préparer la transition de navigation :', error);
+        }
+    </script>
 </head>
 <body>
     <header class="navbar" id="navbar">
-        <a href="#equipe" class="brand-logo" aria-label="Coco Miracles, accueil">COCO MIRACLES</a>
+        <a href="#space-title" class="brand-logo" aria-label="Coco Miracles, accueil">COCO MIRACLES</a>
         <div class="brand-desc">
             <span class="desc-title">Studio de création événementielle</span>
             <span class="desc-location">Basé à Paris et en Île-de-France</span>
@@ -29,52 +37,6 @@
     </header>
 
     <main>
-        <video
-            class="home-background-video"
-            src="asset/bg/1.mp4"
-            aria-hidden="true"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto">
-        </video>
-        <!-- SECTION 1 : VIDÉO HERO STICKY AVEC PADDING 0.5CM ET DÉFILEMENT GÉANT SANS ÉTOILES -->
-        <section class="video-hero-section" id="equipe" aria-label="Vidéo Coco Miracles">
-            <div class="hero-content">
-                <!-- Défilement en haut de la section : COCO MIRACLES en grands caractères BOLD -->
-                <div class="section-marquee-top" aria-hidden="true">
-                    <div class="marquee-track">
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                        <span class="marquee-item">COCO MIRACLES</span>
-                    </div>
-                </div>
-
-                <div class="video-frame">
-                    <video
-                        class="hero-video"
-                        src="asset/bg/1.mp4"
-                        aria-label="Vidéo Coco Miracles"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        preload="auto">
-                    </video>
-                </div>
-            </div>
-        </section>
-
         <section class="space-title-section" aria-labelledby="space-title">
             <h2 class="space-title" id="space-title">
                 <span>ART</span>
@@ -88,7 +50,7 @@
                 <defs>
                     <path id="arch-mobile-heading-path" d="M 0,200 C 0,89.5 223.9,0 500,0 C 776.1,0 1000,89.5 1000,200"/>
                 </defs>
-                <text text-anchor="middle" transform="translate(0 70)" fill="#151b2c" font-family="Bodoni Moda, Georgia, serif" font-size="38" font-weight="700" letter-spacing="3">
+                <text text-anchor="middle" transform="translate(0 70)" fill="#151b2c" font-family="Cormorant Garamond, Georgia, serif" font-size="38" font-weight="700" letter-spacing="3">
                     <textPath href="#arch-mobile-heading-path" startOffset="50%" textLength="900" lengthAdjust="spacingAndGlyphs">TROIS RAISONS DE CHOISIR COCO MIRACLES</textPath>
                 </text>
             </svg>
@@ -437,6 +399,8 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+    <script src="js/text-roll.js?v=text-roll-v5"></script>
+    <script src="js/nav-transition.js?v=nav-transition-v3"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

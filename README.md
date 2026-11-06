@@ -30,6 +30,7 @@ coco miracles/
 - **⭐ Témoignages** - Avis clients avec système de notation
 - **❓ FAQ** - Questions fréquentes avec accordéon interactif
 - **📞 Contact / CTA** - Appel à l'action pour réservation
+- **💬 Conciergerie virtuelle** - Assistant Gemini limité aux informations Coco Miracles (serveur local Node.js ou fonction Vercel)
 - **📍 Footer** - Informations de contact, liens, réseaux sociaux
 
 ### Caractéristiques Techniques
@@ -108,24 +109,16 @@ Double-cliquez simplement sur le fichier `index.html` pour l'ouvrir dans votre n
 
 ### Option 2 : Serveur Local (Recommandé)
 
-#### Avec Python
-```bash
-# Python 3
-python -m http.server 8000
+Pour utiliser la conciergerie Gemini sur `index2.html`, il faut Node.js 18 ou plus récent : le serveur local gère le site et la route privée `/api/chat`.
 
-# Puis ouvrez http://localhost:8000
-```
+1. Après avoir révoqué toute clé déjà exposée, copiez `.env.example` vers `.env.local` à la racine du projet.
+2. Remplacez la valeur exemple par votre nouvelle clé, sans guillemets : `GEMINI_API_KEY=VOTRE_NOUVELLE_CLE`.
+3. Pour activer les demandes par e-mail, créez une clé API Resend, vérifiez votre domaine d'envoi dans Resend, puis ajoutez dans `.env.local` `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (une adresse du domaine vérifié) et `CONTACT_TO_EMAIL=drikilocko@gmail.com` (adresse qui reçoit les demandes).
+4. Double-cliquez sur `demarrer.bat`, puis ouvrez `http://localhost:8000`.
 
-#### Avec Node.js
-```bash
-# Installer http-server globalement
-npm install -g http-server
+Le fichier `.env.local` est ignoré par Git et n'est jamais servi au navigateur. N'ouvrez pas `index2.html` directement en `file://` et n'utilisez pas un serveur statique Python/Live Server pour le chat ou l'envoi d'e-mails : ils ne peuvent pas exécuter les routes API. Si la configuration Resend manque, le formulaire l'indiquera ; après un envoi réussi, la demande est transmise à Coco Miracles et le client reçoit un e-mail de confirmation au format HTML aux couleurs de la Maison.
 
-# Lancer le serveur
-http-server -p 8000
-
-# Puis ouvrez http://localhost:8000
-```
+Pour le déploiement, configurez `GEMINI_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL` et `CONTACT_TO_EMAIL` dans les variables d'environnement Vercel, puis déployez normalement. Les clés ne doivent jamais être inscrites dans le HTML, le JavaScript public ou un fichier versionné.
 
 #### Avec VS Code
 Utilisez l'extension **Live Server** et cliquez sur "Go Live".
@@ -317,6 +310,16 @@ L'équipe Coco Miracles
 5. **Backup**
    - Sauvegardes régulières de la base de données
    - Versioning du code (Git)
+
+### Conciergerie Gemini sur Vercel
+
+La page `index2.html` utilise la fonction serveur `api/chat.js` pour appeler Gemini. La clé n'est jamais incluse dans le navigateur.
+
+1. Pour tester sans déployer, suivez les étapes de configuration du serveur Node.js local ci-dessus.
+2. Sur Vercel, ajoutez `GEMINI_API_KEY` dans **Project Settings → Environment Variables**, puis déployez.
+3. Ne jamais ajouter la clé à HTML, JavaScript public ou à un fichier versionné. Révoquez toute clé déjà partagée ou exposée, puis créez-en une nouvelle dans Google AI Studio / Google Cloud.
+
+L'assistant est configuré pour guider les visiteurs uniquement sur les informations Coco Miracles présentes sur le site. Les réponses sont générées par Gemini ; vérifiez les informations et limites d'utilisation dans la console Google.
 
 ---
 

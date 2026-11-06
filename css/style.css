@@ -1,8 +1,12 @@
 :root {
-    --ink: #17151a;
+    --font-title: "Cormorant Garamond", Georgia, serif;
+    --font-italic: "Cormorant Garamond", Georgia, serif;
+    --font-body: "Codec Pro", Arial, sans-serif;
+    --ink: #33291f;
     --muted: #6d6971;
     --white: #ffffff;
-    --accent: #9f69c9;
+    --page-text: #d6bd8c;
+    --accent: #d6bd8c;
     --projects-background: #f5f0e8;
 }
 
@@ -18,14 +22,63 @@ html {
 }
 
 body {
+    position: relative;
+    isolation: isolate;
     margin: 0;
     min-width: 320px;
     overflow-x: clip;
-    background: var(--projects-background);
+    background: transparent;
     color: var(--ink);
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-body);
     overscroll-behavior: none;
     overscroll-behavior-y: none;
+}
+
+body::before {
+    position: fixed;
+    z-index: -1;
+    inset: -16px;
+    background: url("../gg.jpg") center / cover no-repeat;
+    content: "";
+    filter: blur(4px) brightness(0.78);
+    pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-title);
+}
+
+em,
+i {
+    font-family: var(--font-italic);
+    font-style: italic;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-title);
+}
+
+em,
+i {
+    font-family: var(--font-italic);
+    font-style: italic;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
 }
 
 .navbar {
@@ -50,7 +103,7 @@ body {
 
 .brand-logo {
     color: var(--ink);
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-title);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -71,6 +124,7 @@ body {
 .nav-link,
 .connect-link {
     color: var(--ink);
+    font-family: var(--font-body);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -93,130 +147,10 @@ main {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
-    background: #ffffff;
-}
-
-.home-background-video {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    object-fit: cover;
-    opacity: var(--home-background-opacity, 1);
-    filter: blur(3px);
-    pointer-events: none;
-    transform: scale(1.04);
-    will-change: opacity;
-}
-
-/* ==========================================================
-   SECTION 1 : VIDEO HERO
-   ========================================================== */
-.video-hero-section {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: calc(100vh + 7vh - 0.5cm);
-    height: calc(100dvh + 7vh - 0.5cm);
-    min-height: calc(100vh + 7vh - 0.5cm);
-    min-height: calc(100dvh + 7vh - 0.5cm);
-    box-sizing: border-box;
     background: transparent;
-    overflow: hidden;
-    isolation: isolate;
 }
 
-.video-hero-section::before {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    pointer-events: none;
-    content: "";
-    background: rgba(255, 255, 255, 0.18);
-}
-
-.hero-content {
-    position: absolute;
-    inset: 0 var(--hero-content-inset-x, 0.5cm) var(--hero-content-inset, 0.5cm);
-    z-index: 2;
-    overflow: hidden;
-    background: transparent;
-    transform: scale(var(--hero-content-scale, 1));
-    transform-origin: center;
-    will-change: transform;
-}
-
-/* EN HAUT DE LA SECTION : COCO MIRACLES DÉFILANT TRÈS GRAND ET RALENTI (SANS ÉTOILE) */
-.section-marquee-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 100%;
-    height: var(--hero-title-space, clamp(96px, 16vh, 170px));
-    padding: 0;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
-    background: transparent;
-    pointer-events: none;
-    transform: translate3d(0, var(--marquee-parallax-y, 0px), 0);
-    opacity: var(--hero-title-opacity, 1);
-    will-change: transform;
-}
-
-.video-frame {
-    position: absolute;
-    inset: var(--hero-title-space, clamp(96px, 16vh, 170px)) 0 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.hero-video {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    object-fit: cover;
-    pointer-events: none;
-}
-
-.marquee-track {
-    display: inline-flex;
-    align-items: center;
-    gap: clamp(40px, 6vw, 100px); /* Grand espacement sans étoile */
-    white-space: nowrap;
-    will-change: transform;
-    animation: marquee-scroll 55s linear infinite; /* Défilement ralenti */
-}
-
-.marquee-item {
-    font-family: "Archivo Black", sans-serif;
-    font-size: clamp(3.4rem, 8.5vw, 7.5rem); /* Taille encore plus grande */
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink);
-    line-height: 0.95;
-    display: inline-block;
-    user-select: none;
-}
-
-@keyframes marquee-scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-/* CONTENEUR VIDÉO COLLÉ AU BOTTOM ET SANS BORDER-RADIUS */
+/* TITRE PRINCIPAL */
 .space-title-section {
     position: sticky;
     top: 0.5cm;
@@ -227,21 +161,11 @@ main {
     place-items: center;
     overflow: hidden;
     padding: 7vh 2cm 9vh;
-    background: transparent;
-    color: #151b2c;
+    background: var(--ink);
+    color: var(--page-text);
     transform: scale(var(--space-title-scale, 1));
     transform-origin: center;
     will-change: transform;
-}
-
-.space-title-section::before {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    background: #ffffff;
-    content: "";
-    opacity: var(--space-title-white-opacity, 0);
-    pointer-events: none;
 }
 
 .space-title {
@@ -251,7 +175,7 @@ main {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(5rem, 22vw, 12rem);
     font-weight: 600;
     letter-spacing: var(--space-title-letter-spacing, -0.075em);
@@ -367,7 +291,7 @@ main {
 }
 
 .rotating-badge-text {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-body);
     font-size: 8.5px;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -379,7 +303,7 @@ main {
     position: absolute;
     color: var(--accent);
     font-size: 20px;
-    text-shadow: 0 0 10px rgba(159, 105, 201, 0.9);
+    text-shadow: 0 0 10px rgba(214, 189, 140, 0.55);
 }
 
 @keyframes rotate-badge {
@@ -401,7 +325,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-body);
     font-weight: 800;
     color: #ffffff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
@@ -440,7 +364,7 @@ main {
 }
 
 .scroll-v-text {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-body);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.28em;
@@ -487,7 +411,7 @@ main {
 
 /* Couleur bleu poudrée exacte de l'image de référence (#adc8d6) */
 .arch-dome-fill {
-    fill: #adc8d6;
+    fill: var(--page-text);
 }
 
 .arch-dome-fill-mobile {
@@ -496,7 +420,7 @@ main {
 
 /* Texte courbé le long de l'arche */
 .arch-curved-title {
-    font-family: "Bodoni Moda", "Playfair Display", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(28px, 2.2vw, 36px);
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -551,7 +475,7 @@ main {
 }
 
 .monogram-side-label {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-body);
     font-size: clamp(10px, 1.1vw, 12px);
     font-weight: 800;
     letter-spacing: 0.28em;
@@ -625,11 +549,14 @@ main {
 }
 
 .reason-badge {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-body);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.16em;
-    color: var(--accent);
+    width: fit-content;
+    padding: 4px 8px;
+    background: var(--accent);
+    color: var(--ink);
     display: block;
     margin-bottom: 10px;
 }
@@ -639,7 +566,7 @@ main {
 }
 
 .reason-title {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-title);
     font-size: clamp(1rem, 1.4vw, 1.25rem);
     font-weight: 800;
     color: #151b2c;
@@ -659,7 +586,7 @@ main {
     z-index: 2;
     width: 100%;
     min-height: 100vh;
-    background: #adc8d6;
+    background: var(--page-text);
     padding: clamp(16px, 2.5vh, 24px) 24px 48px;
     box-sizing: border-box;
 }
@@ -688,7 +615,7 @@ main {
     align-items: center;
     width: 100%;
     min-height: 100vh;
-    background: #adc8d6;
+    background: var(--page-text);
 }
 
 @media (min-width: 901px) {
@@ -725,13 +652,6 @@ main {
         display: none; /* En mobile, évite de déborder les 0.5cm de hauteur */
     }
 
-    .video-hero-section {
-        height: calc(100vh + 8vh - 0.5cm);
-        height: calc(100dvh + 8vh - 0.5cm);
-        min-height: calc(100vh + 8vh - 0.5cm);
-        min-height: calc(100dvh + 8vh - 0.5cm);
-    }
-
     .space-title-section {
         min-height: 100vh;
         min-height: 100svh;
@@ -743,17 +663,9 @@ main {
     }
 
     .reasons-arch-section {
-        background: #adc8d6;
+        background: var(--page-text);
         border-top-left-radius: 50vw 20vh;
         border-top-right-radius: 50vw 20vh;
-    }
-
-    .marquee-item {
-        font-size: clamp(2.4rem, 10vw, 3.8rem);
-    }
-
-    .section-marquee-top {
-        height: var(--hero-title-space, clamp(72px, 14vh, 120px));
     }
 
     .arch-center-content {
@@ -858,7 +770,7 @@ main {
 .projects-eyebrow,
 .project-kicker {
     display: block;
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-body);
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.32em;
@@ -880,7 +792,7 @@ main {
 
 .projects-heading h2 {
     margin: 16px 0 0;
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-weight: 600;
     letter-spacing: -0.06em;
 }
@@ -919,7 +831,7 @@ main {
 
 .project-card h3 {
     margin: 0 0 28px;
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(3rem, 5vw, 4.8rem);
     font-weight: 600;
     letter-spacing: -0.075em;
@@ -962,7 +874,7 @@ main {
 
 .project-caption {
     margin: 22px 0 0;
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(15px, 1.5vw, 22px);
     font-weight: 600;
     letter-spacing: 0.025em;
@@ -1035,7 +947,7 @@ main {
 
 .honorees-eyebrow {
     margin: 0 0 clamp(34px, 5vw, 72px);
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-body);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -1044,7 +956,7 @@ main {
 
 .honorees-title {
     margin: 0 0 12px;
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(2.8rem, 5vw, 5rem);
     font-weight: 600;
     letter-spacing: -0.065em;
@@ -1053,7 +965,7 @@ main {
 
 .honorees-count {
     margin: 0 0 28px;
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-body);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -1084,7 +996,7 @@ main {
     color: inherit;
     cursor: pointer;
     text-align: left;
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-title);
     font-size: clamp(1.1rem, 1.7vw, 1.6rem);
     font-weight: 500;
     letter-spacing: -0.045em;
@@ -1103,7 +1015,7 @@ main {
 
 .honoree-details p {
     margin: 0;
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-body);
     font-size: clamp(0.88rem, 1vw, 1rem);
     font-weight: 400;
     line-height: 1.55;
@@ -1230,8 +1142,8 @@ main {
     align-items: center;
     width: 76vw;
     margin: 0;
-    color: #ffffff;
-    font-family: "Bodoni Moda", Georgia, serif;
+    color: var(--page-text);
+    font-family: var(--font-title);
     font-size: clamp(2.5rem, 14vw, 12rem);
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -1361,10 +1273,10 @@ main {
     }
 
     .carousel-title {
-        font-family: "Bodoni Moda", "Playfair Display", Georgia, serif;
+        font-family: var(--font-title);
         font-weight: 700;
         letter-spacing: 0.02em;
-        color: #151b2c;
+        color: #33291f;
         margin: 0 auto clamp(40px, 6vh, 60px);
     }
 
@@ -1445,10 +1357,12 @@ main {
 
     .carousel-tagline {
         margin: clamp(88px, 14vh, 144px) auto 0;
-        color: #151b2c;
-        font-family: "Bodoni Moda", "Playfair Display", Georgia, serif;
+        color: #33291f;
+        font-family: var(--font-italic);
+        font-size: clamp(2.4rem, 6vw, 5rem);
         font-weight: 600;
         letter-spacing: -0.04em;
+        text-transform: none;
     }
 
     .carousel-btn {
@@ -1483,7 +1397,7 @@ main {
 
     .carousel-current,
     .carousel-total {
-        font-family: "Space Grotesk", sans-serif;
+        font-family: var(--font-body);
         min-width: 1ch;
         font-size: 12px;
         font-weight: 700;
@@ -1613,7 +1527,7 @@ main {
 .video-showcase-section {
     padding: clamp(88px, 14vh, 144px) 5vw clamp(64px, 10vh, 112px);
     background: var(--projects-background);
-    color: #151b2c;
+    color: #33291f;
 }
 
 .video-showcase-container {
@@ -1634,7 +1548,7 @@ main {
 .video-showcase-title {
     width: 90%;
     margin: 0 auto clamp(40px, 7vh, 72px);
-    font-family: "Bodoni Moda", Georgia, serif;
+    font-family: var(--font-title);
     font-size: clamp(2rem, 7vw, 6rem);
     font-weight: 600;
     letter-spacing: -0.04em;
@@ -1784,7 +1698,7 @@ main {
     left: 50%;
     width: min(80%, 260px);
     margin: 0;
-    color: #77736d;
+    color: rgba(214, 189, 140, 0.82);
     font-size: clamp(0.9rem, 1.2vw, 1.1rem);
     font-weight: 600;
     line-height: 1.15;
@@ -1795,8 +1709,8 @@ main {
 .site-footer-word {
     position: absolute;
     z-index: 1;
-    color: #77736d;
-    font-family: Inter, Arial, sans-serif;
+    color: rgba(214, 189, 140, 0.72);
+    font-family: var(--font-title);
     font-size: clamp(5rem, 18vw, 17rem);
     font-weight: 800;
     letter-spacing: -0.09em;
@@ -1818,7 +1732,7 @@ main {
     position: absolute;
     z-index: 1;
     margin: 0;
-    color: #77736d;
+    color: rgba(214, 189, 140, 0.82);
     font-size: clamp(0.85rem, 1.5vw, 1.25rem);
     font-weight: 500;
     line-height: 1.25;
@@ -1836,9 +1750,9 @@ main {
 }
 
 .site-footer-name {
-    color: #fff;
+    color: var(--page-text);
     margin: 0;
-    font-family: Inter, Arial, sans-serif;
+    font-family: var(--font-title);
     font-size: clamp(1.25rem, 2vw, 1.8rem);
     font-weight: 600;
     letter-spacing: -0.04em;
@@ -1846,7 +1760,7 @@ main {
 
 .site-footer-role {
     margin: 4px 0 clamp(38px, 6vh, 64px);
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(214, 189, 140, 0.82);
     font-size: clamp(1.1rem, 1.8vw, 1.5rem);
 }
 
@@ -1854,7 +1768,7 @@ main {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #fff;
+    color: var(--page-text);
     font-size: clamp(1.25rem, 2.2vw, 1.8rem);
     text-decoration-thickness: 1px;
     text-underline-offset: 7px;
@@ -1905,5 +1819,188 @@ main {
     .video-showcase-slide,
     .video-showcase-button {
         transition-duration: 0.01ms;
+    }
+}
+
+main > section:nth-of-type(n + 2),
+body > section[class] {
+    background: transparent;
+}
+
+main > section:nth-of-type(n + 2) :is(
+    h1, h2, h3, h4, h5, h6, p, a, li, span, strong, em, small,
+    blockquote, figcaption, label, legend, button, dt, dd, summary
+) {
+    color: #f5f0e8 !important;
+}
+
+main > section:nth-of-type(n + 2) :is(.project-card, .honoree) {
+    background: transparent !important;
+}
+
+main > section:nth-of-type(n + 2) :is(.honoree, .honoree-heading, .honoree-details) {
+    border-color: rgba(245, 240, 232, 0.55) !important;
+}
+
+main > section:nth-of-type(n + 2) :is(h1, h2, h3, h4, h5, h6) em,
+body > section[class] :is(h1, h2, h3, h4, h5, h6) em {
+    color: #e8d5a5 !important;
+}
+
+.text-roll-word {
+    display: inline-grid;
+    overflow: hidden;
+    vertical-align: bottom;
+    line-height: inherit;
+}
+
+.text-roll-word-line {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+}
+
+.text-roll-letter {
+    display: inline-block;
+    transition: transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    transition-delay: var(--roll-delay, 0ms);
+}
+
+.text-roll-word-line[aria-hidden="true"] .text-roll-letter {
+    transform: translateY(110%);
+}
+
+.text-roll-word-line[aria-hidden="true"] .text-roll-letter::before {
+    content: attr(data-letter);
+}
+
+.has-text-roll:hover .text-roll-word-line:first-child .text-roll-letter,
+.has-text-roll:focus-visible .text-roll-word-line:first-child .text-roll-letter {
+    transform: translateY(-110%);
+}
+
+.has-text-roll:hover .text-roll-word-line[aria-hidden="true"] .text-roll-letter,
+.has-text-roll:focus-visible .text-roll-word-line[aria-hidden="true"] .text-roll-letter {
+    transform: translateY(0);
+}
+
+button.has-text-roll {
+    -webkit-backdrop-filter: blur(1.5px);
+    backdrop-filter: blur(1.5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .text-roll-letter {
+        transition-duration: 0.01ms;
+        transition-delay: 0ms;
+    }
+}
+
+html.nav-transitioning,
+html.nav-transitioning body {
+    overflow: hidden;
+}
+
+html.nav-transition-pending::before {
+    position: fixed;
+    z-index: 1000000;
+    inset: 0;
+    background: rgba(25, 22, 19, 0.98);
+    content: "";
+}
+
+.nav-page-transition {
+    position: fixed;
+    z-index: 1000001;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    place-items: center start;
+    background: rgba(25, 22, 19, 0.96);
+    color: #f5f0e8;
+    -webkit-backdrop-filter: blur(18px) saturate(125%);
+    backdrop-filter: blur(18px) saturate(125%);
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: transform 760ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.nav-page-transition.is-covering {
+    transform: translateX(0);
+}
+
+.nav-page-transition.is-leaving {
+    transform: translateX(-100%);
+}
+
+.nav-page-transition-title {
+    display: flex;
+    max-width: min(90vw, 1100px);
+    margin: 0;
+    padding: 0 clamp(24px, 9vw, 140px);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.22em;
+    color: #f5f0e8;
+    font-family: var(--font-title, "Cormorant Garamond", Georgia, serif);
+    font-size: clamp(42px, 8vw, 112px);
+    font-weight: 400;
+    line-height: 1.05;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.nav-page-transition-word {
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.nav-page-transition-word:last-child {
+    color: #e8d5a5;
+    font-style: italic;
+}
+
+.nav-page-transition-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(110%);
+    animation: nav-page-transition-letter-in 700ms cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
+    animation-delay: var(--nav-letter-delay, 0ms);
+    animation-play-state: paused;
+}
+
+.nav-page-transition.is-text-visible .nav-page-transition-letter {
+    animation-play-state: running;
+}
+
+@keyframes nav-page-transition-letter-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-transition-reveal {
+    animation: nav-section-reveal 800ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+@keyframes nav-section-reveal {
+    from {
+        filter: blur(6px);
+        opacity: 0.55;
+        translate: 0 24px;
+    }
+    to {
+        filter: blur(0);
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-page-transition,
+    .nav-page-transition-letter,
+    .nav-transition-reveal {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
