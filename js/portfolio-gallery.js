@@ -197,11 +197,86 @@ window.addEventListener('DOMContentLoaded', () => {
         const caption = document.createElement('figcaption');
         const category = document.createElement('span');
         category.textContent = `Portfolio · ${number}`;
-        caption.append(category, asset.title);
+        const title = document.createElement('strong');
+        title.textContent = asset.title;
+        const description = document.createElement('p');
+        description.textContent = asset.description || `Un aperçu des créations et des coulisses de Coco Miracles : ${asset.title}.`;
+        const moreButton = document.createElement('button');
+        moreButton.className = 'portfolio-gallery-more';
+        moreButton.type = 'button';
+        moreButton.textContent = 'Voir plus';
+        moreButton.setAttribute('aria-label', `Voir la vidéo et les détails : ${asset.title}`);
+        caption.append(category, title, description, moreButton);
         card.append(media, caption);
         fragment.append(card);
+
+        moreButton.addEventListener('click', () => {
+            const dialog = document.querySelector('#portfolio-project-dialog');
+            const dialogTitle = dialog?.querySelector('#portfolio-project-title');
+            const dialogDescription = dialog?.querySelector('.portfolio-project-description');
+            const dialogVideo = dialog?.querySelector('.portfolio-project-video');
+            const dialogStatus = dialog?.querySelector('.portfolio-project-status');
+            if (
+                !(dialog instanceof HTMLDialogElement) ||
+                !(dialogTitle instanceof HTMLElement) ||
+                !(dialogDescription instanceof HTMLElement) ||
+                !(dialogVideo instanceof HTMLVideoElement) ||
+                !(dialogStatus instanceof HTMLElement)
+            ) {
+                console.error('Impossible d’ouvrir le projet : fenêtre vidéo introuvable.');
+                return;
+            }
+
+            if (activeVideo) {
+                stopVideo(activeVideo);
+                activeVideo = null;
+            }
+            dialog.dataset.activeTrigger = String(index);
+            dialogTitle.textContent = asset.title;
+            dialogDescription.textContent = description.textContent || '';
+            dialogStatus.textContent = '';
+            dialogVideo.poster = asset.poster;
+            dialogVideo.src = asset.src;
+            dialogVideo.load();
+            dialog.showModal();
+            dialogVideo.play().catch(error => {
+                if (error.name === 'NotAllowedError') {
+                    dialogStatus.textContent = 'Appuyez sur lecture pour regarder la vidéo.';
+                } else if (error.name !== 'AbortError') {
+                    console.error(`Impossible de lire la vidéo du portfolio : ${asset.src}`, error);
+                    dialogStatus.textContent = 'La vidéo n’a pas pu démarrer. Utilisez les commandes du lecteur pour réessayer.';
+                }
+            });
+        });
     });
 
     gallery.replaceChildren(fragment);
     gallery.querySelectorAll('video[data-portfolio-video-index]').forEach(setupVideo);
+
+    const projectDialog = document.querySelector('#portfolio-project-dialog');
+    const projectVideo = projectDialog?.querySelector('.portfolio-project-video');
+    const projectStatus = projectDialog?.querySelector('.portfolio-project-status');
+    const closeButton = projectDialog?.querySelector('.portfolio-project-close');
+    if (
+        projectDialog instanceof HTMLDialogElement &&
+        projectVideo instanceof HTMLVideoElement &&
+        projectStatus instanceof HTMLElement &&
+        closeButton instanceof HTMLButtonElement
+    ) {
+        closeButton.addEventListener('click', () => projectDialog.close());
+        projectDialog.addEventListener('click', event => {
+            if (event.target === projectDialog) projectDialog.close();
+        });
+        projectDialog.addEventListener('close', () => {
+            projectVideo.pause();
+            projectVideo.removeAttribute('src');
+            projectVideo.load();
+            projectStatus.textContent = '';
+            const index = Number(projectDialog.dataset.activeTrigger);
+            gallery.querySelectorAll('.portfolio-gallery-more')[index]?.focus({ preventScroll: true });
+            delete projectDialog.dataset.activeTrigger;
+        });
+    } else {
+        console.error('Impossible de configurer la fenêtre des projets du portfolio.');
+    }
 });

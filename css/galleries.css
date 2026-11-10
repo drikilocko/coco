@@ -276,6 +276,282 @@ body.gallery-menu-open {
     line-height: 1.2;
 }
 
+.beauty-gallery-card figcaption strong {
+    display: block;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.gallery-card figcaption strong {
+    display: block;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.gallery-card figcaption p {
+    min-height: 42px;
+    margin: 8px 0 14px;
+    color: var(--gallery-muted);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.beauty-gallery-card figcaption p {
+    min-height: 42px;
+    margin: 8px 0 14px;
+    color: var(--gallery-muted);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.beauty-gallery-open {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.beauty-gallery-open img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 450ms ease;
+}
+
+.beauty-gallery-open:hover img,
+.beauty-gallery-open:focus-visible img {
+    transform: scale(1.035);
+}
+
+.beauty-gallery-open:focus-visible {
+    outline: 2px solid var(--gallery-gold);
+    outline-offset: -5px;
+}
+
+.beauty-gallery-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 58px;
+    height: 58px;
+    place-items: center;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    background: rgba(34, 29, 25, 0.62);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+.beauty-gallery-more,
+.beauty-project-cta,
+.portfolio-gallery-more,
+.portfolio-project-cta {
+    display: inline-flex;
+    min-height: 42px;
+    padding: 0 18px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--gallery-gold);
+    border-radius: 24px;
+    background: transparent;
+    color: var(--gallery-ink);
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.beauty-gallery-more:hover,
+.beauty-gallery-more:focus-visible,
+.beauty-project-cta:hover,
+.beauty-project-cta:focus-visible,
+.portfolio-gallery-more:hover,
+.portfolio-gallery-more:focus-visible,
+.portfolio-project-cta:hover,
+.portfolio-project-cta:focus-visible {
+    background: var(--gallery-gold);
+    color: #fff;
+}
+
+.beauty-project-dialog {
+    position: fixed;
+    width: min(900px, calc(100% - 32px));
+    max-width: none;
+    max-height: min(92vh, 960px);
+    margin: auto;
+    padding: clamp(24px, 5vw, 48px);
+    overflow: auto;
+    border: 1px solid rgba(140, 116, 81, 0.5);
+    background: var(--gallery-paper);
+    color: var(--gallery-ink);
+}
+
+.beauty-project-dialog::backdrop {
+    background: rgba(20, 17, 15, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.beauty-project-content {
+    display: grid;
+    gap: 14px;
+}
+
+.beauty-project-content .gallery-eyebrow,
+.beauty-project-content h2,
+.beauty-project-content > p {
+    margin: 0;
+    text-align: left;
+}
+
+.beauty-project-content h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.beauty-project-description,
+.beauty-project-status {
+    color: var(--gallery-muted);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.beauty-project-video {
+    display: block;
+    width: 100%;
+    max-height: 58vh;
+    aspect-ratio: 16 / 9;
+    background: #211c18;
+    object-fit: contain;
+}
+
+.beauty-project-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(51, 41, 31, 0.3);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--gallery-ink);
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.beauty-project-cta {
+    justify-self: start;
+    background: var(--gallery-ink);
+    color: var(--gallery-paper);
+}
+
+.beauty-project-status:empty {
+    display: none;
+}
+
+.portfolio-gallery-more {
+    appearance: none;
+}
+
+.portfolio-project-dialog {
+    position: fixed;
+    width: min(900px, calc(100% - 32px));
+    max-width: none;
+    max-height: min(92vh, 960px);
+    margin: auto;
+    padding: clamp(24px, 5vw, 48px);
+    overflow: auto;
+    border: 1px solid rgba(140, 116, 81, 0.5);
+    background: var(--gallery-paper);
+    color: var(--gallery-ink);
+}
+
+.portfolio-project-dialog::backdrop {
+    background: rgba(20, 17, 15, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.portfolio-project-content {
+    display: grid;
+    gap: 14px;
+}
+
+.portfolio-project-content .gallery-eyebrow,
+.portfolio-project-content h2,
+.portfolio-project-content > p {
+    margin: 0;
+    text-align: left;
+}
+
+.portfolio-project-content h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.portfolio-project-description,
+.portfolio-project-status {
+    color: var(--gallery-muted);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.portfolio-project-video {
+    display: block;
+    width: 100%;
+    max-height: 58vh;
+    aspect-ratio: 16 / 9;
+    background: #211c18;
+    object-fit: contain;
+}
+
+.portfolio-project-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(51, 41, 31, 0.3);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--gallery-ink);
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.portfolio-project-cta {
+    justify-self: start;
+    background: var(--gallery-ink);
+    color: var(--gallery-paper);
+}
+
+.portfolio-project-status:empty {
+    display: none;
+}
+
 .gallery-card figcaption span {
     display: block;
     margin-bottom: 5px;

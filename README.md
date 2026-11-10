@@ -20,16 +20,22 @@ coco miracles/
 ├── js/
 │   ├── main.js         # JavaScript de la page principale
 │   ├── gallery-menu.js # Menu mobile des galeries
+│   ├── beauty-videos.js # Liste des vidéos beauté locales
+│   ├── beauty-gallery.js # Cartes et fenêtre de lecture beauté
 │   ├── portfolio-videos.js # Liste des vidéos locales du portfolio
 │   └── portfolio-gallery.js # Lecteurs vidéo du portfolio
 ├── asset/video/        # Vidéos locales du portfolio
 │   └── posters/        # Miniatures JPG extraites des vidéos du portfolio
+├── asset/beaute/       # Vidéos locales de la galerie beauté
+│   └── posters/        # Miniatures JPG des vidéos beauté
 ├── api/                # Routes serveur Gemini et formulaire e-mail
 ├── inutile/            # Ancienne page, fichiers CSS/JS et vidéos locales archivés
 └── README.md           # Documentation du projet
 ```
 
 Le portfolio utilise les vidéos locales de `asset/video/` sur l’accueil, dans la galerie complète et dans les aperçus des projets. Chaque vidéo possède une miniature JPG dans `asset/video/posters/`, affichée avant le lancement.
+
+La page d’accueil affiche quatre vidéos beauté et une cinquième carte d’accès à la galerie complète. Les autres vidéos beauté de `asset/beaute/` sont listées dans `js/beauty-videos.js`; la galerie les présente avec une courte description et une fenêtre vidéo avec son et lien de contact. Pour activer l’audio dans le carrousel, utilisez le bouton son : les navigateurs bloquent généralement la lecture automatique avec le son.
 
 ---
 

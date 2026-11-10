@@ -9,10 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/galleries.css?v=local-video-gallery-v1">
+    <link rel="stylesheet" href="css/galleries.css?v=local-video-gallery-v3">
     <script src="js/gallery-menu.js" defer></script>
-    <script src="js/portfolio-videos.js?v=local-video-gallery-v2" defer></script>
-    <script src="js/portfolio-gallery.js?v=local-video-gallery-v2" defer></script>
+    <script src="js/portfolio-videos.js?v=local-video-gallery-v3" defer></script>
+    <script src="js/portfolio-gallery.js?v=local-video-gallery-v3" defer></script>
     <script src="js/rose-snow.js" defer></script>
 </head>
 <body class="gallery-page">
@@ -35,10 +35,21 @@
         <header class="gallery-heading">
             <p class="gallery-eyebrow">Créations en mouvement · Coco Miracles</p>
             <h1>Le portfolio <em>en vidéo</em></h1>
-            <p class="gallery-intro">Explorez les décors, les ambiances et les instants de célébration imaginés par notre équipe. Lancez une vidéo pour la regarder directement sur cette page.</p>
+            <p class="gallery-intro">Explorez les décors, les ambiances et les instants de célébration imaginés par notre équipe. Les vidéos sont accompagnées d’un aperçu, d’une courte description et d’une fenêtre de lecture détaillée.</p>
         </header>
         <div class="gallery-grid" id="portfolio-local-gallery" aria-live="polite"></div>
     </main>
+    <dialog class="portfolio-project-dialog" id="portfolio-project-dialog" aria-labelledby="portfolio-project-title">
+        <button class="portfolio-project-close" type="button" aria-label="Fermer la vidéo">&times;</button>
+        <div class="portfolio-project-content">
+            <p class="gallery-eyebrow">Portfolio · Coco Miracles</p>
+            <h2 id="portfolio-project-title"></h2>
+            <p class="portfolio-project-description"></p>
+            <video class="portfolio-project-video" controls playsinline preload="metadata"></video>
+            <p class="portfolio-project-status" role="status" aria-live="polite"></p>
+            <a class="portfolio-project-cta" href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>
+        </div>
+    </dialog>
     <footer class="gallery-footer">
         <p>Une création en tête ? Échangeons sur vos idées.</p>
         <a href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>

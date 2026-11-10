@@ -811,6 +811,97 @@ window.addEventListener('DOMContentLoaded', () => {
         console.error('Impossible de configurer les vidéos des projets : éléments de dialogue introuvables.');
     }
 
+    const homeDetailDialog = document.querySelector('#home-detail-dialog');
+    const homeDetailTitle = homeDetailDialog?.querySelector('#home-detail-title');
+    const homeDetailDescription = homeDetailDialog?.querySelector('.home-detail-description');
+    const homeDetailImage = homeDetailDialog?.querySelector('.home-detail-image');
+    const homeDetailVideo = homeDetailDialog?.querySelector('.home-detail-video');
+    const homeDetailStatus = homeDetailDialog?.querySelector('.home-detail-status');
+    const homeDetailClose = homeDetailDialog?.querySelector('.home-detail-close');
+    const homeDetailButtons = Array.from(document.querySelectorAll('.home-detail-link'));
+
+    if (
+        homeDetailDialog instanceof HTMLDialogElement &&
+        homeDetailTitle instanceof HTMLElement &&
+        homeDetailDescription instanceof HTMLElement &&
+        homeDetailImage instanceof HTMLImageElement &&
+        homeDetailVideo instanceof HTMLVideoElement &&
+        homeDetailStatus instanceof HTMLElement &&
+        homeDetailClose instanceof HTMLButtonElement
+    ) {
+        let activeDetailTrigger = null;
+        const closeHomeDetail = () => {
+            if (homeDetailDialog.open) homeDetailDialog.close();
+        };
+        const resetHomeDetail = () => {
+            homeDetailVideo.pause();
+            homeDetailVideo.removeAttribute('src');
+            homeDetailVideo.removeAttribute('poster');
+            homeDetailVideo.load();
+            homeDetailVideo.hidden = true;
+            homeDetailImage.removeAttribute('src');
+            homeDetailImage.hidden = true;
+            homeDetailStatus.textContent = '';
+            activeDetailTrigger?.focus({ preventScroll: true });
+            activeDetailTrigger = null;
+        };
+
+        homeDetailButtons.forEach(button => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.addEventListener('click', () => {
+                const title = button.dataset.detailTitle;
+                const description = button.dataset.detailDescription;
+                if (!title || !description) {
+                    console.error('Impossible d’ouvrir les détails : titre ou description manquant.');
+                    return;
+                }
+
+                activeDetailTrigger = button;
+                homeDetailTitle.textContent = title;
+                homeDetailDescription.textContent = description;
+                homeDetailStatus.textContent = '';
+                const beautyVideoIndex = Number(button.dataset.detailBeautyVideoIndex);
+                const portfolioVideoIndex = Number(button.dataset.detailVideoIndex);
+                const asset = Number.isInteger(beautyVideoIndex)
+                    ? window.cocoBeautyVideos?.[beautyVideoIndex]
+                    : Number.isInteger(portfolioVideoIndex)
+                        ? window.cocoPortfolioVideos?.[portfolioVideoIndex]
+                        : null;
+
+                if (asset && typeof asset.src === 'string') {
+                    homeDetailVideo.poster = asset.poster;
+                    homeDetailVideo.src = asset.src;
+                    homeDetailVideo.hidden = false;
+                    homeDetailVideo.load();
+                } else {
+                    const image = button.dataset.detailImage;
+                    if (image) {
+                        homeDetailImage.src = image;
+                        homeDetailImage.alt = title;
+                        homeDetailImage.hidden = false;
+                    }
+                }
+
+                homeDetailDialog.showModal();
+                if (asset && typeof asset.src === 'string') {
+                    homeDetailVideo.play().catch(error => {
+                        if (error.name !== 'NotAllowedError' && error.name !== 'AbortError') {
+                            console.error('Impossible de lancer la vidéo des détails.', error.name);
+                            homeDetailStatus.textContent = 'La vidéo n’a pas pu démarrer. Utilisez les commandes du lecteur pour réessayer.';
+                        }
+                    });
+                }
+            });
+        });
+        homeDetailClose.addEventListener('click', closeHomeDetail);
+        homeDetailDialog.addEventListener('click', event => {
+            if (event.target === homeDetailDialog) closeHomeDetail();
+        });
+        homeDetailDialog.addEventListener('close', resetHomeDetail);
+    } else if (homeDetailButtons.length) {
+        console.error('Impossible de configurer les détails des cartes : éléments de dialogue introuvables.');
+    }
+
     const formatsTrack = document.querySelector('#formats-track');
     const formatsCount = document.querySelector('.formats-count');
     const formatPreviousButtons = Array.from(document.querySelectorAll('.formats-side-prev, .formats-control-prev'));
@@ -903,7 +994,12 @@ window.addEventListener('DOMContentLoaded', () => {
     let portfolioUpdateRequested = false;
     const beautyVideoShowcase = document.querySelector('.beauty-video-showcase');
     if (beautyVideoShowcase instanceof HTMLElement) {
-        const videoSlides = Array.from(beautyVideoShowcase.querySelectorAll('.beauty-video-slide'));
+        const showcaseSlides = Array.from(beautyVideoShowcase.querySelectorAll('.beauty-video-slide'));
+        const videoSlides = showcaseSlides.filter(slide => slide.querySelector('video'));
+        const beautyVideoDetails = document.querySelector('.beauty-video-details');
+        const beautyVideoDetailTitle = beautyVideoDetails?.querySelector('.beauty-video-detail-title');
+        const beautyVideoDetailDescription = beautyVideoDetails?.querySelector('.beauty-video-detail-description');
+        const beautyVideoDetailLink = beautyVideoDetails?.querySelector('.beauty-video-detail-link');
         const videoCurrent = beautyVideoShowcase.querySelector('.beauty-video-current');
         const previousVideoButton = beautyVideoShowcase.querySelector('.beauty-video-button.prev');
         const nextVideoButton = beautyVideoShowcase.querySelector('.beauty-video-button.next');
@@ -916,8 +1012,13 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         if (
+            !showcaseSlides.length ||
             !videoSlides.length ||
             !slidesHaveVideoSources ||
+            !(beautyVideoDetails instanceof HTMLElement) ||
+            !(beautyVideoDetailTitle instanceof HTMLElement) ||
+            !(beautyVideoDetailDescription instanceof HTMLElement) ||
+            !(beautyVideoDetailLink instanceof HTMLButtonElement) ||
             !(videoCurrent instanceof HTMLElement) ||
             !(previousVideoButton instanceof HTMLButtonElement) ||
             !(nextVideoButton instanceof HTMLButtonElement) ||
@@ -939,28 +1040,49 @@ window.addEventListener('DOMContentLoaded', () => {
 
             const updatePlayButton = () => {
                 const activeVideo = getActiveVideo();
-                const isPaused = isVideoPausedByUser || (activeVideo instanceof HTMLVideoElement && activeVideo.paused);
+                const hasActiveVideo = activeVideo instanceof HTMLVideoElement;
+                playButton.hidden = !hasActiveVideo;
+                soundButton.hidden = !hasActiveVideo;
+                const isPaused = !hasActiveVideo || isVideoPausedByUser || activeVideo.paused;
                 playButton.setAttribute('aria-pressed', String(isPaused));
                 playButton.setAttribute('aria-label', isPaused ? 'Lire la vidéo' : 'Mettre la vidéo en pause');
             };
 
-            const getActiveVideo = () => videoSlides[activeVideoIndex]?.querySelector('video');
+            const getActiveVideo = () => showcaseSlides[activeVideoIndex]?.querySelector('video');
+
+            const updateBeautyVideoDetails = () => {
+                const asset = window.cocoBeautyVideos?.[activeVideoIndex];
+                if (!asset || typeof asset.title !== 'string' || typeof asset.description !== 'string') {
+                    beautyVideoDetails.hidden = true;
+                    if (activeVideoIndex < videoSlides.length) {
+                        console.error(`Informations manquantes pour la vidéo beauté ${activeVideoIndex + 1}.`);
+                    }
+                    return;
+                }
+
+                beautyVideoDetails.hidden = false;
+                beautyVideoDetailTitle.textContent = asset.title;
+                beautyVideoDetailDescription.textContent = asset.description;
+                beautyVideoDetailLink.dataset.detailTitle = asset.title;
+                beautyVideoDetailLink.dataset.detailDescription = asset.description;
+                beautyVideoDetailLink.dataset.detailBeautyVideoIndex = String(activeVideoIndex);
+            };
 
             const updateVideoShowcase = () => {
-                const previousIndex = (activeVideoIndex - 1 + videoSlides.length) % videoSlides.length;
-                const nextIndex = (activeVideoIndex + 1) % videoSlides.length;
+                const previousIndex = activeVideoIndex === 0 ? videoSlides.length - 1 : activeVideoIndex - 1;
+                const nextIndex = activeVideoIndex === showcaseSlides.length - 1 ? 0 : activeVideoIndex + 1;
+                const activeVideo = getActiveVideo();
+                if (!(activeVideo instanceof HTMLVideoElement)) soundEnabled = false;
 
-                videoSlides.forEach((slide, index) => {
+                showcaseSlides.forEach((slide, index) => {
                     const isActive = index === activeVideoIndex;
                     slide.classList.toggle('is-active', isActive);
                     slide.classList.toggle('is-previous', index === previousIndex);
                     slide.classList.toggle('is-next', index === nextIndex);
                     slide.setAttribute('aria-hidden', String(!isActive));
+                    slide.inert = !isActive;
                     const video = slide.querySelector('video');
-                    if (!(video instanceof HTMLVideoElement)) {
-                        console.error('Élément vidéo introuvable dans une diapositive du carrousel beauté.');
-                        return;
-                    }
+                    if (!(video instanceof HTMLVideoElement)) return;
 
                     if (!video.getAttribute('src')) {
                         if (!video.dataset.src) {
@@ -992,8 +1114,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
 
                 videoCurrent.textContent = String(activeVideoIndex + 1);
+                videoTrack.classList.toggle('is-cta-active', !(activeVideo instanceof HTMLVideoElement));
                 updateSoundButton();
                 updatePlayButton();
+                updateBeautyVideoDetails();
             };
 
             const refreshVideoShowcaseVisibility = () => {
@@ -1006,7 +1130,11 @@ window.addEventListener('DOMContentLoaded', () => {
             };
 
             const moveToVideo = direction => {
-                activeVideoIndex = (activeVideoIndex + direction + videoSlides.length) % videoSlides.length;
+                if (direction > 0) {
+                    activeVideoIndex = activeVideoIndex >= videoSlides.length ? 0 : activeVideoIndex + 1;
+                } else {
+                    activeVideoIndex = activeVideoIndex === 0 ? videoSlides.length - 1 : activeVideoIndex - 1;
+                }
                 isVideoPausedByUser = false;
                 updateVideoShowcase();
             };
@@ -1027,10 +1155,26 @@ window.addEventListener('DOMContentLoaded', () => {
             previousVideoButton.addEventListener('click', () => moveToVideo(-1));
             nextVideoButton.addEventListener('click', () => moveToVideo(1));
             soundButton.addEventListener('click', () => {
+                const activeVideo = getActiveVideo();
+                if (!(activeVideo instanceof HTMLVideoElement)) return;
                 soundEnabled = !soundEnabled;
+                activeVideo.muted = !soundEnabled;
+                if (soundEnabled) {
+                    activeVideo.volume = 1;
+                    activeVideo.play().catch(error => {
+                        if (error.name === 'NotAllowedError') {
+                            soundEnabled = false;
+                            activeVideo.muted = true;
+                            updateVideoShowcase();
+                        } else if (error.name !== 'AbortError') {
+                            console.error('Impossible d’activer le son de la vidéo beauté.', error);
+                        }
+                    });
+                }
                 updateVideoShowcase();
             });
             playButton.addEventListener('click', () => {
+                if (!(getActiveVideo() instanceof HTMLVideoElement)) return;
                 isVideoPausedByUser = !isVideoPausedByUser;
                 updateVideoShowcase();
             });
@@ -1038,7 +1182,7 @@ window.addEventListener('DOMContentLoaded', () => {
             let dragPointerId = null;
 
             videoTrack.addEventListener('pointerdown', event => {
-                if (event.target instanceof Element && event.target.closest('button')) return;
+                if (event.target instanceof Element && event.target.closest('button, a')) return;
                 if (event.pointerType === 'mouse' && event.button !== 0) return;
                 dragStartX = event.clientX;
                 dragPointerId = event.pointerId;
@@ -1670,11 +1814,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Mise en beauté nuptiale haute définition, travail d’orfèvre sur le teint réflecteur de lumière et soins préparatoires d’exception pour la reine du jour et son cortège.',
             extended: 'Nos artistes maquilleurs subliment les lignes naturelles et la carnation de chaque visage grâce à des techniques haute tenue pensées pour rayonner sous les feux des projecteurs comme sous la lumière du jour.',
             images: [
-                { src: 'asset/beaute/1.jpg', alt: 'Teint haute définition et éclat' },
-                { src: 'asset/beaute/2.jpg', alt: 'Mise en beauté nuptiale' },
-                { src: 'asset/beaute/3.jpg', alt: 'Regard sublimé & parure' },
-                { src: 'asset/beaute/4.jpg', alt: 'Soins d’apparat' },
-                { src: 'asset/beaute/5.jpg', alt: 'Cortège d’honneur' }
+                { src: 'asset/beaute/posters/01.jpg', alt: 'Teint haute définition et éclat' },
+                { src: 'asset/beaute/posters/02.jpg', alt: 'Mise en beauté nuptiale' },
+                { src: 'asset/beaute/posters/03.jpg', alt: 'Regard sublimé & parure' },
+                { src: 'asset/beaute/posters/04.jpg', alt: 'Soins d’apparat' },
+                { src: 'asset/beaute/posters/05.jpg', alt: 'Mise en beauté festive' }
             ]
         },
         'Suivi & accompagnement personnalisé': {

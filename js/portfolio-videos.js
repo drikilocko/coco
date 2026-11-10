@@ -70,9 +70,18 @@ window.cocoPortfolioVideos = [
     {
         title: 'Événement privé à Lomé',
         filename: 'À Lomé, @coco_miracles a eu l’honneur de sublimer un événement privé tout en finesse pour @suypa.mp4'
+    },
+    {
+        title: 'Inspiration & création',
+        filename: 'Quelques jours à explorer, à apprendre, à m’inspirer… et je ressors transformé.Chaque détail, ch.mp4'
+    },
+    {
+        title: 'Vlog · Création événementielle',
+        filename: 'VLOOOOOOOOGGGGGGG 🥳🥳🥳😏..Vous aimez des contenus comme ça  Déco- @coco_miracles.mp4'
     }
 ].map((video, index) => ({
     ...video,
+    description: video.description || `Découvrez « ${video.title} », une création du portfolio Coco Miracles.`,
     poster: `asset/video/posters/${String(index + 1).padStart(2, '0')}.jpg`,
     src: `asset/video/${encodeURIComponent(video.filename)}`
 }));
