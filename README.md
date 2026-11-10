@@ -11,12 +11,25 @@ Site web professionnel pour **Coco Miracles**, une entreprise de décoration de 
 ```
 coco miracles/
 ├── index.html          # Page principale du site
+├── galerie-beaute.html
+├── galerie-evenements.html
+├── galerie-portfolio.html
 ├── css/
-│   └── style.css       # Styles CSS modernes et responsive
+│   ├── style.css       # Styles de la page principale
+│   └── galleries.css   # Styles des galeries
 ├── js/
-│   └── main.js         # JavaScript (navigation, FAQ, formulaire, QR code)
+│   ├── main.js         # JavaScript de la page principale
+│   ├── gallery-menu.js # Menu mobile des galeries
+│   ├── portfolio-videos.js # Liste des vidéos locales du portfolio
+│   └── portfolio-gallery.js # Lecteurs vidéo du portfolio
+├── asset/video/        # Vidéos locales du portfolio
+│   └── posters/        # Miniatures JPG extraites des vidéos du portfolio
+├── api/                # Routes serveur Gemini et formulaire e-mail
+├── inutile/            # Ancienne page, fichiers CSS/JS et vidéos locales archivés
 └── README.md           # Documentation du projet
 ```
+
+Le portfolio utilise les vidéos locales de `asset/video/` sur l’accueil, dans la galerie complète et dans les aperçus des projets. Chaque vidéo possède une miniature JPG dans `asset/video/posters/`, affichée avant le lancement.
 
 ---
 
@@ -27,6 +40,7 @@ coco miracles/
 - **👥 À Propos** - Présentation de l'entreprise et ses valeurs
 - **🎨 Services** - 6 types de services (Mariages, Anniversaires, Baptêmes, etc.)
 - **🖼️ Réalisations** - Portfolio filtrable avec catégories
+- **🎞️ Galeries dédiées** - Pages séparées pour les créations beauté, les événements et les vidéos locales du portfolio
 - **⭐ Témoignages** - Avis clients avec système de notation
 - **❓ FAQ** - Questions fréquentes avec accordéon interactif
 - **📞 Contact / CTA** - Appel à l'action pour réservation
@@ -37,7 +51,8 @@ coco miracles/
 - ✅ **100% Responsive** (Mobile, Tablette, Desktop)
 - ✅ **Animations fluides** (Scroll, Hover, Transitions)
 - ✅ **Navigation fixe** avec effet de scroll
-- ✅ **Menu mobile** hamburger
+- ✅ **Menu mobile** hamburger en plein écran
+- ✅ **Boutons « Voir toute la galerie »** sous les carrousels beauté et portfolio, et sous les réalisations
 - ✅ **Filtres de portfolio** dynamiques
 - ✅ **Formulaire de réservation** avec validation
 - ✅ **Système de ticketing** avec QR Code
@@ -105,20 +120,20 @@ Cette donnée peut être :
 ## 🚀 Comment Lancer le Site
 
 ### Option 1 : Ouverture Directe
-Double-cliquez simplement sur le fichier `index.html` pour l'ouvrir dans votre navigateur.
+Le site peut être consulté avec un serveur statique, mais les vidéos du portfolio nécessitent la route serveur décrite ci-dessous.
 
 ### Option 2 : Serveur Local (Recommandé)
 
-Pour utiliser la conciergerie Gemini sur `index2.html`, il faut Node.js 18 ou plus récent : le serveur local gère le site et la route privée `/api/chat`.
+Il faut Node.js 18 ou plus récent : le serveur local gère le site et les routes privées `/api/chat` et `/api/contact`. Il prend aussi en charge les requêtes HTTP Range pour charger progressivement les vidéos du portfolio.
 
 1. Après avoir révoqué toute clé déjà exposée, copiez `.env.example` vers `.env.local` à la racine du projet.
 2. Remplacez la valeur exemple par votre nouvelle clé, sans guillemets : `GEMINI_API_KEY=VOTRE_NOUVELLE_CLE`.
 3. Pour activer les demandes par e-mail, créez une clé API Resend, vérifiez votre domaine d'envoi dans Resend, puis ajoutez dans `.env.local` `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (une adresse du domaine vérifié) et `CONTACT_TO_EMAIL=drikilocko@gmail.com` (adresse qui reçoit les demandes).
 4. Double-cliquez sur `demarrer.bat`, puis ouvrez `http://localhost:8000`.
 
-Le fichier `.env.local` est ignoré par Git et n'est jamais servi au navigateur. N'ouvrez pas `index2.html` directement en `file://` et n'utilisez pas un serveur statique Python/Live Server pour le chat ou l'envoi d'e-mails : ils ne peuvent pas exécuter les routes API. Si la configuration Resend manque, le formulaire l'indiquera ; après un envoi réussi, la demande est transmise à Coco Miracles et le client reçoit un e-mail de confirmation au format HTML aux couleurs de la Maison.
+Le fichier `.env.local` est ignoré par Git et n'est jamais servi au navigateur. N'ouvrez pas `index.html` directement en `file://` et n'utilisez pas un serveur statique Python/Live Server pour le chat ou l'envoi d'e-mails : ils ne peuvent pas exécuter les routes API. Le lecteur du portfolio attend que cinq secondes de vidéo soient tamponnées avant de démarrer. Si la configuration Resend manque, le formulaire l'indiquera ; après un envoi réussi, la demande est transmise à Coco Miracles et le client reçoit un e-mail de confirmation au format HTML aux couleurs de la Maison.
 
-Pour le déploiement, configurez `GEMINI_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL` et `CONTACT_TO_EMAIL` dans les variables d'environnement Vercel, puis déployez normalement. Les clés ne doivent jamais être inscrites dans le HTML, le JavaScript public ou un fichier versionné.
+Pour le déploiement, configurez `GEMINI_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL` et `CONTACT_TO_EMAIL` dans les variables d'environnement Vercel, puis déployez normalement. Vérifiez que les vidéos voulues de `asset/video/` sont incluses dans le dépôt et le déploiement. Les clés ne doivent jamais être inscrites dans le HTML, le JavaScript public ou un fichier versionné.
 
 #### Avec VS Code
 Utilisez l'extension **Live Server** et cliquez sur "Go Live".
@@ -128,25 +143,19 @@ Utilisez l'extension **Live Server** et cliquez sur "Go Live".
 ## 🔧 Personnalisation et Intégration
 
 ### 1. Images du Site
-Remplacez les éléments visuels (actuellement des emojis et gradients) par vos propres photos :
-- **Hero** : `hero-image-placeholder` dans `index.html`
-- **Portfolio** : Les `gallery-image` dans la section `#realisations`
-- **Témoignages** : Les `author-avatar` dans la section `#temoignages`
+Les visuels de la page principale et des galeries se trouvent dans le dossier `asset/`. Les pages principales sont `index.html`, `galerie-beaute.html`, `galerie-evenements.html` et `galerie-portfolio.html`.
 
 ### 2. Informations de l'Entreprise
-Mettez à jour les informations dans `index.html` :
-- **Coordonnées** : Section Footer
-- **Services** : Section `#services`
-- **Témoignages** : Section `#temoignages`
-- **FAQ** : Section `#faq`
+Mettez à jour les informations de la page principale dans `index.html` : coordonnées dans le pied de page, services dans `#prestations`, portfolio dans `#portfolio` et beauté dans `#mise-en-beaute`.
 
 ### 3. Couleurs du Thème
-Modifiez les variables CSS dans `css/style.css` (ligne 2-15) :
+Modifiez les variables de thème en haut de `css/style.css` :
 ```css
 :root {
-    --primary: #8b5cf6;      /* Couleur principale */
-    --secondary: #ec4899;    /* Couleur secondaire */
-    --accent: #f59e0b;       /* Couleur d'accent */
+    --editorial-paper: #f5f0e8;
+    --editorial-ink: #33291f;
+    --hero-gold: #d6bd8c;
+    --hero-ivory: #f4efe7;
 }
 ```
 
@@ -313,7 +322,7 @@ L'équipe Coco Miracles
 
 ### Conciergerie Gemini sur Vercel
 
-La page `index2.html` utilise la fonction serveur `api/chat.js` pour appeler Gemini. La clé n'est jamais incluse dans le navigateur.
+La page `index.html` utilise la fonction serveur `api/chat.js` pour appeler Gemini. La clé n'est jamais incluse dans le navigateur.
 
 1. Pour tester sans déployer, suivez les étapes de configuration du serveur Node.js local ci-dessus.
 2. Sur Vercel, ajoutez `GEMINI_API_KEY` dans **Project Settings → Environment Variables**, puis déployez.

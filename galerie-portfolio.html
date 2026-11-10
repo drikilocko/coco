@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f0e8">
+    <title>Vidéos du portfolio — Coco Miracles</title>
+    <meta name="description" content="Regardez les vidéos des créations et scénographies du portfolio Coco Miracles.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/galleries.css?v=local-video-gallery-v1">
+    <script src="js/gallery-menu.js" defer></script>
+    <script src="js/portfolio-videos.js?v=local-video-gallery-v2" defer></script>
+    <script src="js/portfolio-gallery.js?v=local-video-gallery-v2" defer></script>
+    <script src="js/rose-snow.js" defer></script>
+</head>
+<body class="gallery-page">
+    <header class="gallery-header">
+        <a class="gallery-brand" href="index.html" aria-label="Coco Miracles, accueil">
+            <img src="asset/logo/logo-coco.png" alt="">
+            <span>COCO MIRACLES</span>
+        </a>
+        <button class="gallery-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="gallery-navigation">
+            <span></span><span></span>
+        </button>
+        <nav class="gallery-nav" id="gallery-navigation" aria-label="Navigation principale">
+            <a href="index.html">Accueil</a>
+            <a href="galerie-beaute.html">Galerie beauté</a>
+            <a href="galerie-evenements.html">Galerie événements</a>
+            <a href="galerie-portfolio.html" aria-current="page">Vidéos du portfolio</a>
+        </nav>
+    </header>
+    <main class="gallery-main">
+        <header class="gallery-heading">
+            <p class="gallery-eyebrow">Créations en mouvement · Coco Miracles</p>
+            <h1>Le portfolio <em>en vidéo</em></h1>
+            <p class="gallery-intro">Explorez les décors, les ambiances et les instants de célébration imaginés par notre équipe. Lancez une vidéo pour la regarder directement sur cette page.</p>
+        </header>
+        <div class="gallery-grid" id="portfolio-local-gallery" aria-live="polite"></div>
+    </main>
+    <footer class="gallery-footer">
+        <p>Une création en tête ? Échangeons sur vos idées.</p>
+        <a href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f0e8">
+    <title>Galerie beauté — Coco Miracles</title>
+    <meta name="description" content="Découvrez les créations de beauté et de maquillage d’apparat de Coco Miracles.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/galleries.css">
+    <script src="js/gallery-menu.js" defer></script>
+    <script src="js/rose-snow.js" defer></script>
+</head>
+<body class="gallery-page">
+    <header class="gallery-header">
+        <a class="gallery-brand" href="index.html" aria-label="Coco Miracles, accueil">
+            <img src="asset/logo/logo-coco.png" alt="">
+            <span>COCO MIRACLES</span>
+        </a>
+        <button class="gallery-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="gallery-navigation">
+            <span></span><span></span>
+        </button>
+        <nav class="gallery-nav" id="gallery-navigation" aria-label="Navigation principale">
+            <a href="index.html">Accueil</a>
+            <a href="galerie-beaute.html" aria-current="page">Galerie beauté</a>
+            <a href="galerie-evenements.html">Galerie événements</a>
+            <a href="galerie-portfolio.html">Vidéos du portfolio</a>
+        </nav>
+    </header>
+    <main class="gallery-main">
+        <header class="gallery-heading">
+            <p class="gallery-eyebrow">Bridal artistry · Beauté d’apparat</p>
+            <h1>Galerie <em>beauté</em></h1>
+            <p class="gallery-intro">Un aperçu des mises en beauté nuptiales, du teint haute définition et des détails imaginés par Coco Miracles.</p>
+        </header>
+        <div class="gallery-grid">
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><video controls muted loop playsinline preload="metadata" poster="asset/beaute/1.jpg"><source src="asset/beaute/1.mp4" type="video/mp4">Votre navigateur ne prend pas en charge la lecture vidéo.</video></div>
+                <figcaption><span>Vidéo · 01</span>Teint haute définition</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><video controls muted loop playsinline preload="metadata" poster="asset/beaute/2.jpg"><source src="asset/beaute/2.mp4" type="video/mp4">Votre navigateur ne prend pas en charge la lecture vidéo.</video></div>
+                <figcaption><span>Vidéo · 02</span>Mise en beauté nuptiale</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><video controls muted loop playsinline preload="metadata" poster="asset/beaute/3.jpg"><source src="asset/beaute/3.mp4" type="video/mp4">Votre navigateur ne prend pas en charge la lecture vidéo.</video></div>
+                <figcaption><span>Vidéo · 03</span>Regard sublimé</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><video controls muted loop playsinline preload="metadata" poster="asset/beaute/4.jpg"><source src="asset/beaute/4.mp4" type="video/mp4">Votre navigateur ne prend pas en charge la lecture vidéo.</video></div>
+                <figcaption><span>Vidéo · 04</span>Soins d’apparat</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><img src="asset/beaute/1.jpg" alt="Mise en beauté signée Coco Miracles" loading="lazy"></div>
+                <figcaption><span>Maquillage</span>Éclat naturel</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><img src="asset/beaute/2.jpg" alt="Maquillage nuptial Coco Miracles" loading="lazy"></div>
+                <figcaption><span>Beauté nuptiale</span>Teint lumineux</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><img src="asset/beaute/3.jpg" alt="Détail d’une mise en beauté Coco Miracles" loading="lazy"></div>
+                <figcaption><span>Détails</span>Regard sublimé</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><img src="asset/beaute/4.jpg" alt="Création beauté Coco Miracles" loading="lazy"></div>
+                <figcaption><span>Création</span>Finitions couture</figcaption>
+            </figure>
+            <figure class="gallery-card">
+                <div class="gallery-card-media"><img src="asset/beaute/5.jpg" alt="Mise en beauté du cortège par Coco Miracles" loading="lazy"></div>
+                <figcaption><span>Cortège</span>Beauté partagée</figcaption>
+            </figure>
+        </div>
+    </main>
+    <footer class="gallery-footer">
+        <p>Un projet beauté à imaginer ensemble ?</p>
+        <a href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>
+    </footer>
+</body>
+</html>

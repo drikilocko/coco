@@ -187,7 +187,7 @@ function serveStatic(req, res, pathname) {
         return;
     }
 
-    const relativePath = decodedPath === '/' ? 'index2.html' : decodedPath.slice(1);
+    const relativePath = decodedPath === '/' ? 'index.html' : decodedPath.slice(1);
     const filePath = path.resolve(ROOT, relativePath);
     if (!filePath.startsWith(`${ROOT}${path.sep}`)) {
         res.writeHead(404).end('Not found');
@@ -204,17 +204,44 @@ function serveStatic(req, res, pathname) {
             res.writeHead(404).end('Not found');
             return;
         }
-        res.writeHead(200, {
+        const isVideo = path.extname(filePath).toLowerCase() === '.mp4';
+        let statusCode = 200;
+        let start = 0;
+        let end = stats.size - 1;
+        if (isVideo && req.headers.range) {
+            const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+            if (!range || (!range[1] && !range[2])) {
+                res.writeHead(416, { 'Content-Range': `bytes */${stats.size}` }).end();
+                return;
+            }
+            if (!range[1]) {
+                const suffixLength = Number(range[2]);
+                start = Math.max(0, stats.size - suffixLength);
+            } else {
+                start = Number(range[1]);
+            }
+            end = range[2] && range[1] ? Math.min(Number(range[2]), stats.size - 1) : stats.size - 1;
+            if (start >= stats.size || end < start) {
+                res.writeHead(416, { 'Content-Range': `bytes */${stats.size}` }).end();
+                return;
+            }
+            statusCode = 206;
+        }
+
+        const headers = {
             'Cache-Control': 'no-cache',
-            'Content-Length': stats.size,
+            'Content-Length': end - start + 1,
             'Content-Type': contentType,
             'X-Content-Type-Options': 'nosniff'
-        });
+        };
+        if (isVideo) headers['Accept-Ranges'] = 'bytes';
+        if (statusCode === 206) headers['Content-Range'] = `bytes ${start}-${end}/${stats.size}`;
+        res.writeHead(statusCode, headers);
         if (req.method === 'HEAD') {
             res.end();
             return;
         }
-        fs.createReadStream(filePath).pipe(res);
+        fs.createReadStream(filePath, { start, end }).pipe(res);
     });
 }
 
