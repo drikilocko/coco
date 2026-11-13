@@ -1,73 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const heroHeader = document.querySelector('.hero-header');
-    const heroHeaderContent = document.querySelector('.hero-header-content');
-    const heroMenuToggle = document.querySelector('.hero-menu-toggle');
-    if (heroHeaderContent instanceof HTMLElement && heroMenuToggle instanceof HTMLButtonElement) {
-        const setHeroMenuOpen = isOpen => {
-            heroHeaderContent.classList.toggle('is-menu-open', isOpen);
-            if (isOpen) heroHeader?.classList.remove('is-scroll-hidden');
-            heroMenuToggle.setAttribute('aria-expanded', String(isOpen));
-            heroMenuToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
-            document.body.classList.toggle('mobile-menu-open', isOpen);
-        };
-
-        heroMenuToggle.addEventListener('click', () => {
-            setHeroMenuOpen(heroMenuToggle.getAttribute('aria-expanded') !== 'true');
-        });
-        heroHeaderContent.querySelectorAll('.hero-nav a').forEach(link => {
-            link.addEventListener('click', () => setHeroMenuOpen(false));
-        });
-        document.addEventListener('pointerdown', event => {
-            if (
-                heroMenuToggle.getAttribute('aria-expanded') === 'true' &&
-                event.target instanceof Node &&
-                !heroHeaderContent.contains(event.target)
-            ) {
-                setHeroMenuOpen(false);
-            }
-        });
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape' && heroMenuToggle.getAttribute('aria-expanded') === 'true') {
-                setHeroMenuOpen(false);
-                heroMenuToggle.focus();
-            }
-        });
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 800) setHeroMenuOpen(false);
-        });
-    }
-
-    if (heroHeader instanceof HTMLElement) {
-        let lastHeroScrollY = window.scrollY;
-        let heroScrollFramePending = false;
-        window.addEventListener('scroll', () => {
-            if (heroScrollFramePending) return;
-            heroScrollFramePending = true;
-            window.requestAnimationFrame(() => {
-                const currentScrollY = Math.max(0, window.scrollY);
-                const scrollDelta = currentScrollY - lastHeroScrollY;
-                const menuIsOpen = heroMenuToggle?.getAttribute('aria-expanded') === 'true';
-
-                heroHeader.classList.toggle('is-scrolled', currentScrollY > 60);
-                if (currentScrollY <= 60 || menuIsOpen) {
-                    heroHeader.classList.remove('is-scroll-hidden');
-                } else if (scrollDelta > 8) {
-                    heroHeader.classList.add('is-scroll-hidden');
-                } else if (scrollDelta < -8) {
-                    heroHeader.classList.remove('is-scroll-hidden');
-                }
-
-                lastHeroScrollY = currentScrollY;
-                heroScrollFramePending = false;
-            });
-        }, { passive: true });
-
-        heroHeader.addEventListener('focusin', () => {
-            heroHeader.classList.remove('is-scroll-hidden');
-        });
-    }
-
     const pagePreloader = document.querySelector('.page-preloader');
     let initialPreloaderFinished = !(pagePreloader instanceof HTMLElement);
     let releasePageReveals = () => {};
@@ -224,7 +156,51 @@ window.addEventListener('DOMContentLoaded', () => {
             window.setTimeout(exitPreloader, prefersReducedMotion ? 20 : 1100);
         };
 
-        window.setTimeout(revealBrand, prefersReducedMotion ? 20 : 1050);
+        const waitForHeroImage = () => new Promise(resolve => {
+            const preloadLink = document.querySelector('link[rel="preload"][as="image"]');
+            const imageUrl = preloadLink instanceof HTMLLinkElement ? preloadLink.href : '';
+            if (!imageUrl) {
+                console.error('Impossible de synchroniser le préloader : image principale introuvable.');
+                resolve();
+                return;
+            }
+
+            const heroImage = new Image();
+            let settled = false;
+            const finishWaiting = () => {
+                if (settled) return;
+                settled = true;
+                window.clearTimeout(imageLoadTimeout);
+                resolve();
+            };
+            const imageLoadTimeout = window.setTimeout(() => {
+                console.warn('Le chargement de l’image principale dépasse le délai du préloader.');
+                finishWaiting();
+            }, 8000);
+
+            heroImage.addEventListener('load', () => {
+                heroImage.decode().then(finishWaiting).catch(() => {
+                    finishWaiting();
+                });
+            }, { once: true });
+            heroImage.addEventListener('error', () => {
+                console.error(`Impossible de charger l’image principale : ${imageUrl}`);
+                finishWaiting();
+            }, { once: true });
+            heroImage.fetchPriority = 'high';
+            heroImage.src = imageUrl;
+
+            if (heroImage.complete && heroImage.naturalWidth > 0) {
+                heroImage.decode().then(finishWaiting).catch(() => {
+                    finishWaiting();
+                });
+            }
+        });
+
+        Promise.all([
+            new Promise(resolve => window.setTimeout(resolve, prefersReducedMotion ? 20 : 1050)),
+            waitForHeroImage()
+        ]).then(revealBrand);
     }
 
     let handleScrollUpdate = () => {};
@@ -587,8 +563,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
     const siteFooter = document.querySelector('.site-footer');
-    const footerYear = document.querySelector('#footer-year');
-    if (footerYear) footerYear.textContent = String(new Date().getFullYear());
     const personalityRows = Array.from(document.querySelectorAll('.personality-row'));
     const portfolioVideos = Array.from(document.querySelectorAll('.portfolio-video-card video[data-src]'));
     const portfolioFilmstrip = document.querySelector('.portfolio-filmstrip');
@@ -630,6 +604,7 @@ window.addEventListener('DOMContentLoaded', () => {
             let testimonialsAnimationFrame = 0;
             let testimonialsResumeTimer = 0;
             let testimonialsAutoplayPaused = false;
+            let testimonialsPointerInside = false;
             let testimonialsInView = false;
             let lastTestimonialsFrameTime = 0;
 
@@ -697,11 +672,19 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
+            const resumeTestimonialsMotion = () => {
+                window.clearTimeout(testimonialsResumeTimer);
+                testimonialsAutoplayPaused = false;
+                lastTestimonialsFrameTime = 0;
+                startTestimonialsMotion();
+            };
+
             const pauseTestimonialsMotion = (resumeDelay = 0) => {
                 testimonialsAutoplayPaused = true;
                 window.clearTimeout(testimonialsResumeTimer);
                 if (resumeDelay > 0) {
                     testimonialsResumeTimer = window.setTimeout(() => {
+                        if (testimonialsPointerInside) return;
                         testimonialsAutoplayPaused = false;
                         lastTestimonialsFrameTime = 0;
                         startTestimonialsMotion();
@@ -720,6 +703,18 @@ window.addEventListener('DOMContentLoaded', () => {
             testimonialsTrack.addEventListener('pointerdown', () => pauseTestimonialsMotion(), { passive: true });
             testimonialsTrack.addEventListener('pointerup', () => pauseTestimonialsMotion(350), { passive: true });
             testimonialsTrack.addEventListener('pointercancel', () => pauseTestimonialsMotion(350), { passive: true });
+            testimonialsTrack.addEventListener('pointerenter', event => {
+                if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+                    testimonialsPointerInside = true;
+                    pauseTestimonialsMotion();
+                }
+            }, { passive: true });
+            testimonialsTrack.addEventListener('pointerleave', event => {
+                if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+                    testimonialsPointerInside = false;
+                    resumeTestimonialsMotion();
+                }
+            }, { passive: true });
             testimonialsTrack.addEventListener('wheel', () => pauseTestimonialsMotion(700), { passive: true });
             testimonialsTrack.addEventListener('keydown', event => {
                 if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
@@ -1083,6 +1078,16 @@ window.addEventListener('DOMContentLoaded', () => {
                     const video = slide.querySelector('video');
                     if (!(video instanceof HTMLVideoElement)) return;
 
+                    if (!isActive || !isVideoShowcaseVisible) {
+                        video.muted = true;
+                        video.pause();
+                        if (video.hasAttribute('src')) {
+                            video.removeAttribute('src');
+                            video.load();
+                        }
+                        return;
+                    }
+
                     if (!video.getAttribute('src')) {
                         if (!video.dataset.src) {
                             console.error('Aucune source définie pour une vidéo de la galerie beauté.');
@@ -1093,14 +1098,8 @@ window.addEventListener('DOMContentLoaded', () => {
                         video.load();
                     }
 
-                    if (!isActive) {
-                        video.muted = true;
-                        video.pause();
-                        return;
-                    }
-
                     video.muted = !soundEnabled;
-                    if (!isVideoShowcaseVisible || isVideoPausedByUser) {
+                    if (isVideoPausedByUser) {
                         video.pause();
                         return;
                     }

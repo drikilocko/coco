@@ -8,28 +8,66 @@
     <meta name="description" content="Regardez les vidéos des créations et scénographies du portfolio Coco Miracles.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/galleries.css?v=overscroll-fix-v2">
-    <script src="js/gallery-menu.js" defer></script>
+    <link rel="stylesheet" href="css/footer.css?v=footer-v1">
+    <link rel="stylesheet" href="css/site-header.css?v=shared-header-v1">
+    <script src="js/site-header.js?v=shared-header-v1" defer></script>
     <script src="js/portfolio-videos.js?v=local-video-gallery-v3" defer></script>
-    <script src="js/portfolio-gallery.js?v=local-video-gallery-v3" defer></script>
+    <script src="js/portfolio-gallery.js?v=local-video-gallery-v4" defer></script>
     <script src="js/rose-snow.js" defer></script>
+    <script src="js/footer.js?v=footer-v1" defer></script>
 </head>
 <body class="gallery-page">
-    <header class="gallery-header">
-        <a class="gallery-brand" href="index.html" aria-label="Coco Miracles, accueil">
-            <img src="asset/logo/logo-coco.png" alt="">
-            <span>COCO MIRACLES</span>
-        </a>
-        <button class="gallery-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="gallery-navigation">
-            <span></span><span></span>
-        </button>
-        <nav class="gallery-nav" id="gallery-navigation" aria-label="Navigation principale">
-            <a href="index.html">Accueil</a>
-            <a href="galerie-beaute.html">Galerie beauté</a>
-            <a href="galerie-evenements.html">Galerie événements</a>
-            <a href="galerie-portfolio.html" aria-current="page">Vidéos du portfolio</a>
-        </nav>
+    <header class="hero-header">
+        <div class="hero-header-content">
+            <nav class="hero-nav hero-nav-left" id="gallery-nav-left" aria-label="Navigation principale">
+                <div class="hero-nav-item">
+                    <a href="index.html#hero">Home</a>
+                    <div class="hero-nav-submenu">
+                        <a href="index.html#hero">Accueil</a>
+                        <a href="index.html#univers">Notre univers</a>
+                        <a href="index.html#direction">La direction</a>
+                    </div>
+                </div>
+                <div class="hero-nav-item">
+                    <a href="index.html#prestations">Services</a>
+                    <div class="hero-nav-submenu">
+                        <a href="index.html#prestations">Nos prestations</a>
+                        <a href="index.html#formats">Nos formats</a>
+                        <a href="index.html#mise-en-beaute">Mise en beauté</a>
+                    </div>
+                </div>
+                <div class="hero-nav-item"><a href="event-planner.html">Event Planner</a></div>
+            </nav>
+            <a class="hero-brand" href="index.html#hero" aria-label="Coco Miracles, accueil">
+                <span class="hero-brand-name" aria-hidden="true">Coco Miracles</span>
+                <img class="hero-logo" src="asset/logo/logo-coco.png" alt="">
+            </a>
+            <nav class="hero-nav hero-nav-right" id="gallery-nav-right" aria-label="Navigation complémentaire">
+                <div class="hero-nav-item">
+                    <a href="index.html#portfolio">Portfolio</a>
+                </div>
+                <div class="hero-nav-item">
+                    <a href="galerie-beaute.html">Galerie</a>
+                    <div class="hero-nav-submenu">
+                        <a href="galerie-beaute.html">Galerie beauté</a>
+                        <a href="galerie-evenements.html">Galerie événements</a>
+                        <a href="galerie-portfolio.html">Vidéos du portfolio</a>
+                    </div>
+                </div>
+                <div class="hero-nav-item">
+                    <a href="index.html#project-contact-title">Contact</a>
+                    <div class="hero-nav-submenu">
+                        <a href="index.html#project-contact-title">Parlons de votre projet</a>
+                        <a href="index.html#footer-name">Coordonnées</a>
+                    </div>
+                </div>
+            </nav>
+            <button class="hero-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="gallery-nav-left gallery-nav-right">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </button>
+        </div>
     </header>
     <main class="gallery-main">
         <header class="gallery-heading">
@@ -50,9 +88,41 @@
             <a class="portfolio-project-cta" href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>
         </div>
     </dialog>
-    <footer class="gallery-footer">
-        <p>Une création en tête ? Échangeons sur vos idées.</p>
-        <a href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">↗</span></a>
+    <footer class="site-footer" aria-labelledby="footer-name">
+        <div class="site-footer-links">
+            <nav class="site-footer-column" aria-label="Navigation de bas de page">
+                <a href="index.html#prestations">Services</a>
+                <a href="event-planner.html">Event Planner</a>
+                <a href="index.html#portfolio">Réalisations</a>
+                <a href="galerie-beaute.html">Galerie beauté</a>
+                <a href="galerie-evenements.html">Galerie événements</a>
+                <a href="galerie-portfolio.html">Galerie vidéo</a>
+                <a href="index.html#hero">Accueil</a>
+                <a href="index.html#project-contact-title">Nous contacter</a>
+            </nav>
+            <nav class="site-footer-column" aria-label="Services Coco Miracles">
+                <a href="index.html#prestations">Mariages d’exception</a>
+                <a href="index.html#prestations">Célébrations privées</a>
+                <a href="index.html#prestations">Événements professionnels</a>
+                <a href="index.html#prestations">Scénographie &amp; décoration</a>
+                <a href="index.html#mise-en-beaute">Mise en beauté nuptiale</a>
+            </nav>
+            <div class="site-footer-column">
+                <a href="tel:+22890499996">+228 90 49 99 96</a>
+                <a href="tel:+22898667878">+228 98 66 78 78</a>
+                <a href="mailto:cocomiracless@gmail.com">cocomiracless@gmail.com</a>
+                <span>Lomé, Togo · International</span>
+            </div>
+            <div class="site-footer-social-column">
+                <nav aria-label="Réseaux sociaux officiels">
+                    <a href="https://www.instagram.com/cocomiracles/" target="_blank" rel="noopener noreferrer">Instagram</a>,
+                    <a href="https://www.tiktok.com/@coco_miracles" target="_blank" rel="noopener noreferrer">TikTok</a>,
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
+                </nav>
+                <p>© <span id="footer-year"></span> Coco Miracles. Tous droits réservés.</p>
+            </div>
+        </div>
+        <h2 class="site-footer-signature" id="footer-name" aria-label="Coco Miracles">COCO MIRACLES</h2>
     </footer>
 </body>
 </html>

@@ -9,8 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=blur-reveals-v3">
+    <link rel="stylesheet" href="css/style.css?v=portfolio-arrows-v2">
     <link rel="stylesheet" href="css/galleries.css?v=overscroll-fix-v2">
+    <link rel="stylesheet" href="css/footer.css?v=footer-v1">
+    <link rel="stylesheet" href="css/site-header.css?v=shared-header-v1">
+    <script src="js/site-header.js?v=shared-header-v1" defer></script>
+    <script src="js/footer.js?v=footer-v1" defer></script>
     <script>
         try {
             if (sessionStorage.getItem('coco-miracles-nav-transition')) {
@@ -49,8 +53,10 @@
                         <a href="./index.html#prestations">Nos prestations</a>
                         <a href="./index.html#formats">Nos formats</a>
                         <a href="./index.html#mise-en-beaute">Mise en beauté</a>
-                        <a href="./galerie-beaute.html">Galerie beauté</a>
                     </div>
+                </div>
+                <div class="hero-nav-item">
+                    <a href="event-planner.html">Event Planner</a>
                 </div>
             </nav>
             <a class="hero-brand" href="#hero" aria-label="Coco Miracles, accueil">
@@ -59,13 +65,14 @@
             </a>
             <nav class="hero-nav hero-nav-right" id="hero-nav-right" aria-label="Navigation complémentaire">
                 <div class="hero-nav-item">
-                    <a href="./index.html#portfolio">Projet</a>
+                    <a href="./index.html#portfolio">Portfolio</a>
+                </div>
+                <div class="hero-nav-item">
+                    <a href="./galerie-beaute.html">Galerie</a>
                     <div class="hero-nav-submenu">
-                        <a href="./index.html#portfolio">Portfolio</a>
-                        <a href="./index.html#realisations">Réalisations</a>
+                        <a href="./galerie-beaute.html">Galerie beauté</a>
                         <a href="./galerie-evenements.html">Galerie événements</a>
                         <a href="./galerie-portfolio.html">Vidéos du portfolio</a>
-                        <a href="./index.html#testimonials-title">Avis clients</a>
                     </div>
                 </div>
                 <div class="hero-nav-item">
@@ -133,7 +140,7 @@
                     <p>Chaque détail accordé avec précision et élégance.</p>
                 </article>
                 <figure class="universe-image-main">
-                    <img class="universe-image" src="asset/bg/1.png" alt="Dîner de gala dans une salle élégamment décorée">
+                    <img class="universe-image" src="asset/bg/1.png" alt="Dîner de gala dans une salle élégamment décorée" loading="lazy" decoding="async">
                 </figure>
                 <article class="universe-pillar universe-pillar-third">
                     <span class="universe-pillar-number" aria-hidden="true">03</span>
@@ -161,9 +168,9 @@
                 </div>
                 <div class="direction-portrait-column">
                     <figure class="direction-portrait">
-                        <img src="asset/team/ceo-coco-miracles.jpg" alt="Portrait de Dogbe Foli Julio, président et directeur stratégique de Coco Miracles">
+                        <img src="asset/team/ceo-coco-miracles.jpg" alt="Portrait de Dogbe Foli Julio, président et directeur stratégique de Coco Miracles" loading="lazy" decoding="async">
                         <div class="direction-portrait-overlay">
-                            <img class="direction-portrait-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles">
+                            <img class="direction-portrait-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles" loading="lazy" decoding="async">
                             <div class="direction-portrait-caption">
                                 <span>Chief Executive Officer (CEO)</span>
                                 <strong>Dogbe Foli Julio</strong>
@@ -203,10 +210,10 @@
                 <button class="direction-dialog-close" type="button" aria-label="Fermer la présentation">&times;</button>
                 <div class="direction-dialog-layout">
                     <figure class="direction-dialog-portrait">
-                        <img src="asset/team/ceo-coco-miracles.jpg" alt="Dogbe Foli Julio, CEO de Coco Miracles">
+                        <img src="asset/team/ceo-coco-miracles.jpg" alt="Dogbe Foli Julio, CEO de Coco Miracles" loading="lazy" decoding="async">
                     </figure>
                     <div class="direction-dialog-content">
-                        <img class="direction-dialog-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles">
+                        <img class="direction-dialog-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles" loading="lazy" decoding="async">
                         <p class="direction-dialog-eyebrow">Direction de la Maison</p>
                         <h3 id="direction-dialog-title">Dogbe Foli Julio</h3>
                         <p class="direction-dialog-role">Chief Executive Officer (CEO)</p>
@@ -256,10 +263,10 @@
 
                 <figure class="craft-team">
                     <div class="craft-team-image">
-                        <img class="craft-team-photo" src="asset/team/Equipe3.jpg" alt="L’équipe de Coco Miracles réunie autour d’une table lors d’un événement">
+                        <img class="craft-team-photo" src="asset/team/Equipe3.jpg" alt="L’équipe de Coco Miracles réunie autour d’une table lors d’un événement" loading="lazy" decoding="async">
                         <div class="craft-team-overlay">
                             <div class="craft-team-topline">
-                                <img src="asset/logo/logo-coco.png" alt="">
+                                <img src="asset/logo/logo-coco.png" alt="" loading="lazy" decoding="async">
                                 <span>Collectif de terrain</span>
                             </div>
                             <div class="craft-team-caption">
@@ -286,10 +293,10 @@
             <button class="direction-dialog-close" type="button" aria-label="Fermer la présentation">&times;</button>
             <div class="direction-dialog-layout">
                 <figure class="direction-dialog-portrait craft-team-dialog-portrait">
-                    <img src="asset/team/Equipe3.jpg" alt="L’équipe de Coco Miracles réunie lors d’un événement">
+                    <img src="asset/team/Equipe3.jpg" alt="L’équipe de Coco Miracles réunie lors d’un événement" loading="lazy" decoding="async">
                 </figure>
                 <div class="direction-dialog-content">
-                    <img class="direction-dialog-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles">
+                    <img class="direction-dialog-logo" src="asset/logo/logo-coco.png" alt="Coco Miracles" loading="lazy" decoding="async">
                     <p class="direction-dialog-eyebrow">Collectif de terrain</p>
                     <h3 id="craft-team-dialog-title">L’équipe de la Maison</h3>
                     <p class="direction-dialog-role">Lomé &amp; international</p>
@@ -306,91 +313,74 @@
                 <p class="prestations-eyebrow">Savoir-faire &amp; prestations</p>
                 <h2 id="prestations-title">Nos prestations <em>d’exception</em></h2>
                 <span class="universe-divider" aria-hidden="true"></span>
+                <p class="prestations-intro">De la première esquisse à la coordination du jour J, nous imaginons chaque détail pour faire de votre événement une expérience singulière.</p>
             </header>
 
             <div class="prestations-grid">
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>01</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/bg/Seaside Floral Arch Wedding Ceremony.png" alt="Arche florale monumentale pour une cérémonie en plein air" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>01</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Décoration sur-mesure</h3>
                     <p class="prestation-card-category">Scénographie &amp; métamorphose d’espaces</p>
-                    <p class="prestation-card-description">Conception et réalisation d’ambiances complètes adaptées au caractère de chaque lieu : installations florales d’envergure, voûtes végétales suspendues, drapés aériens et création de décors immersifs.</p>
-                    <ul>
-                        <li>Scénographies florales d’apparat</li>
-                        <li>Structures &amp; canopées suspendues</li>
-                        <li>Arches asymétriques &amp; scènes d’honneur</li>
-                    </ul>
+                    <p class="prestation-card-description">Conception et réalisation d’ambiances complètes adaptées au caractère de chaque lieu : installations florales d’envergure, voûtes végétales suspendues et drapés aériens, sublimés par des scénographies florales d’apparat, des canopées suspendues et des arches asymétriques créées sur mesure.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Décoration sur-mesure">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>02</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/bg/villa-event.jpg" alt="Mise en scène élégante d’une réception dans une villa" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>02</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Direction artistique &amp; production visuelle</h3>
                     <p class="prestation-card-category">Harmonie esthétique &amp; mise en scène</p>
                     <p class="prestation-card-description">Élaboration d’une ligne visuelle cohérente et raffinée : sélection des teintes, choix des matières nobles, dressage impérial et conception d’une expérience visuelle jusque dans ses images.</p>
-                    <ul>
-                        <li>Art de la table &amp; vaisselle de prestige</li>
-                        <li>Mise en lumière &amp; ambiance nocturne</li>
-                        <li>Supervision stylistique des captations</li>
-                    </ul>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Direction artistique &amp; production visuelle">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>03</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/bg/gala-banner.jpg" alt="Décor et table dressée pour une réception de gala" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>03</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Planning événementiel d’élite</h3>
                     <p class="prestation-card-category">Régie logistique &amp; coordination jour J</p>
-                    <p class="prestation-card-description">Planification rigoureuse et encadrement protocolaire de chaque étape. Nous synchronisons les rétroplannings, supervisons les artisans et gérons les imprévus en coulisses afin que vous profitiez pleinement de votre réception.</p>
-                    <ul>
-                        <li>Rétroplanning &amp; gestion des flux</li>
-                        <li>Coordination des prestataires clés</li>
-                        <li>Régie protocolaire le jour de la réception</li>
-                    </ul>
+                    <p class="prestation-card-description">Planification rigoureuse et encadrement protocolaire de chaque étape. Nous synchronisons le rétroplanning et la gestion des flux, coordonnons les prestataires clés et assurons la régie le jour de la réception, pour que vous en profitiez pleinement.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Planning événementiel d’élite">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>04</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/beaute/posters/01.jpg" alt="Création de maquillage artistique pour un événement" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>04</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Maquillage artistique &amp; événementiel</h3>
                     <p class="prestation-card-category">Bridal artistry &amp; soins d’apparat</p>
-                    <p class="prestation-card-description">Mise en beauté nuptiale haute définition, travail d’orfèvre sur le teint réflecteur de lumière et soins préparatoires pour la mariée et son cortège. Une approche sur mesure respectant les traits naturels et la carnation de chaque visage.</p>
-                    <ul>
-                        <li>Teint haute tenue &amp; regard sublimé</li>
-                        <li>Mise en beauté de la mariée &amp; parure</li>
-                        <li>Prise en charge du cortège d’honneur</li>
-                    </ul>
+                    <p class="prestation-card-description">Mise en beauté nuptiale haute définition, teint longue tenue et regard sublimé : nous préparons la mariée, sa parure et son cortège avec une approche sur mesure, respectueuse des traits naturels et de la carnation de chacune.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Maquillage artistique &amp; événementiel">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>05</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/team/Equipe3.jpg" alt="L’équipe Coco Miracles préparant un événement" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>05</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Suivi &amp; accompagnement personnalisé</h3>
                     <p class="prestation-card-category">Interlocuteur unique &amp; discrétion</p>
-                    <p class="prestation-card-description">Un lien de proximité constant dès la première esquisse jusqu’aux lendemains de fête. Nous offrons une écoute attentive, des ajustements en temps réel et une discrétion absolue pour votre tranquillité.</p>
-                    <ul>
-                        <li>Consultations privées régulières</li>
-                        <li>Interlocuteur dédié joignable</li>
-                        <li>Confidentialité absolue garantie</li>
-                    </ul>
+                    <p class="prestation-card-description">Un lien de proximité constant, de la première esquisse aux lendemains de fête : consultations privées régulières, interlocuteur dédié et joignable, ajustements en temps réel et confidentialité absolue pour votre tranquillité.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Suivi &amp; accompagnement personnalisé">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="prestation-card">
-                    <div class="prestation-card-meta"><span>06</span><span>Maison Coco Miracles</span></div>
+                    <div class="prestation-card-visual">
+                        <img src="asset/bg/3.png" alt="Décoration raffinée pour une célébration privée ou corporate" loading="lazy" decoding="async">
+                        <div class="prestation-card-meta"><span>06</span><span>Maison Coco Miracles</span></div>
+                    </div>
                     <h3>Événements privés &amp; corporate</h3>
                     <p class="prestation-card-category">Dîners de gala &amp; sommets institutionnels</p>
-                    <p class="prestation-card-description">Orchestration d’événements d’envergure pour entreprises, institutions et grandes marques : banquets officiels, lancements de collections, jubilés et réceptions d’État nécessitant distinction et maîtrise protocolaire.</p>
-                    <ul>
-                        <li>Dîners d’État &amp; galas de prestige</li>
-                        <li>Lancements de marque &amp; relations publiques</li>
-                        <li>Protocoles d’accueil personnalisés VIP</li>
-                    </ul>
+                    <p class="prestation-card-description">Orchestration d’événements d’envergure pour entreprises, institutions et grandes marques : dîners d’État et galas de prestige, lancements de marque et relations publiques, avec un accueil VIP personnalisé et une maîtrise protocolaire.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Événements privés &amp; corporate">Voir le catalogue <span aria-hidden="true">↗</span></button>
-                    <a class="prestation-card-link" href="index.html#footer-name">Inclure dans mon projet <span aria-hidden="true">↗</span></a>
                 </article>
             </div>
             <dialog class="prestation-catalog-dialog" id="prestation-catalog-dialog" aria-labelledby="popup-catalog-title">
@@ -445,43 +435,43 @@
                     <p class="personality-field">Sport</p>
                     <h3>Adebayor Sheyi</h3>
                     <p class="personality-role">Icône internationale du football</p>
-                    <img class="personality-image" src="asset/personality/adebayor.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/adebayor.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Musique</p>
                     <h3>Santrinos Raphaël</h3>
                     <p class="personality-role">Artiste chanteur émérite</p>
-                    <img class="personality-image" src="asset/personality/santrinos.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/santrinos.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Médias</p>
                     <h3>Konnie Touré</h3>
                     <p class="personality-role">Animatrice &amp; productrice média</p>
-                    <img class="personality-image" src="asset/personality/konnie%20toure.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/konnie%20toure.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Entrepreneuriat</p>
                     <h3>Suy Fatem</h3>
                     <p class="personality-role">Miss Côte d’Ivoire &amp; entrepreneure</p>
-                    <img class="personality-image" src="asset/personality/Suy%20Fatem.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/Suy%20Fatem.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Musique</p>
                     <h3>Hiro</h3>
                     <p class="personality-role">Artiste &amp; auteur-compositeur</p>
-                    <img class="personality-image" src="asset/personality/hiro.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/hiro.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Musique</p>
                     <h3>Stonebwoy</h3>
                     <p class="personality-role">Artiste international</p>
-                    <img class="personality-image" src="asset/personality/images.webp" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/images.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
                 <article class="personality-row" role="button" tabindex="0" aria-expanded="false">
                     <p class="personality-field">Médias</p>
                     <h3>Enioluwa Adeoluwa</h3>
                     <p class="personality-role">Personnalité publique &amp; influenceur</p>
-                    <img class="personality-image" src="asset/personality/Enioluwa%20Adeoluwa.jpg" alt="" aria-hidden="true">
+                    <img class="personality-image" src="asset/personality/Enioluwa%20Adeoluwa.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
                 </article>
             </div>
             <div class="trust-callout">
@@ -525,13 +515,6 @@
                 <h2 id="portfolio-title">Notre <em>Portfolio</em></h2>
                 <span class="universe-divider" aria-hidden="true"></span>
             </header>
-
-            <article class="portfolio-feature">
-                <p class="portfolio-feature-label">Scénographie &amp; Décors</p>
-                <div class="portfolio-feature-content">
-                    <p>Captations authentiques des espaces, des jeux de lumière et des agencements de table.</p>
-                </div>
-            </article>
 
             <div class="portfolio-gallery">
                 <button class="portfolio-gallery-arrow portfolio-gallery-arrow-left" type="button" aria-label="Défiler les vidéos vers la gauche" aria-controls="portfolio-video-track" aria-hidden="true" disabled>
@@ -579,9 +562,39 @@
                                 <button class="home-detail-link" type="button" data-detail-title="AT Redemption" data-detail-description="Un projet de design événementiel signé Coco Miracles, où les éléments décoratifs s’accordent pour créer une atmosphère cohérente et accueillante." data-detail-video-index="3">Lire plus</button>
                             </figcaption>
                         </figure>
+                        <figure class="portfolio-video-card">
+                            <div class="portfolio-video-media">
+                                <video class="portfolio-video-embed" data-portfolio-video-index="4" poster="asset/video/posters/05.jpg" preload="none" playsinline></video>
+                            </div>
+                            <figcaption>
+                                <strong>Anniversaire · Adebayor</strong>
+                                <p>Une célébration d’exception, portée par une scénographie festive et raffinée.</p>
+                                <button class="home-detail-link" type="button" data-detail-title="Anniversaire · Adebayor" data-detail-description="Retour sur une célébration d’envergure imaginée avec soin, entre décor spectaculaire, ambiance festive et art de recevoir." data-detail-video-index="4">Lire plus</button>
+                            </figcaption>
+                        </figure>
+                        <figure class="portfolio-video-card">
+                            <div class="portfolio-video-media">
+                                <video class="portfolio-video-embed" data-portfolio-video-index="5" poster="asset/video/posters/06.jpg" preload="none" playsinline></video>
+                            </div>
+                            <figcaption>
+                                <strong>AT Redemption · Part 2</strong>
+                                <p>Un second regard sur une décoration pensée dans ses moindres détails.</p>
+                                <button class="home-detail-link" type="button" data-detail-title="AT Redemption · Part 2" data-detail-description="Une autre perspective sur AT Redemption : matières, composition et décoration se répondent pour créer une ambiance singulière." data-detail-video-index="5">Lire plus</button>
+                            </figcaption>
+                        </figure>
+                        <figure class="portfolio-video-card">
+                            <div class="portfolio-video-media">
+                                <video class="portfolio-video-embed" data-portfolio-video-index="6" poster="asset/video/posters/07.jpg" preload="none" playsinline></video>
+                            </div>
+                            <figcaption>
+                                <strong>Le choix · Clap de fin</strong>
+                                <p>Les derniers instants d’un projet célébré avec élégance.</p>
+                                <button class="home-detail-link" type="button" data-detail-title="Le choix · Clap de fin" data-detail-description="Un dernier aperçu du projet « Le choix », entre émotion, scénographie et souvenirs partagés." data-detail-video-index="6">Lire plus</button>
+                            </figcaption>
+                        </figure>
                         <figure class="portfolio-video-card portfolio-more-card">
                             <a class="portfolio-more-link portfolio-next-link" href="galerie-portfolio.html" aria-label="Voir toutes les vidéos du portfolio">
-                                <img src="asset/video/posters/05.jpg" alt="" loading="lazy">
+                                <img src="asset/video/posters/08.jpg" alt="" loading="lazy" decoding="async">
                                 <span>Voir plus</span>
                                 <span class="portfolio-more-arrow" aria-hidden="true">↗</span>
                             </a>
@@ -604,7 +617,7 @@
             </header>
             <div class="realisations-grid">
                 <figure class="realisation-card realisation-card-featured">
-                    <img src="asset/bg/1.png" alt="Décor événementiel signé Coco Miracles">
+                    <img src="asset/bg/1.png" alt="Décor événementiel signé Coco Miracles" loading="lazy" decoding="async">
                     <figcaption>
                         <span>01 / Scénographie</span><strong>Des décors qui racontent une histoire</strong>
                         <p>Des ambiances composées autour de votre événement et de votre univers.</p>
@@ -612,7 +625,7 @@
                     </figcaption>
                 </figure>
                 <figure class="realisation-card">
-                    <img src="asset/bg/2.png" alt="Mise en scène de célébration par Coco Miracles" loading="lazy">
+                    <img src="asset/bg/2.png" alt="Mise en scène de célébration par Coco Miracles" loading="lazy" decoding="async">
                     <figcaption>
                         <span>02 / Célébration</span><strong>L’élégance de chaque instant</strong>
                         <p>Une mise en scène harmonieuse pour accueillir vos proches avec élégance.</p>
@@ -620,7 +633,7 @@
                     </figcaption>
                 </figure>
                 <figure class="realisation-card">
-                    <img src="asset/bg/3.png" alt="Création florale et décor événementiel Coco Miracles" loading="lazy">
+                    <img src="asset/bg/3.png" alt="Création florale et décor événementiel Coco Miracles" loading="lazy" decoding="async">
                     <figcaption>
                         <span>03 / Art floral</span><strong>Le détail, signature de la Maison</strong>
                         <p>Des compositions florales choisies pour donner du relief à votre décor.</p>
@@ -628,7 +641,7 @@
                     </figcaption>
                 </figure>
                 <figure class="realisation-card">
-                    <img src="asset/bg/4.png" alt="Réception mise en scène par Coco Miracles" loading="lazy">
+                    <img src="asset/bg/4.png" alt="Réception mise en scène par Coco Miracles" loading="lazy" decoding="async">
                     <figcaption>
                         <span>04 / Art de recevoir</span><strong>Une expérience pensée sur mesure</strong>
                         <p>Un art de la table et un accueil adaptés à chaque réception.</p>
@@ -636,7 +649,7 @@
                     </figcaption>
                 </figure>
                 <figure class="realisation-card">
-                    <img src="asset/bg/5.png" alt="Réalisation événementielle Coco Miracles" loading="lazy">
+                    <img src="asset/bg/5.png" alt="Réalisation événementielle Coco Miracles" loading="lazy" decoding="async">
                     <figcaption>
                         <span>05 / Création</span><strong>Des souvenirs faits pour durer</strong>
                         <p>Une décoration qui accompagne les instants importants de votre journée.</p>
@@ -644,7 +657,7 @@
                     </figcaption>
                 </figure>
                 <figure class="realisation-card">
-                    <img src="asset/bg/villa-event.jpg" alt="Réception élégante aménagée dans une villa" loading="lazy">
+                    <img src="asset/bg/villa-event.jpg" alt="Réception élégante aménagée dans une villa" loading="lazy" decoding="async">
                     <figcaption>
                         <span>06 / Réception</span><strong>Un cadre d’exception pour vos invités</strong>
                         <p>Un lieu préparé pour recevoir vos invités dans une atmosphère soignée.</p>
@@ -652,32 +665,29 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="gallery-more-actions">
-                <a class="gallery-more-link" href="galerie-evenements.html">Voir toute la galerie événementielle <span aria-hidden="true">↗</span></a>
-            </div>
         </section>
 
         <section class="logo-marquee logo-marquee-before-formats" aria-label="Logos des partenaires">
             <div class="logo-marquee-track">
                 <div class="logo-marquee-group">
-                    <img src="logo/0x0.png" alt="Logo partenaire 1">
-                    <img src="logo/1.png" alt="Logo partenaire 2">
-                    <img src="logo/2.png" alt="Logo partenaire 3">
-                    <img src="logo/3.png" alt="Logo partenaire 4">
-                    <img src="logo/4.png" alt="Logo partenaire 5">
-                    <img src="logo/5.png" alt="Logo partenaire 6">
-                    <img src="logo/6.png" alt="Logo partenaire 7">
-                    <img src="logo/67ab0bf40eae00e24111a42d_HT%20logo-880x125-transparent.webp" alt="Logo partenaire 8">
+                    <img src="logo/0x0.png" alt="Logo partenaire 1" loading="lazy" decoding="async">
+                    <img src="logo/1.png" alt="Logo partenaire 2" loading="lazy" decoding="async">
+                    <img src="logo/2.png" alt="Logo partenaire 3" loading="lazy" decoding="async">
+                    <img src="logo/3.png" alt="Logo partenaire 4" loading="lazy" decoding="async">
+                    <img src="logo/4.png" alt="Logo partenaire 5" loading="lazy" decoding="async">
+                    <img src="logo/5.png" alt="Logo partenaire 6" loading="lazy" decoding="async">
+                    <img src="logo/6.png" alt="Logo partenaire 7" loading="lazy" decoding="async">
+                    <img src="logo/67ab0bf40eae00e24111a42d_HT%20logo-880x125-transparent.webp" alt="Logo partenaire 8" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-marquee-group" aria-hidden="true">
-                    <img src="logo/0x0.png" alt="">
-                    <img src="logo/1.png" alt="">
-                    <img src="logo/2.png" alt="">
-                    <img src="logo/3.png" alt="">
-                    <img src="logo/4.png" alt="">
-                    <img src="logo/5.png" alt="">
-                    <img src="logo/6.png" alt="">
-                    <img src="logo/67ab0bf40eae00e24111a42d_HT%20logo-880x125-transparent.webp" alt="">
+                    <img src="logo/0x0.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/1.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/2.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/3.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/4.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/5.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/6.png" alt="" loading="lazy" decoding="async">
+                    <img src="logo/67ab0bf40eae00e24111a42d_HT%20logo-880x125-transparent.webp" alt="" loading="lazy" decoding="async">
                 </div>
             </div>
         </section>
@@ -890,7 +900,7 @@
                         </div>
                         <div class="beauty-video-slide beauty-video-teaser" data-video-index="4">
                             <a href="galerie-beaute.html" aria-label="Voir toutes les vidéos de la galerie beauté">
-                                <img src="asset/beaute/posters/05.jpg" alt="" loading="lazy">
+                                <img src="asset/beaute/posters/05.jpg" alt="" loading="lazy" decoding="async">
                                 <span>Voir plus <span aria-hidden="true">↗</span></span>
                             </a>
                         </div>
@@ -998,7 +1008,7 @@
         <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title" data-lenis-prevent>
             <button class="contact-dialog-close" type="button" aria-label="Fermer le formulaire">&times;</button>
             <div class="contact-dialog-header">
-                <img src="asset/logo/logo-coco.png" alt="Coco Miracles">
+                <img src="asset/logo/logo-coco.png" alt="Coco Miracles" loading="lazy" decoding="async">
                 <div>
                     <p class="contact-dialog-eyebrow">COCO MIRACLES <span aria-hidden="true">•</span> <a href="mailto:cocomiracless@gmail.com">cocomiracless@gmail.com</a></p>
                     <h2 id="contact-dialog-title">Consultation Privée &amp; Devis</h2>
@@ -1041,6 +1051,7 @@
                             <option>Mariage de prestige</option>
                             <option>Réception privée</option>
                             <option>Gala ou événement professionnel</option>
+                            <option>Événement corporate</option>
                             <option>Mise en beauté</option>
                             <option>Autre projet sur mesure</option>
                         </select>
@@ -1186,6 +1197,7 @@
         <div class="site-footer-links">
             <nav class="site-footer-column" aria-label="Navigation de bas de page">
                 <a href="#prestations">Services</a>
+                <a href="event-planner.html">Event Planner</a>
                 <a href="#portfolio">Réalisations</a>
                 <a href="galerie-beaute.html">Galerie beauté</a>
                 <a href="galerie-evenements.html">Galerie événements</a>
@@ -1219,9 +1231,9 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js" defer></script>
     <script src="js/portfolio-videos.js?v=local-video-gallery-v3" defer></script>
-    <script src="js/portfolio-gallery.js?v=local-video-gallery-v3" defer></script>
+    <script src="js/portfolio-gallery.js?v=local-video-gallery-v4" defer></script>
     <script src="js/beauty-videos.js?v=beauty-gallery-v2" defer></script>
-    <script src="js/main.js?v=beauty-card-details-v2" defer></script>
+    <script src="js/main.js?v=preloader-image-sync-v1" defer></script>
     <script src="js/chatbot.js?v=chat-shared-transition-v2" defer></script>
     <script src="js/text-roll.js?v=text-roll-v5" defer></script>
     <script src="js/nav-transition.js?v=nav-transition-v3" defer></script>

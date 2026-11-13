@@ -575,23 +575,6 @@ body.gallery-menu-open {
     text-underline-offset: 3px;
 }
 
-.gallery-footer {
-    display: flex;
-    min-height: 110px;
-    padding: 24px clamp(22px, 5vw, 76px);
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    background: #28221d;
-    color: #f5f0e8;
-}
-
-.gallery-footer p {
-    margin: 0;
-    font-size: 18px;
-}
-
-.gallery-footer a,
 .gallery-more-link {
     display: inline-flex;
     min-height: 48px;
@@ -609,17 +592,33 @@ body.gallery-menu-open {
     transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
-.gallery-footer a:hover,
-.gallery-footer a:focus-visible {
-    border-color: var(--gallery-paper);
-    background: var(--gallery-paper);
-    color: var(--gallery-ink);
-}
-
 .gallery-more-actions {
     display: flex;
     margin: 32px auto 0;
     justify-content: center;
+}
+
+.gallery-more-actions.beauty-gallery-more {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 14px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.gallery-more-actions.beauty-gallery-more .gallery-more-link {
+    min-height: 36px;
+    padding: 0 14px;
+    gap: 7px;
+    border: 1px solid #33291f;
+    border-radius: 999px;
+    background: #33291f;
+    color: #f5f0e8;
+    font-size: 9px;
+    letter-spacing: 0.08em;
 }
 
 .gallery-more-link {
@@ -632,6 +631,13 @@ body.gallery-menu-open {
     border-color: var(--gallery-ink);
     background: var(--gallery-ink);
     color: var(--gallery-paper);
+}
+
+.gallery-more-actions.beauty-gallery-more .gallery-more-link:hover,
+.gallery-more-actions.beauty-gallery-more .gallery-more-link:focus-visible {
+    border-color: #211c18;
+    background: #211c18;
+    color: #f5f0e8;
 }
 
 @media (max-width: 760px) {
@@ -731,10 +737,6 @@ body.gallery-menu-open {
         font-size: 17px;
     }
 
-    .gallery-footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
 }
 
 @media (max-width: 460px) {

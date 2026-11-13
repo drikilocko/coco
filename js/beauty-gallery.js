@@ -48,9 +48,10 @@ window.addEventListener('DOMContentLoaded', () => {
         openButton.type = 'button';
         openButton.setAttribute('aria-label', `Voir la vidéo : ${asset.title}`);
         const poster = document.createElement('img');
-        poster.src = asset.poster;
-        poster.alt = '';
         poster.loading = 'lazy';
+        poster.decoding = 'async';
+        poster.alt = '';
+        poster.src = asset.poster;
         const playIcon = document.createElement('span');
         playIcon.className = 'beauty-gallery-play-icon';
         playIcon.setAttribute('aria-hidden', 'true');

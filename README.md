@@ -11,15 +11,20 @@ Site web professionnel pour **Coco Miracles**, une entreprise de décoration de 
 ```
 coco miracles/
 ├── index.html          # Page principale du site
+├── event-planner.html  # Présentation dédiée aux événements corporate
 ├── galerie-beaute.html
 ├── galerie-evenements.html
 ├── galerie-portfolio.html
 ├── css/
 │   ├── style.css       # Styles de la page principale
-│   └── galleries.css   # Styles des galeries
+│   ├── galleries.css   # Styles des galeries
+│   ├── event-planner.css # Styles de la page Event Planner
+│   ├── site-header.css # En-tête partagé avec effet de flou
+│   └── footer.css      # Pied de page partagé
 ├── js/
 │   ├── main.js         # JavaScript de la page principale
-│   ├── gallery-menu.js # Menu mobile des galeries
+│   ├── site-header.js  # Menu mobile et comportement partagé de l'en-tête
+│   ├── footer.js       # Année du pied de page partagé
 │   ├── beauty-videos.js # Liste des vidéos beauté locales
 │   ├── beauty-gallery.js # Cartes et fenêtre de lecture beauté
 │   ├── portfolio-videos.js # Liste des vidéos locales du portfolio
@@ -47,6 +52,7 @@ La page d’accueil affiche quatre vidéos beauté et une cinquième carte d’a
 - **🎨 Services** - 6 types de services (Mariages, Anniversaires, Baptêmes, etc.)
 - **🖼️ Réalisations** - Portfolio filtrable avec catégories
 - **🎞️ Galeries dédiées** - Pages séparées pour les créations beauté, les événements et les vidéos locales du portfolio
+- **🎤 Event Planner** - Page dédiée à l'organisation d'événements corporate
 - **⭐ Témoignages** - Avis clients avec système de notation
 - **❓ FAQ** - Questions fréquentes avec accordéon interactif
 - **📞 Contact / CTA** - Appel à l'action pour réservation
@@ -57,6 +63,7 @@ La page d’accueil affiche quatre vidéos beauté et une cinquième carte d’a
 - ✅ **100% Responsive** (Mobile, Tablette, Desktop)
 - ✅ **Animations fluides** (Scroll, Hover, Transitions)
 - ✅ **Navigation fixe** avec effet de scroll
+- ✅ **En-tête partagé et flouté** sur toutes les pages
 - ✅ **Menu mobile** hamburger en plein écran
 - ✅ **Boutons « Voir toute la galerie »** sous les carrousels beauté et portfolio, et sous les réalisations
 - ✅ **Filtres de portfolio** dynamiques

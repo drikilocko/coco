@@ -8,6 +8,19 @@ window.addEventListener('DOMContentLoaded', () => {
     const minimumBufferSeconds = 5;
     const loadIntervals = new WeakMap();
     const loadTimeouts = new WeakMap();
+    const pendingPosters = new WeakMap();
+    const posterObserver = 'IntersectionObserver' in window
+        ? new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const poster = pendingPosters.get(entry.target);
+                if (typeof poster !== 'string') return;
+                entry.target.poster = poster;
+                pendingPosters.delete(entry.target);
+                posterObserver.unobserve(entry.target);
+            });
+        }, { rootMargin: '120px 0px' })
+        : null;
     let activeVideo = null;
 
     const clearLoadTimers = video => {
@@ -62,11 +75,17 @@ window.addEventListener('DOMContentLoaded', () => {
         video.dataset.playerReady = 'true';
         video.classList.add('portfolio-local-video');
         video.title = asset.title;
-        video.poster = asset.poster;
         video.preload = 'none';
         video.playsInline = true;
         video.controls = false;
         video.hidden = false;
+
+        if (posterObserver) {
+            pendingPosters.set(video, asset.poster);
+            posterObserver.observe(video);
+        } else {
+            video.poster = asset.poster;
+        }
 
         const loading = document.createElement('p');
         loading.className = 'portfolio-video-loading';
