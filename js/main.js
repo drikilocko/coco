@@ -1,10 +1,22 @@
 window.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const pagePreloader = document.querySelector('.page-preloader');
+    const heroImageStatus = document.querySelector('.hero-image-status');
+    const heroImageRetry = heroImageStatus?.querySelector('.hero-image-retry');
     let initialPreloaderFinished = !(pagePreloader instanceof HTMLElement);
     let releasePageReveals = () => {};
     let startHeroBrandCycle = () => {};
     let lenisInstance = null;
+
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+        navigator.serviceWorker.register('./service-worker.js').catch(error => {
+            console.error('Impossible d’activer le cache hors connexion du site.', error);
+        });
+    }
+
+    if (heroImageRetry instanceof HTMLButtonElement) {
+        heroImageRetry.addEventListener('click', () => window.location.reload());
+    }
 
     const siteMusic = document.querySelector('#site-music-audio');
     const siteMusicConsent = document.querySelector('#site-music-consent');
@@ -151,9 +163,13 @@ window.addEventListener('DOMContentLoaded', () => {
             window.setTimeout(finishPreloader, 1000);
         };
 
-        const revealBrand = () => {
+        const revealBrand = (heroImageLoaded = true) => {
+            if (!heroImageLoaded) {
+                document.documentElement.classList.add('hero-image-unavailable');
+                if (heroImageStatus instanceof HTMLElement) heroImageStatus.hidden = false;
+            }
             pagePreloader.classList.add('is-brand-visible');
-            window.setTimeout(exitPreloader, prefersReducedMotion ? 20 : 1100);
+            window.setTimeout(exitPreloader, prefersReducedMotion || !heroImageLoaded ? 20 : 1100);
         };
 
         const waitForHeroImage = () => new Promise(resolve => {
@@ -161,38 +177,38 @@ window.addEventListener('DOMContentLoaded', () => {
             const imageUrl = preloadLink instanceof HTMLLinkElement ? preloadLink.href : '';
             if (!imageUrl) {
                 console.error('Impossible de synchroniser le préloader : image principale introuvable.');
-                resolve();
+                resolve(false);
                 return;
             }
 
             const heroImage = new Image();
             let settled = false;
-            const finishWaiting = () => {
+            const finishWaiting = loaded => {
                 if (settled) return;
                 settled = true;
                 window.clearTimeout(imageLoadTimeout);
-                resolve();
+                resolve(loaded);
             };
             const imageLoadTimeout = window.setTimeout(() => {
                 console.warn('Le chargement de l’image principale dépasse le délai du préloader.');
-                finishWaiting();
-            }, 8000);
+                finishWaiting(false);
+            }, 5000);
 
             heroImage.addEventListener('load', () => {
-                heroImage.decode().then(finishWaiting).catch(() => {
-                    finishWaiting();
+                heroImage.decode().then(() => finishWaiting(true)).catch(() => {
+                    finishWaiting(heroImage.naturalWidth > 0);
                 });
             }, { once: true });
             heroImage.addEventListener('error', () => {
                 console.error(`Impossible de charger l’image principale : ${imageUrl}`);
-                finishWaiting();
+                finishWaiting(false);
             }, { once: true });
             heroImage.fetchPriority = 'high';
             heroImage.src = imageUrl;
 
             if (heroImage.complete && heroImage.naturalWidth > 0) {
-                heroImage.decode().then(finishWaiting).catch(() => {
-                    finishWaiting();
+                heroImage.decode().then(() => finishWaiting(true)).catch(() => {
+                    finishWaiting(heroImage.naturalWidth > 0);
                 });
             }
         });
@@ -200,7 +216,7 @@ window.addEventListener('DOMContentLoaded', () => {
         Promise.all([
             new Promise(resolve => window.setTimeout(resolve, prefersReducedMotion ? 20 : 1050)),
             waitForHeroImage()
-        ]).then(revealBrand);
+        ]).then(([, heroImageLoaded]) => revealBrand(heroImageLoaded));
     }
 
     let handleScrollUpdate = () => {};
@@ -268,6 +284,166 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Impossible de réorganiser les sections : section introuvable.');
     }
+
+    const sectionPagination = document.querySelector('.section-pagination');
+    const sectionPaginationCurrent = sectionPagination?.querySelector('.section-pagination-current');
+    const sectionPaginationProgress = sectionPagination?.querySelector('.section-pagination-progress > span');
+    const sectionPaginationPrevious = sectionPagination?.querySelector('.section-pagination-prev');
+    const sectionPaginationNext = sectionPagination?.querySelector('.section-pagination-next');
+    const navigableSections = Array.from(document.querySelectorAll('main > section:not(.logo-marquee)'));
+
+    if (
+        sectionPagination instanceof HTMLElement &&
+        sectionPaginationCurrent instanceof HTMLElement &&
+        sectionPaginationProgress instanceof HTMLElement &&
+        sectionPaginationPrevious instanceof HTMLButtonElement &&
+        sectionPaginationNext instanceof HTMLButtonElement &&
+        navigableSections.length
+    ) {
+        const sectionTitles = navigableSections.map(section => {
+            if (section.id === 'hero') return 'Accueil';
+            const headingId = section.getAttribute('aria-labelledby')?.split(/\s+/)[0];
+            const heading = headingId ? document.getElementById(headingId) : section.querySelector('h1, h2');
+            return heading?.innerText?.replace(/\s+/g, ' ').trim() ||
+                section.getAttribute('aria-label') ||
+                section.id;
+        });
+        let activeSectionIndex = -1;
+        let sectionPaginationFrame = 0;
+
+        const updateSectionPagination = () => {
+            sectionPaginationFrame = 0;
+            const marker = Math.min(window.innerHeight * 0.4, 280);
+            let nextIndex = navigableSections.findIndex(section => {
+                const bounds = section.getBoundingClientRect();
+                return bounds.top <= marker && bounds.bottom > marker;
+            });
+
+            if (nextIndex < 0) {
+                nextIndex = navigableSections.reduce((closestIndex, section, index) => {
+                    const bounds = section.getBoundingClientRect();
+                    const distance = Math.min(
+                        Math.abs(bounds.top - marker),
+                        Math.abs(bounds.bottom - marker)
+                    );
+                    const closestBounds = navigableSections[closestIndex].getBoundingClientRect();
+                    const closestDistance = Math.min(
+                        Math.abs(closestBounds.top - marker),
+                        Math.abs(closestBounds.bottom - marker)
+                    );
+                    return distance < closestDistance ? index : closestIndex;
+                }, 0);
+            }
+
+            if (nextIndex === activeSectionIndex) return;
+            activeSectionIndex = nextIndex;
+            sectionPagination.hidden = nextIndex === 0;
+            sectionPaginationCurrent.textContent =
+                `${String(nextIndex + 1).padStart(2, '0')} / ${String(navigableSections.length).padStart(2, '0')} · ${sectionTitles[nextIndex]}`;
+            sectionPaginationProgress.style.width =
+                `${((nextIndex + 1) / navigableSections.length) * 100}%`;
+            sectionPaginationPrevious.disabled = nextIndex === 0;
+            sectionPaginationNext.disabled = nextIndex === navigableSections.length - 1;
+            sectionPaginationPrevious.setAttribute(
+                'aria-label',
+                nextIndex > 0 ? `Section précédente : ${sectionTitles[nextIndex - 1]}` : 'Section précédente'
+            );
+            sectionPaginationNext.setAttribute(
+                'aria-label',
+                nextIndex < navigableSections.length - 1
+                    ? `Section suivante : ${sectionTitles[nextIndex + 1]}`
+                    : 'Section suivante'
+            );
+        };
+        const queueSectionPaginationUpdate = () => {
+            if (sectionPaginationFrame) return;
+            sectionPaginationFrame = window.requestAnimationFrame(updateSectionPagination);
+        };
+        const scrollToSection = index => {
+            navigableSections[index]?.scrollIntoView({
+                behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                block: 'start'
+            });
+        };
+
+        sectionPaginationPrevious.addEventListener('click', () => {
+            if (activeSectionIndex > 0) scrollToSection(activeSectionIndex - 1);
+        });
+        sectionPaginationNext.addEventListener('click', () => {
+            if (activeSectionIndex < navigableSections.length - 1) {
+                scrollToSection(activeSectionIndex + 1);
+            }
+        });
+        window.addEventListener('scroll', queueSectionPaginationUpdate, { passive: true });
+        window.addEventListener('resize', queueSectionPaginationUpdate, { passive: true });
+        updateSectionPagination();
+    }
+
+    const setupCardPagination = (trackSelector, cardSelector, countSelector, previousSelector, nextSelector, label) => {
+        const track = document.querySelector(trackSelector);
+        const cards = Array.from(track?.querySelectorAll(cardSelector) ?? []);
+        const count = document.querySelector(countSelector);
+        const previous = document.querySelector(previousSelector);
+        const next = document.querySelector(nextSelector);
+
+        if (
+            !(track instanceof HTMLElement) ||
+            !cards.length ||
+            !(count instanceof HTMLElement) ||
+            !(previous instanceof HTMLButtonElement) ||
+            !(next instanceof HTMLButtonElement)
+        ) {
+            console.error(`Impossible de configurer la pagination ${label}.`);
+            return;
+        }
+
+        const getActiveCardIndex = () => {
+            const trackBounds = track.getBoundingClientRect();
+            const trackStyle = window.getComputedStyle(track);
+            const trackLeft = trackBounds.left + (Number.parseFloat(trackStyle.paddingLeft) || 0);
+            const index = cards.findIndex(card => card.getBoundingClientRect().right > trackLeft + 1);
+            return index < 0 ? cards.length - 1 : index;
+        };
+        const updateControls = () => {
+            const activeCardIndex = getActiveCardIndex();
+            count.textContent =
+                `${String(activeCardIndex + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+            previous.disabled = track.scrollLeft <= 1;
+            next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+        };
+        const scrollCards = direction => {
+            const card = cards[getActiveCardIndex()];
+            const styles = window.getComputedStyle(track);
+            const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
+            track.scrollBy({
+                left: direction * (card.getBoundingClientRect().width + gap),
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
+            });
+        };
+
+        previous.addEventListener('click', () => scrollCards(-1));
+        next.addEventListener('click', () => scrollCards(1));
+        track.addEventListener('scroll', updateControls, { passive: true });
+        window.addEventListener('resize', updateControls);
+        requestAnimationFrame(updateControls);
+    };
+
+    setupCardPagination(
+        '#realisations-grid',
+        '.realisation-card',
+        '.realisations-count',
+        '.realisations-control-prev',
+        '.realisations-control-next',
+        'des réalisations'
+    );
+    setupCardPagination(
+        '#prestations-grid',
+        '.prestation-card',
+        '.prestations-count',
+        '.prestations-control-prev',
+        '.prestations-control-next',
+        'des prestations'
+    );
 
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {
         const revealTargets = Array.from(document.querySelectorAll([
@@ -601,12 +777,6 @@ window.addEventListener('DOMContentLoaded', () => {
             testimonialsTrack.prepend(...leadingClones);
             testimonialsTrack.append(...trailingClones);
             const testimonialCards = Array.from(testimonialsTrack.querySelectorAll('.testimonial-card'));
-            let testimonialsAnimationFrame = 0;
-            let testimonialsResumeTimer = 0;
-            let testimonialsAutoplayPaused = false;
-            let testimonialsPointerInside = false;
-            let testimonialsInView = false;
-            let lastTestimonialsFrameTime = 0;
 
             const updateTestimonialsControls = () => {
                 previousTestimonialButton.disabled = false;
@@ -631,7 +801,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
                 testimonialsTrack.scrollBy({
                     left: direction * (card.getBoundingClientRect().width + gap),
-                    behavior: 'smooth'
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth'
                 });
             };
 
@@ -640,102 +810,28 @@ window.addEventListener('DOMContentLoaded', () => {
                 const nextSetStart = trailingClones[0].offsetLeft;
                 const setWidth = nextSetStart - originalStart;
                 if (testimonialsTrack.scrollLeft < originalStart - 1) {
+                    testimonialsTrack.classList.add('is-repositioning');
                     testimonialsTrack.scrollLeft += setWidth;
+                    requestAnimationFrame(() => testimonialsTrack.classList.remove('is-repositioning'));
                 } else if (testimonialsTrack.scrollLeft >= nextSetStart - 1) {
+                    testimonialsTrack.classList.add('is-repositioning');
                     testimonialsTrack.scrollLeft -= setWidth;
+                    requestAnimationFrame(() => testimonialsTrack.classList.remove('is-repositioning'));
                 }
             };
 
-            const runTestimonialsMotion = time => {
-                testimonialsAnimationFrame = 0;
-                if (
-                    prefersReducedMotion ||
-                    testimonialsAutoplayPaused ||
-                    !testimonialsInView ||
-                    document.hidden
-                ) {
-                    lastTestimonialsFrameTime = 0;
-                    return;
-                }
-                if (lastTestimonialsFrameTime) {
-                    const elapsed = Math.min(time - lastTestimonialsFrameTime, 50);
-                    testimonialsTrack.scrollLeft += elapsed * 0.024;
-                    adjustTestimonialsLoop();
-                }
-                lastTestimonialsFrameTime = time;
-                testimonialsAnimationFrame = requestAnimationFrame(runTestimonialsMotion);
-            };
-
-            const startTestimonialsMotion = () => {
-                if (!testimonialsAnimationFrame) {
-                    testimonialsAnimationFrame = requestAnimationFrame(runTestimonialsMotion);
-                }
-            };
-
-            const resumeTestimonialsMotion = () => {
-                window.clearTimeout(testimonialsResumeTimer);
-                testimonialsAutoplayPaused = false;
-                lastTestimonialsFrameTime = 0;
-                startTestimonialsMotion();
-            };
-
-            const pauseTestimonialsMotion = (resumeDelay = 0) => {
-                testimonialsAutoplayPaused = true;
-                window.clearTimeout(testimonialsResumeTimer);
-                if (resumeDelay > 0) {
-                    testimonialsResumeTimer = window.setTimeout(() => {
-                        if (testimonialsPointerInside) return;
-                        testimonialsAutoplayPaused = false;
-                        lastTestimonialsFrameTime = 0;
-                        startTestimonialsMotion();
-                    }, resumeDelay);
-                }
-            };
-
-            previousTestimonialButton.addEventListener('click', () => {
-                pauseTestimonialsMotion(1000);
-                scrollTestimonials(-1);
-            });
-            nextTestimonialButton.addEventListener('click', () => {
-                pauseTestimonialsMotion(1000);
-                scrollTestimonials(1);
-            });
-            testimonialsTrack.addEventListener('pointerdown', () => pauseTestimonialsMotion(), { passive: true });
-            testimonialsTrack.addEventListener('pointerup', () => pauseTestimonialsMotion(350), { passive: true });
-            testimonialsTrack.addEventListener('pointercancel', () => pauseTestimonialsMotion(350), { passive: true });
-            testimonialsTrack.addEventListener('pointerenter', event => {
-                if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
-                    testimonialsPointerInside = true;
-                    pauseTestimonialsMotion();
-                }
-            }, { passive: true });
-            testimonialsTrack.addEventListener('pointerleave', event => {
-                if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
-                    testimonialsPointerInside = false;
-                    resumeTestimonialsMotion();
-                }
-            }, { passive: true });
-            testimonialsTrack.addEventListener('wheel', () => pauseTestimonialsMotion(700), { passive: true });
-            testimonialsTrack.addEventListener('keydown', event => {
-                if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
-                    pauseTestimonialsMotion(700);
-                }
-            });
+            previousTestimonialButton.addEventListener('click', () => scrollTestimonials(-1));
+            nextTestimonialButton.addEventListener('click', () => scrollTestimonials(1));
             testimonialsTrack.addEventListener('scroll', () => {
                 updateTestimonialsControls();
                 adjustTestimonialsLoop();
             }, { passive: true });
             window.addEventListener('resize', updateTestimonialsControls);
-            document.addEventListener('visibilitychange', startTestimonialsMotion);
-            const testimonialsObserver = new IntersectionObserver(entries => {
-                testimonialsInView = entries.some(entry => entry.isIntersecting);
-                startTestimonialsMotion();
-            });
-            testimonialsObserver.observe(testimonialsTrack);
+            testimonialsTrack.classList.add('is-initializing');
             requestAnimationFrame(() => {
                 testimonialsTrack.scrollLeft = originalTestimonialCards[0].offsetLeft;
+                testimonialsTrack.classList.remove('is-initializing');
                 updateTestimonialsControls();
-                startTestimonialsMotion();
             });
         }
     }
@@ -1178,6 +1274,13 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             let dragStartX = null;
             let dragPointerId = null;
+            let videoWheelUnlockTimer = 0;
+            let videoWheelLocked = false;
+            const setVideoDragOffset = offset => {
+                showcaseSlides.forEach(slide => {
+                    slide.style.setProperty('--beauty-drag-offset', `${offset}px`);
+                });
+            };
 
             videoTrack.addEventListener('pointerdown', event => {
                 if (event.target instanceof Element && event.target.closest('button, a')) return;
@@ -1187,6 +1290,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 videoTrack.classList.add('is-dragging');
                 videoTrack.setPointerCapture(event.pointerId);
             });
+            videoTrack.addEventListener('pointermove', event => {
+                if (event.pointerId !== dragPointerId || dragStartX === null) return;
+                const offset = event.clientX - dragStartX;
+                setVideoDragOffset(Math.max(-videoTrack.clientWidth, Math.min(videoTrack.clientWidth, offset)));
+            });
             videoTrack.addEventListener('pointerup', event => {
                 if (event.pointerId !== dragPointerId || dragStartX === null) return;
                 const dragDistance = event.clientX - dragStartX;
@@ -1194,14 +1302,32 @@ window.addEventListener('DOMContentLoaded', () => {
                 dragPointerId = null;
                 videoTrack.classList.remove('is-dragging');
                 if (Math.abs(dragDistance) > 50) moveToVideo(dragDistance < 0 ? 1 : -1);
+                setVideoDragOffset(0);
             });
             const cancelVideoDrag = () => {
                 dragStartX = null;
                 dragPointerId = null;
                 videoTrack.classList.remove('is-dragging');
+                setVideoDragOffset(0);
             };
             videoTrack.addEventListener('pointercancel', cancelVideoDrag);
             videoTrack.addEventListener('lostpointercapture', cancelVideoDrag);
+            videoTrack.addEventListener('wheel', event => {
+                const horizontalDelta = event.shiftKey ? event.deltaY : event.deltaX;
+                if (
+                    Math.abs(horizontalDelta) < 18 ||
+                    (!event.shiftKey && Math.abs(event.deltaX) <= Math.abs(event.deltaY))
+                ) return;
+                event.preventDefault();
+                if (!videoWheelLocked) {
+                    videoWheelLocked = true;
+                    moveToVideo(horizontalDelta > 0 ? 1 : -1);
+                }
+                window.clearTimeout(videoWheelUnlockTimer);
+                videoWheelUnlockTimer = window.setTimeout(() => {
+                    videoWheelLocked = false;
+                }, 260);
+            }, { passive: false });
 
             if ('IntersectionObserver' in window) {
                 const videoShowcaseObserver = new IntersectionObserver(([entry]) => {
@@ -1460,7 +1586,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const direction = arrow.classList.contains('portfolio-gallery-arrow-left') ? -1 : 1;
             portfolioFilmstrip.scrollBy({
                 left: direction * (card.getBoundingClientRect().width + gap),
-                behavior: 'instant'
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
             updatePortfolioGallery();
         });
@@ -1770,11 +1896,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Coco Miracles imagine et sculpte des ambiances complètes où l’architecture du lieu s’efface au profit d’une féerie florale et lumineuse sur-mesure.',
             extended: 'Arches monumentales, voûtes végétales suspendues, drapés aériens et créations immersives : chaque scénographie est une ode à la majesté conçue pour transformer chaque instant en souvenir éternel.',
             images: [
-                { src: 'asset/bg/Seaside Floral Arch Wedding Ceremony.png', alt: 'Cérémonie royale sur la côte' },
+                { src: 'asset/bg/Seaside Floral Arch Wedding Ceremony.webp', alt: 'Cérémonie royale sur la côte' },
                 { src: 'asset/bg/hero-optimized.jpg', alt: 'Scénographie florale monumentale' },
-                { src: 'asset/realisation/1.jpg', alt: 'Dressage floral d’exception' },
-                { src: 'asset/work/1.jpg', alt: 'Détail de composition florale' },
-                { src: 'asset/bg/2.png', alt: 'Ambiance nocturne et illuminations' }
+                { src: 'asset/realisation/1.webp', alt: 'Dressage floral d’exception' },
+                { src: 'asset/work/1.webp', alt: 'Détail de composition florale' },
+                { src: 'asset/bg/2.webp', alt: 'Ambiance nocturne et illuminations' }
             ]
         },
         'Direction artistique & production visuelle': {
@@ -1784,11 +1910,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Une harmonie esthétique sans faille : du choix des teintes aux matières nobles, nous créons une identité visuelle saisissante et pérenne.',
             extended: 'Dressage impérial, vaisselle d’orfèvre, conception d’une signature lumineuse et direction stylistique des captations : chaque perspective est ciselée comme un tableau vivant.',
             images: [
-                { src: 'asset/bg/villa-event.jpg', alt: 'Mise en scène villa de prestige' },
+                { src: 'asset/bg/villa-event.webp', alt: 'Mise en scène villa de prestige' },
                 { src: 'asset/realisation/2.jpg', alt: 'Art de la table impérial' },
-                { src: 'asset/bg/new-optimized.jpg', alt: 'Harmonie noble et visuelle' },
+                { src: 'asset/bg/new-optimized.webp', alt: 'Harmonie noble et visuelle' },
                 { src: 'asset/work/2.jpg', alt: 'Lumières & matières nobles' },
-                { src: 'asset/bg/3.png', alt: 'Captation stylisée et ambiance' }
+                { src: 'asset/bg/3.webp', alt: 'Captation stylisée et ambiance' }
             ]
         },
         'Planning événementiel d’élite': {
@@ -1798,11 +1924,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Une planification rigoureuse et une présence feutrée en coulisses pour que chaque temps fort de votre célébration s’exécute avec une perfection millimétrée.',
             extended: 'Rétroplannings détaillés, synchronisation des artisans d’élite, gestion prédictive des flux et encadrement protocolaire : profitez sereinement de vos convives, nous maîtrisons chaque détail.',
             images: [
-                { src: 'asset/team/Equipe3.jpg', alt: 'L’équipe de régie en action' },
-                { src: 'asset/bg/gala-banner.jpg', alt: 'Coordination de grand banquet' },
-                { src: 'asset/realisation/3.jpg', alt: 'Mise en place protocolaire' },
-                { src: 'asset/work/3.jpg', alt: 'Orchestration en coulisses' },
-                { src: 'asset/bg/4.png', alt: 'Célébration d’élite et fluidité' }
+                { src: 'asset/team/Equipe3.webp', alt: 'L’équipe de régie en action' },
+                { src: 'asset/bg/gala-banner.webp', alt: 'Coordination de grand banquet' },
+                { src: 'asset/realisation/3.webp', alt: 'Mise en place protocolaire' },
+                { src: 'asset/work/3.webp', alt: 'Orchestration en coulisses' },
+                { src: 'asset/bg/4.webp', alt: 'Célébration d’élite et fluidité' }
             ]
         },
         'Maquillage artistique & événementiel': {
@@ -1812,11 +1938,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Mise en beauté nuptiale haute définition, travail d’orfèvre sur le teint réflecteur de lumière et soins préparatoires d’exception pour la reine du jour et son cortège.',
             extended: 'Nos artistes maquilleurs subliment les lignes naturelles et la carnation de chaque visage grâce à des techniques haute tenue pensées pour rayonner sous les feux des projecteurs comme sous la lumière du jour.',
             images: [
-                { src: 'asset/beaute/posters/01.jpg', alt: 'Teint haute définition et éclat' },
-                { src: 'asset/beaute/posters/02.jpg', alt: 'Mise en beauté nuptiale' },
-                { src: 'asset/beaute/posters/03.jpg', alt: 'Regard sublimé & parure' },
-                { src: 'asset/beaute/posters/04.jpg', alt: 'Soins d’apparat' },
-                { src: 'asset/beaute/posters/05.jpg', alt: 'Mise en beauté festive' }
+                { src: 'asset/beaute/posters/01.webp', alt: 'Teint haute définition et éclat' },
+                { src: 'asset/beaute/posters/02.webp', alt: 'Mise en beauté nuptiale' },
+                { src: 'asset/beaute/posters/03.webp', alt: 'Regard sublimé & parure' },
+                { src: 'asset/beaute/posters/04.webp', alt: 'Soins d’apparat' },
+                { src: 'asset/beaute/posters/05.webp', alt: 'Mise en beauté festive' }
             ]
         },
         'Suivi & accompagnement personnalisé': {
@@ -1826,11 +1952,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Une relation de proximité et de confiance absolue dès la première esquisse jusqu’aux lendemains de fête, portée par un interlocuteur privilégié.',
             extended: 'Écoute attentive, disponibilité constante, confidentialité absolue et anticipation de chaque souhait : nous vous accompagnons à chaque pas avec la déférence et l’attention que mérite votre projet.',
             images: [
-                { src: 'asset/team/ceo-coco-miracles.jpg', alt: 'Direction de la Maison Coco Miracles' },
-                { src: 'asset/work/4.jpg', alt: 'Consultations privées et esquisses' },
-                { src: 'asset/realisation/1.jpg', alt: 'Création et suivi de projet' },
+                { src: 'asset/team/ceo-coco-miracles.webp', alt: 'Direction de la Maison Coco Miracles' },
+                { src: 'asset/work/4.webp', alt: 'Consultations privées et esquisses' },
+                { src: 'asset/realisation/1.webp', alt: 'Création et suivi de projet' },
                 { src: 'asset/bg/hero-optimized.jpg', alt: 'Concrétisation d’exception' },
-                { src: 'asset/bg/1.png', alt: 'Intimité & élégance' }
+                { src: 'asset/bg/1.webp', alt: 'Intimité & élégance' }
             ]
         },
         'Événements privés & corporate': {
@@ -1840,11 +1966,11 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Orchestration magistrale d’événements d’envergure pour institutions, marques de prestige et grandes familles : banquets d’État, galas et lancements officiels.',
             extended: 'Une scénographie monumentale alliée à une stricte maîtrise protocolaire pour offrir à vos hôtes et partenaires une expérience solennelle gravée dans les mémoires.',
             images: [
-                { src: 'asset/bg/gala-banner.jpg', alt: 'Grand dîner de gala' },
-                { src: 'asset/bg/villa-event.jpg', alt: 'Réception d’envergure' },
-                { src: 'asset/realisation/4.jpg', alt: 'Protocole VIP' },
+                { src: 'asset/bg/gala-banner.webp', alt: 'Grand dîner de gala' },
+                { src: 'asset/bg/villa-event.webp', alt: 'Réception d’envergure' },
+                { src: 'asset/realisation/4.webp', alt: 'Protocole VIP' },
                 { src: 'asset/personality/adebayor.jpg', alt: 'Hôtes d’honneur' },
-                { src: 'asset/bg/5.png', alt: 'Scène de grand événement' }
+                { src: 'asset/bg/5.webp', alt: 'Scène de grand événement' }
             ]
         }
     };
