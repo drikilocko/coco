@@ -1,8 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const pagePreloader = document.querySelector('.page-preloader');
-    const heroImageStatus = document.querySelector('.hero-image-status');
-    const heroImageRetry = heroImageStatus?.querySelector('.hero-image-retry');
+    const heroImageRetry = pagePreloader?.querySelector('.hero-image-retry');
     let initialPreloaderFinished = !(pagePreloader instanceof HTMLElement);
     let releasePageReveals = () => {};
     let startHeroBrandCycle = () => {};
@@ -166,10 +165,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const revealBrand = (heroImageLoaded = true) => {
             if (!heroImageLoaded) {
                 document.documentElement.classList.add('hero-image-unavailable');
-                if (heroImageStatus instanceof HTMLElement) heroImageStatus.hidden = false;
+                const connectionNotice = pagePreloader.querySelector('.page-preloader-connection');
+                if (connectionNotice instanceof HTMLElement) connectionNotice.hidden = false;
+                pagePreloader.classList.add('is-image-unavailable');
+                pagePreloader.setAttribute('aria-hidden', 'false');
+                return;
             }
             pagePreloader.classList.add('is-brand-visible');
-            window.setTimeout(exitPreloader, prefersReducedMotion || !heroImageLoaded ? 20 : 1100);
+            window.setTimeout(exitPreloader, prefersReducedMotion ? 20 : 1100);
         };
 
         const waitForHeroImage = () => new Promise(resolve => {
@@ -283,100 +286,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     } else {
         console.error('Impossible de réorganiser les sections : section introuvable.');
-    }
-
-    const sectionPagination = document.querySelector('.section-pagination');
-    const sectionPaginationCurrent = sectionPagination?.querySelector('.section-pagination-current');
-    const sectionPaginationProgress = sectionPagination?.querySelector('.section-pagination-progress > span');
-    const sectionPaginationPrevious = sectionPagination?.querySelector('.section-pagination-prev');
-    const sectionPaginationNext = sectionPagination?.querySelector('.section-pagination-next');
-    const navigableSections = Array.from(document.querySelectorAll('main > section:not(.logo-marquee)'));
-
-    if (
-        sectionPagination instanceof HTMLElement &&
-        sectionPaginationCurrent instanceof HTMLElement &&
-        sectionPaginationProgress instanceof HTMLElement &&
-        sectionPaginationPrevious instanceof HTMLButtonElement &&
-        sectionPaginationNext instanceof HTMLButtonElement &&
-        navigableSections.length
-    ) {
-        const sectionTitles = navigableSections.map(section => {
-            if (section.id === 'hero') return 'Accueil';
-            const headingId = section.getAttribute('aria-labelledby')?.split(/\s+/)[0];
-            const heading = headingId ? document.getElementById(headingId) : section.querySelector('h1, h2');
-            return heading?.innerText?.replace(/\s+/g, ' ').trim() ||
-                section.getAttribute('aria-label') ||
-                section.id;
-        });
-        let activeSectionIndex = -1;
-        let sectionPaginationFrame = 0;
-
-        const updateSectionPagination = () => {
-            sectionPaginationFrame = 0;
-            const marker = Math.min(window.innerHeight * 0.4, 280);
-            let nextIndex = navigableSections.findIndex(section => {
-                const bounds = section.getBoundingClientRect();
-                return bounds.top <= marker && bounds.bottom > marker;
-            });
-
-            if (nextIndex < 0) {
-                nextIndex = navigableSections.reduce((closestIndex, section, index) => {
-                    const bounds = section.getBoundingClientRect();
-                    const distance = Math.min(
-                        Math.abs(bounds.top - marker),
-                        Math.abs(bounds.bottom - marker)
-                    );
-                    const closestBounds = navigableSections[closestIndex].getBoundingClientRect();
-                    const closestDistance = Math.min(
-                        Math.abs(closestBounds.top - marker),
-                        Math.abs(closestBounds.bottom - marker)
-                    );
-                    return distance < closestDistance ? index : closestIndex;
-                }, 0);
-            }
-
-            if (nextIndex === activeSectionIndex) return;
-            activeSectionIndex = nextIndex;
-            sectionPagination.hidden = nextIndex === 0;
-            sectionPaginationCurrent.textContent =
-                `${String(nextIndex + 1).padStart(2, '0')} / ${String(navigableSections.length).padStart(2, '0')} · ${sectionTitles[nextIndex]}`;
-            sectionPaginationProgress.style.width =
-                `${((nextIndex + 1) / navigableSections.length) * 100}%`;
-            sectionPaginationPrevious.disabled = nextIndex === 0;
-            sectionPaginationNext.disabled = nextIndex === navigableSections.length - 1;
-            sectionPaginationPrevious.setAttribute(
-                'aria-label',
-                nextIndex > 0 ? `Section précédente : ${sectionTitles[nextIndex - 1]}` : 'Section précédente'
-            );
-            sectionPaginationNext.setAttribute(
-                'aria-label',
-                nextIndex < navigableSections.length - 1
-                    ? `Section suivante : ${sectionTitles[nextIndex + 1]}`
-                    : 'Section suivante'
-            );
-        };
-        const queueSectionPaginationUpdate = () => {
-            if (sectionPaginationFrame) return;
-            sectionPaginationFrame = window.requestAnimationFrame(updateSectionPagination);
-        };
-        const scrollToSection = index => {
-            navigableSections[index]?.scrollIntoView({
-                behavior: prefersReducedMotion ? 'auto' : 'smooth',
-                block: 'start'
-            });
-        };
-
-        sectionPaginationPrevious.addEventListener('click', () => {
-            if (activeSectionIndex > 0) scrollToSection(activeSectionIndex - 1);
-        });
-        sectionPaginationNext.addEventListener('click', () => {
-            if (activeSectionIndex < navigableSections.length - 1) {
-                scrollToSection(activeSectionIndex + 1);
-            }
-        });
-        window.addEventListener('scroll', queueSectionPaginationUpdate, { passive: true });
-        window.addEventListener('resize', queueSectionPaginationUpdate, { passive: true });
-        updateSectionPagination();
     }
 
     const setupCardPagination = (trackSelector, cardSelector, countSelector, previousSelector, nextSelector, label) => {

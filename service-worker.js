@@ -1,7 +1,7 @@
-const CACHE_NAME = 'coco-miracles-site-v8';
+const CACHE_NAME = 'coco-miracles-site-v9';
 const CORE_ASSETS = [
     './index.html',
-    './css/style.css?v=mobile-ux-pagination-v8',
+    './css/style.css?v=mobile-ux-pagination-v9',
     './css/galleries.css?v=overscroll-fix-v2',
     './css/footer.css?v=footer-v1',
     './css/site-header.css?v=shared-header-v1',
@@ -10,7 +10,7 @@ const CORE_ASSETS = [
     './js/portfolio-videos.js?v=local-video-gallery-v3',
     './js/portfolio-gallery.js?v=local-video-gallery-v4',
     './js/beauty-videos.js?v=beauty-gallery-v2',
-    './js/main.js?v=mobile-ux-pagination-v5',
+    './js/main.js?v=mobile-ux-pagination-v6',
     './js/chatbot.js?v=chat-shared-transition-v2',
     './js/text-roll.js?v=text-roll-v5',
     './js/nav-transition.js?v=nav-transition-v3',
