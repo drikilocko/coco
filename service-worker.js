@@ -1,7 +1,7 @@
-const CACHE_NAME = 'coco-miracles-site-v9';
+const CACHE_NAME = 'coco-miracles-site-v10';
 const CORE_ASSETS = [
     './index.html',
-    './css/style.css?v=mobile-ux-pagination-v9',
+    './css/style.css?v=mobile-ux-pagination-v10',
     './css/galleries.css?v=overscroll-fix-v2',
     './css/footer.css?v=footer-v1',
     './css/site-header.css?v=shared-header-v1',

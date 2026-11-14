@@ -46,8 +46,8 @@
 
 .event-planner-hero-shade {
     background:
-        linear-gradient(90deg, rgba(22, 18, 15, 0.82), rgba(22, 18, 15, 0.53) 48%, rgba(22, 18, 15, 0.08)),
-        linear-gradient(0deg, rgba(22, 18, 15, 0.42), transparent 40%);
+        linear-gradient(90deg, rgba(16, 12, 10, 0.9), rgba(16, 12, 10, 0.72) 48%, rgba(16, 12, 10, 0.32)),
+        linear-gradient(0deg, rgba(16, 12, 10, 0.62), rgba(16, 12, 10, 0.24) 48%, rgba(16, 12, 10, 0.42));
 }
 
 .event-planner-hero-copy {
@@ -65,7 +65,8 @@
 }
 
 .event-planner-eyebrow {
-    color: rgba(255, 255, 255, 0.76);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.82);
 }
 
 .event-planner-eyebrow span {
@@ -80,6 +81,7 @@
     font-weight: 400;
     letter-spacing: -0.045em;
     line-height: 0.91;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.92), 0 8px 24px rgba(0, 0, 0, 0.78);
 }
 
 .event-planner-hero h1 em,
@@ -94,10 +96,11 @@
 .event-planner-hero-copy > p:not(.event-planner-eyebrow) {
     max-width: 560px;
     margin: 0 0 30px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.96);
     font-family: Arial, sans-serif;
     font-size: clamp(14px, 1.3vw, 17px);
     line-height: 1.8;
+    text-shadow: 0 2px 7px rgba(0, 0, 0, 0.9);
 }
 
 .event-planner-button {

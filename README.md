@@ -311,27 +311,11 @@ L'équipe Coco Miracles
 
 ## 🔒 Sécurité
 
-### Pour un Site en Production
+### Déploiement Vercel
 
-1. **HTTPS obligatoire**
-   - Certificat SSL Let's Encrypt (gratuit)
-   - Redirection HTTP → HTTPS
+Vercel fournit le certificat HTTPS et redirige les requêtes HTTP vers HTTPS. Le fichier `vercel.json` ajoute les en-têtes de sécurité du site : HSTS, Content Security Policy, protection contre l’intégration en iframe, politique de référent et restrictions des permissions du navigateur. La CSP autorise les scripts nécessaires au site, notamment Lenis depuis jsDelivr et les polices Google.
 
-2. **Protection CSRF**
-   - Tokens sur tous les formulaires
-   - Validation côté serveur
-
-3. **Rate Limiting**
-   - Limiter les tentatives de réservation
-   - Protection contre le spam
-
-4. **Validation des Données**
-   - Sanitization des entrées
-   - Validation côté serveur ET client
-
-5. **Backup**
-   - Sauvegardes régulières de la base de données
-   - Versioning du code (Git)
+Après toute modification de la configuration, redéployez le projet et vérifiez que le domaine de production utilise HTTPS. HSTS ne doit être conservé que sur un domaine qui reste accessible en HTTPS.
 
 ### Conciergerie Gemini sur Vercel
 
