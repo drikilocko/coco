@@ -4,6 +4,30 @@ window.addEventListener('DOMContentLoaded', () => {
     const menuButton = header?.querySelector('.hero-menu-toggle');
     if (!(header instanceof HTMLElement) || !(content instanceof HTMLElement) || !(menuButton instanceof HTMLButtonElement)) return;
 
+    // Pied du menu mobile : appel à l’action + coordonnées directes.
+    if (!content.querySelector('.hero-menu-footer')) {
+        const footer = document.createElement('div');
+        footer.className = 'hero-menu-footer';
+        footer.innerHTML = `
+            <a class="hero-menu-cta" href="./index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">→</span></a>
+            <div class="hero-menu-contact">
+                <a href="tel:+22890499996">+228 90 49 99 96</a>
+                <a href="tel:+22898667878">+228 98 66 78 78</a>
+            </div>`;
+        content.append(footer);
+    }
+
+    // Met en évidence la page courante dans le menu.
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    content.querySelectorAll('.hero-nav a').forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.includes('#')) return;
+        if (href.replace('./', '') === currentPage) link.setAttribute('aria-current', 'page');
+    });
+
+    const getFocusableItems = () => Array.from(content.querySelectorAll('a[href], button'))
+        .filter(element => element instanceof HTMLElement && element.offsetParent !== null);
+
     const setMenuOpen = isOpen => {
         content.classList.toggle('is-menu-open', isOpen);
         header.classList.toggle('is-menu-open', isOpen);
@@ -17,8 +41,24 @@ window.addEventListener('DOMContentLoaded', () => {
         setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
     });
 
-    content.querySelectorAll('.hero-nav a').forEach(link => {
+    content.querySelectorAll('.hero-nav a, .hero-menu-footer a').forEach(link => {
         link.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    // Garde le focus clavier à l’intérieur du menu ouvert.
+    content.addEventListener('keydown', event => {
+        if (event.key !== 'Tab' || menuButton.getAttribute('aria-expanded') !== 'true') return;
+        const items = getFocusableItems();
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     });
 
     document.addEventListener('pointerdown', event => {

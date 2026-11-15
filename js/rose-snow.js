@@ -1,6 +1,7 @@
 (() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (reducedMotion.matches) return;
+    if (navigator.connection?.saveData) return;
 
     const canvas = document.createElement('canvas');
     canvas.className = 'rose-snow';

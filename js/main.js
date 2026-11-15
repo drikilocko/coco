@@ -65,9 +65,13 @@ window.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener('wheel', onFirstScroll);
             window.removeEventListener('touchmove', onFirstScroll);
             window.removeEventListener('scroll', onFirstScroll);
-            if (!musicDeclinedForPage && !musicPausedByUser) {
-                playSiteMusic();
+            if (musicDeclinedForPage || musicPausedByUser) return;
+            if (window.cocoNetwork?.isSlow()) {
+                // Connexion lente : pas de téléchargement automatique du fichier audio (4,5 Mo).
+                updateMusicToggle(false);
+                return;
             }
+            playSiteMusic();
         };
 
         siteMusic.addEventListener('error', () => {
@@ -164,11 +168,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const revealBrand = (heroImageLoaded = true) => {
             if (!heroImageLoaded) {
+                // Connexion lente : on n’empêche plus l’accès au site. La page s’ouvre avec un fond
+                // de secours et l’image principale continue de se charger en arrière-plan.
                 document.documentElement.classList.add('hero-image-unavailable');
-                const connectionNotice = pagePreloader.querySelector('.page-preloader-connection');
-                if (connectionNotice instanceof HTMLElement) connectionNotice.hidden = false;
-                pagePreloader.classList.add('is-image-unavailable');
-                pagePreloader.setAttribute('aria-hidden', 'false');
+                window.cocoNetwork?.markSlow();
+                exitPreloader();
                 return;
             }
             pagePreloader.classList.add('is-brand-visible');
@@ -194,6 +198,9 @@ window.addEventListener('DOMContentLoaded', () => {
             };
             const imageLoadTimeout = window.setTimeout(() => {
                 console.warn('Le chargement de l’image principale dépasse le délai du préloader.');
+                heroImage.addEventListener('load', () => {
+                    document.documentElement.classList.remove('hero-image-unavailable');
+                }, { once: true });
                 finishWaiting(false);
             }, 5000);
 
@@ -1030,7 +1037,8 @@ window.addEventListener('DOMContentLoaded', () => {
             let activeVideoIndex = 0;
             let isVideoShowcaseVisible = false;
             let soundEnabled = false;
-            let isVideoPausedByUser = false;
+            // Pas de lecture automatique : la vidéo démarre uniquement sur action de l’utilisateur.
+            let isVideoPausedByUser = true;
 
             const updateSoundButton = () => {
                 soundButton.setAttribute('aria-pressed', String(soundEnabled));
@@ -1093,20 +1101,21 @@ window.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
+                    video.muted = !soundEnabled;
+                    if (isVideoPausedByUser) {
+                        // En pause : on garde l’affiche, aucun téléchargement de la vidéo.
+                        video.pause();
+                        return;
+                    }
+
                     if (!video.getAttribute('src')) {
                         if (!video.dataset.src) {
                             console.error('Aucune source définie pour une vidéo de la galerie beauté.');
                             return;
                         }
-                        video.preload = 'auto';
+                        video.preload = window.cocoNetwork?.isSlow() ? 'metadata' : 'auto';
                         video.src = video.dataset.src;
                         video.load();
-                    }
-
-                    video.muted = !soundEnabled;
-                    if (isVideoPausedByUser) {
-                        video.pause();
-                        return;
                     }
 
                     video.play().catch(error => {
@@ -1129,6 +1138,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 const visible = visibleHeight / Math.max(bounds.height, 1) >= 0.25 && !document.hidden;
                 if (visible === isVideoShowcaseVisible) return;
                 isVideoShowcaseVisible = visible;
+                // Quitter la section met la vidéo en pause : elle ne reprend pas toute seule au retour.
+                if (!visible) isVideoPausedByUser = true;
                 updateVideoShowcase();
             };
 
@@ -1138,7 +1149,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 } else {
                     activeVideoIndex = activeVideoIndex === 0 ? videoSlides.length - 1 : activeVideoIndex - 1;
                 }
-                isVideoPausedByUser = false;
+                // Changer de vidéo ne relance pas la lecture automatiquement.
+                isVideoPausedByUser = true;
                 updateVideoShowcase();
             };
 
@@ -1399,6 +1411,8 @@ window.addEventListener('DOMContentLoaded', () => {
             const visibleRatio = visibleArea / Math.max(1, rect.width * rect.height);
 
             if (visibleRatio >= 0.15) {
+                // Connexion lente : l’affiche suffit comme aperçu, la vidéo ne se charge qu’au clic.
+                if (window.cocoNetwork?.isSlow() && !video.dataset.loaded) return;
                 if (!video.dataset.loaded) loadPortfolioVideo(video);
                 video.muted = true;
                 video.pause();
@@ -1445,7 +1459,9 @@ window.addEventListener('DOMContentLoaded', () => {
         const scrolledDistance = Math.max(0, window.scrollY - heroOffsetTop);
         const scrollProgress = Math.min(1, scrolledDistance / heroScrollDistance);
         const fadeProgress = Math.min(1, scrollProgress / 0.65);
-        const nextOpacity = Math.round((1 - fadeProgress) * 100) / 100;
+        // Courbe adoucie (smoothstep) : l’ombre s’efface progressivement, sans à-coup.
+        const easedProgress = fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+        const nextOpacity = Math.round((1 - easedProgress) * 100) / 100;
         if (nextOpacity === heroOverlayOpacity) return;
         heroOverlayOpacity = nextOpacity;
         heroSection.style.setProperty('--hero-overlay-opacity', String(nextOpacity));

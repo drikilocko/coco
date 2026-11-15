@@ -9,11 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=mobile-ux-pagination-v10">
+    <link rel="stylesheet" href="css/style.css?v=prestations-center-v1">
     <link rel="stylesheet" href="css/galleries.css?v=overscroll-fix-v2">
     <link rel="stylesheet" href="css/footer.css?v=footer-v1">
-    <link rel="stylesheet" href="css/site-header.css?v=shared-header-v1">
-    <script src="js/site-header.js?v=shared-header-v1" defer></script>
+    <link rel="stylesheet" href="css/site-header.css?v=menu-pro-v2">
+    <script src="js/network.js?v=network-v1"></script>
+    <script src="js/site-header.js?v=menu-pro-v1" defer></script>
     <script src="js/footer.js?v=footer-v1" defer></script>
     <script>
         try {
@@ -25,7 +26,7 @@
         }
     </script>
     <script>document.documentElement.classList.add('js', 'page-preloading');</script>
-    <script src="js/rose-snow.js" defer></script>
+    <script src="js/rose-snow.js?v=lazy-network-v1" defer></script>
 </head>
 <body class="home-page">
     <div class="page-preloader" aria-hidden="true">
@@ -320,7 +321,8 @@
                 <p class="prestations-intro">De la première esquisse à la coordination du jour J, nous imaginons chaque détail pour faire de votre événement une expérience singulière.</p>
             </header>
 
-            <div class="prestations-grid" id="prestations-grid" role="region" aria-label="Prestations proposées, faites défiler pour découvrir les six cartes" tabindex="0">
+            <div class="prestations-carousel">
+            <div class="prestations-grid" id="prestations-grid" role="region" aria-label="Prestations proposées, faites défiler pour découvrir les cinq cartes" tabindex="0">
                 <article class="prestation-card">
                     <div class="prestation-card-visual">
                         <img src="asset/bg/Seaside Floral Arch Wedding Ceremony.webp" alt="Arche florale monumentale pour une cérémonie en plein air" loading="lazy" decoding="async">
@@ -365,6 +367,7 @@
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Maquillage artistique &amp; événementiel">Voir le catalogue <span aria-hidden="true">↗</span></button>
                 </article>
 
+                <!-- Carte masquée temporairement : Suivi & accompagnement personnalisé (à réactiver plus tard)
                 <article class="prestation-card">
                     <div class="prestation-card-visual">
                         <img src="asset/team/Equipe3.webp" alt="L’équipe Coco Miracles préparant un événement" loading="lazy" decoding="async">
@@ -375,11 +378,12 @@
                     <p class="prestation-card-description">Un lien de proximité constant, de la première esquisse aux lendemains de fête : consultations privées régulières, interlocuteur dédié et joignable, ajustements en temps réel et confidentialité absolue pour votre tranquillité.</p>
                     <button class="prestation-catalog-button" type="button" aria-haspopup="dialog" aria-controls="prestation-catalog-dialog" data-catalog-title="Suivi &amp; accompagnement personnalisé">Voir le catalogue <span aria-hidden="true">↗</span></button>
                 </article>
+                -->
 
                 <article class="prestation-card">
                     <div class="prestation-card-visual">
                         <img src="asset/bg/3.webp" alt="Décoration raffinée pour une célébration privée ou corporate" loading="lazy" decoding="async">
-                        <div class="prestation-card-meta"><span>06</span><span>Maison Coco Miracles</span></div>
+                        <div class="prestation-card-meta"><span>05</span><span>Maison Coco Miracles</span></div>
                     </div>
                     <h3>Événements privés &amp; corporate</h3>
                     <p class="prestation-card-category">Dîners de gala &amp; sommets institutionnels</p>
@@ -389,8 +393,9 @@
             </div>
             <div class="prestations-controls" role="group" aria-label="Navigation des prestations">
                 <button class="prestations-control-prev" type="button" aria-label="Prestation précédente" aria-controls="prestations-grid" disabled><span aria-hidden="true">←</span></button>
-                <span class="prestations-count" aria-live="polite">01 / 06</span>
+                <span class="prestations-count" aria-live="polite">01 / 05</span>
                 <button class="prestations-control-next" type="button" aria-label="Prestation suivante" aria-controls="prestations-grid"><span aria-hidden="true">→</span></button>
+            </div>
             </div>
             <dialog class="prestation-catalog-dialog" id="prestation-catalog-dialog" aria-labelledby="popup-catalog-title">
                 <!-- Topbar : Catégories et bouton Fermer -->
@@ -905,7 +910,7 @@
                             </a>
                         </div>
                         <div class="beauty-video-overlay-controls">
-                            <button class="beauty-video-overlay-button beauty-video-play" type="button" aria-label="Mettre la vidéo en pause" aria-pressed="false">
+                            <button class="beauty-video-overlay-button beauty-video-play" type="button" aria-label="Lire la vidéo" aria-pressed="true">
                                 <svg class="beauty-video-pause-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h4v14H7zm6 0h4v14h-4z" /></svg>
                                 <svg class="beauty-video-play-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m8 5 12 7-12 7z" /></svg>
                             </button>
@@ -1233,7 +1238,7 @@
     <script src="js/portfolio-videos.js?v=local-video-gallery-v3" defer></script>
     <script src="js/portfolio-gallery.js?v=local-video-gallery-v4" defer></script>
     <script src="js/beauty-videos.js?v=beauty-gallery-v2" defer></script>
-    <script src="js/main.js?v=mobile-ux-pagination-v6" defer></script>
+    <script src="js/main.js?v=prestations-overlay-v1" defer></script>
     <script src="js/chatbot.js?v=chat-shared-transition-v2" defer></script>
     <script src="js/text-roll.js?v=text-roll-v5" defer></script>
     <script src="js/nav-transition.js?v=nav-transition-v3" defer></script>
