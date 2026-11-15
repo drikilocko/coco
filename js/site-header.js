@@ -17,6 +17,18 @@ window.addEventListener('DOMContentLoaded', () => {
         content.append(footer);
     }
 
+    // Bouton « Consultation » (mobile uniquement, à gauche) : ouvre la pop-up de contact.
+    // Sur l'accueil la pop-up est sur place ; ailleurs, on y va et elle s'ouvre à l'arrivée.
+    if (!content.querySelector('.hero-consult-button')) {
+        const hasContactDialog = Boolean(document.querySelector('#contact-dialog'));
+        const consult = document.createElement('a');
+        consult.className = 'hero-consult-button';
+        consult.href = hasContactDialog ? '#contact-dialog' : 'index.html#contact-dialog';
+        consult.textContent = 'Consultation';
+        consult.setAttribute('aria-label', 'Demander une consultation');
+        content.append(consult);
+    }
+
     // Met en évidence la page courante dans le menu.
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     content.querySelectorAll('.hero-nav a').forEach(link => {

@@ -2249,6 +2249,12 @@ window.addEventListener('DOMContentLoaded', () => {
             if (contactDialog.open) contactDialog.close();
         };
 
+        // Arrivée depuis une autre page via le bouton « Consultation » (index.html#contact-dialog)
+        if (window.location.hash === '#contact-dialog') {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+            window.setTimeout(() => openContactDialog(null), 300);
+        }
+
         contactCloseButton.addEventListener('click', closeContactDialog);
         contactDialog.addEventListener('click', event => {
             if (event.target === contactDialog) closeContactDialog();
