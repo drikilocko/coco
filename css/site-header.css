@@ -735,3 +735,62 @@ img.is-broken {
         transition: none;
     }
 }
+
+/* =====================================================================
+   Barre de défilement verticale de l'accueil, sur toutes les pages
+   (fine, poignée dorée, piste transparente)
+   ===================================================================== */
+html::-webkit-scrollbar {
+    width: 3px;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: rgba(214, 189, 140, 0.7);
+    border: 0;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #d6bd8c;
+}
+
+/* Firefox (ne connaît pas ::-webkit-scrollbar) */
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(214, 189, 140, 0.7) transparent;
+    }
+}
+
+/* =====================================================================
+   Apparition floutée au défilement (même effet que l'accueil)
+   Les pages galerie et Event Planner l'activent via js/page-reveal.js
+   ===================================================================== */
+html.has-scroll-reveals .scroll-reveal-item {
+    opacity: 0;
+    filter: blur(4px);
+    translate: 0 20px;
+    transition:
+        opacity 520ms ease var(--scroll-reveal-delay, 0ms),
+        filter 520ms ease var(--scroll-reveal-delay, 0ms),
+        translate 520ms cubic-bezier(0.16, 1, 0.3, 1) var(--scroll-reveal-delay, 0ms);
+}
+
+html.has-scroll-reveals .scroll-reveal-item.is-revealed {
+    opacity: 1;
+    filter: blur(0);
+    translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.has-scroll-reveals .scroll-reveal-item,
+    html.has-scroll-reveals .scroll-reveal-item.is-revealed {
+        opacity: 1;
+        filter: none;
+        translate: none;
+        transition: none;
+    }
+}

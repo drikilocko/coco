@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="asset/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="asset/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="asset/icons/apple-touch-icon.png">
     <meta name="theme-color" content="#171512">
     <title>Coco Miracles — Maison événementielle</title>
     <link rel="preload" as="image" href="gg.webp" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=svg-icons-v2">
-    <link rel="stylesheet" href="css/galleries.css?v=overscroll-fix-v2">
+    <link rel="stylesheet" href="css/style.css?v=sand-padding-v2">
+    <link rel="stylesheet" href="css/galleries.css?v=detail-sheet-v2">
     <link rel="stylesheet" href="css/footer.css?v=ambroise-v2">
-    <link rel="stylesheet" href="css/site-header.css?v=svg-icons-v1">
+    <link rel="stylesheet" href="css/site-header.css?v=scroll-reveal-v1">
     <script src="js/network.js?v=network-v1"></script>
     <script src="js/site-header.js?v=svg-icons-v1" defer></script>
     <script src="js/footer.js?v=footer-v1" defer></script>
@@ -76,8 +81,7 @@
                     <a href="./galerie-beaute.html">Galerie</a>
                     <div class="hero-nav-submenu">
                         <a href="./galerie-beaute.html">Galerie beauté</a>
-                        <a href="./galerie-evenements.html">Galerie événements</a>
-                        <a href="./galerie-portfolio.html">Vidéos du portfolio</a>
+                        <a href="./galerie-portfolio.html">Galerie d’événements</a>
                     </div>
                 </div>
                 <div class="hero-nav-item">
@@ -313,7 +317,7 @@
             </div>
         </dialog>
 
-        <section class="prestations-section" id="prestations" aria-labelledby="prestations-title">
+        <section class="prestations-section sand-theme" id="prestations" aria-labelledby="prestations-title">
             <header class="prestations-heading editorial-section-heading">
                 <p class="prestations-eyebrow">Savoir-faire &amp; prestations</p>
                 <h2 id="prestations-title">Nos prestations <em>d’exception</em></h2>
@@ -517,7 +521,7 @@
             </div>
         </section>
 
-        <section class="portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
+        <section class="portfolio-section sand-theme" id="portfolio" aria-labelledby="portfolio-title">
             <header class="portfolio-heading editorial-section-heading">
                 <p class="portfolio-eyebrow">Créations en Mouvement &amp; Artistry</p>
                 <h2 id="portfolio-title">Notre <em>Portfolio</em></h2>
@@ -615,7 +619,7 @@
             </div>
         </section>
 
-        <section class="realisations-section" id="realisations" aria-labelledby="realisations-title">
+        <section class="realisations-section sand-theme" id="realisations" aria-labelledby="realisations-title">
             <header class="realisations-heading">
                 <div>
                     <p class="realisations-eyebrow">L’empreinte de la Maison</p>
@@ -712,66 +716,46 @@
                 <p>Derrière chaque célébration, une émotion partagée. Découvrez ce que nos hôtes retiennent de leur expérience avec la Maison Coco Miracles.</p>
             </header>
             <div class="testimonials-carousel">
-                <div class="testimonials-track" id="testimonials-track" role="region" aria-label="Projets du portfolio, faites défiler pour découvrir les sept cartes" tabindex="0">
+                <div class="testimonials-track" id="testimonials-track" role="region" aria-label="Projets du portfolio, faites défiler pour découvrir les quatre appréciations" tabindex="0">
                     <article class="testimonial-card">
                         <div class="testimonial-card-top">
                             <span class="testimonial-avatar" aria-hidden="true">01</span>
-                            <div><h3>Anniversaire · Emmanuel Adebayor</h3><p>Portfolio vidéo</p></div>
+                            <div><h3>Lancement «&nbsp;Le&nbsp;choix&nbsp;»</h3><p>Invitée</p></div>
                         </div>
-                        <p class="testimonial-card-comment">Matières nobles et textures délicates pour un anniversaire d’envergure : une scénographie spectaculaire, pensée jusque dans ses moindres détails.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="4" data-project-title="Anniversaire · Emmanuel Adebayor" data-project-caption="Matières nobles et textures délicates pour un anniversaire d’envergure : une scénographie spectaculaire, pensée jusque dans ses moindres détails.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+                        <blockquote class="testimonial-card-comment">« C’est une déco à la fois épurée et quand même assez sophistiquée. C’est vraiment bien fait ! »</blockquote>
+                        <p class="testimonial-card-author">— Une invitée</p>
+                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="6" data-project-title="Lancement « Le choix »" data-project-caption="« C’est une déco à la fois épurée et quand même assez sophistiquée. C’est vraiment bien fait ! » — Une invitée">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
                     </article>
                     <article class="testimonial-card">
                         <div class="testimonial-card-top">
                             <span class="testimonial-avatar" aria-hidden="true">02</span>
-                            <div><h3>Le choix · Senza</h3><p>Portfolio vidéo</p></div>
+                            <div><h3>Lancement «&nbsp;Le&nbsp;choix&nbsp;»</h3><p>Invité</p></div>
                         </div>
-                        <p class="testimonial-card-comment">Une journée de mariage parfaite jusque dans ses derniers détails, avec un décor imaginé pour accompagner chaque émotion du grand jour.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="7" data-project-title="Le choix · Senza" data-project-caption="Une journée de mariage parfaite jusque dans ses derniers détails, avec un décor imaginé pour accompagner chaque émotion du grand jour.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+                        <blockquote class="testimonial-card-comment">« Félicitations Julio, c’est du bon boulot. Je donne 10, parce que c’est magnifique ! »</blockquote>
+                        <p class="testimonial-card-author">— Un invité</p>
+                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="6" data-project-title="Lancement « Le choix »" data-project-caption="« Félicitations Julio, c’est du bon boulot. Je donne 10, parce que c’est magnifique ! » — Un invité">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
                     </article>
                     <article class="testimonial-card">
                         <div class="testimonial-card-top">
                             <span class="testimonial-avatar" aria-hidden="true">03</span>
-                            <div><h3>Création · Santrinos Raphaël</h3><p>Portfolio vidéo</p></div>
+                            <div><h3>Lancement «&nbsp;Le&nbsp;choix&nbsp;»</h3><p>Invitée</p></div>
                         </div>
-                        <p class="testimonial-card-comment">Une création réalisée aux côtés de l’artiste, entre mise en scène soignée, lumière maîtrisée et atmosphère chaleureuse.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="14" data-project-title="Création Coco Miracles · Santrinos Raphaël" data-project-caption="Une création réalisée aux côtés de l’artiste, entre mise en scène soignée, lumière maîtrisée et atmosphère chaleureuse.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+                        <blockquote class="testimonial-card-comment">« Pour mon mariage ? Je voudrais pas la même chose… je voudrais bien plus ! J’adore la mise en place. »</blockquote>
+                        <p class="testimonial-card-author">— Une invitée</p>
+                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="6" data-project-title="Lancement « Le choix »" data-project-caption="« Pour mon mariage ? Je voudrais pas la même chose… je voudrais bien plus ! J’adore la mise en place. » — Une invitée">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
                     </article>
                     <article class="testimonial-card">
                         <div class="testimonial-card-top">
                             <span class="testimonial-avatar" aria-hidden="true">04</span>
-                            <div><h3>Événement privé · Suy Parfum</h3><p>Portfolio vidéo</p></div>
+                            <div><h3>Le jour de son mariage</h3><p>Mariée</p></div>
                         </div>
-                        <p class="testimonial-card-comment">À Lomé, un événement privé sublimé tout en finesse : une mise en scène raffinée au service de l’univers de la marque.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="17" data-project-title="Événement privé · Suy Parfum" data-project-caption="À Lomé, un événement privé sublimé tout en finesse : une mise en scène raffinée au service de l’univers de la marque.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
-                    </article>
-                    <article class="testimonial-card">
-                        <div class="testimonial-card-top">
-                            <span class="testimonial-avatar" aria-hidden="true">05</span>
-                            <div><h3>Événementiel en images</h3><p>Portfolio vidéo</p></div>
-                        </div>
-                        <p class="testimonial-card-comment">Compositions florales, drapés et jeux de lumière : un aperçu des décors imaginés par la Maison pour ses célébrations.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="2" data-project-title="Événementiel en images" data-project-caption="Compositions florales, drapés et jeux de lumière : un aperçu des décors imaginés par la Maison pour ses célébrations.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
-                    </article>
-                    <article class="testimonial-card">
-                        <div class="testimonial-card-top">
-                            <span class="testimonial-avatar" aria-hidden="true">06</span>
-                            <div><h3>Scénographie événementielle</h3><p>Portfolio vidéo</p></div>
-                        </div>
-                        <p class="testimonial-card-comment">Event design et décoration signés Coco Miracles : chaque élément s’accorde pour créer une atmosphère cohérente et accueillante.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="3" data-project-title="Scénographie événementielle" data-project-caption="Event design et décoration signés Coco Miracles : chaque élément s’accorde pour créer une atmosphère cohérente et accueillante.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
-                    </article>
-                    <article class="testimonial-card">
-                        <div class="testimonial-card-top">
-                            <span class="testimonial-avatar" aria-hidden="true">07</span>
-                            <div><h3>Réalisation en images</h3><p>Portfolio vidéo</p></div>
-                        </div>
-                        <p class="testimonial-card-comment">Un retour en images sur une réalisation où l’art de recevoir rencontre l’exigence du détail.</p>
-                        <button class="testimonial-project-button" type="button" data-portfolio-video-index="4" data-project-title="Réalisation en images" data-project-caption="Un retour en images sur une réalisation où l’art de recevoir rencontre l’exigence du détail.">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+                        <blockquote class="testimonial-card-comment">« Je suis trop émue, je trouve pas les mots… Aujourd’hui c’est mon mariage, et c’est grâce à lui. Merci ! »</blockquote>
+                        <p class="testimonial-card-author">— La mariée, à propos de Julio</p>
+                        <button class="testimonial-project-button" type="button" data-beauty-video-index="0" data-project-title="Le jour de son mariage" data-project-caption="« Je suis trop émue, je trouve pas les mots… Aujourd’hui c’est mon mariage, et c’est grâce à lui. Merci ! » — La mariée, à propos de Julio">Voir la vidéo <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
                     </article>
                 </div>
                 <div class="testimonials-controls">
-                    <span class="testimonials-count" aria-live="polite">01 / 07</span>
+                    <span class="testimonials-count" aria-live="polite">01 / 04</span>
                     <div>
                         <button class="testimonials-arrow testimonials-arrow-prev" type="button" aria-label="Projet précédent" aria-controls="testimonials-track"><span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-left" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span></button>
                         <button class="testimonials-arrow testimonials-arrow-next" type="button" aria-label="Projet suivant" aria-controls="testimonials-track"><span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
@@ -799,10 +783,12 @@
             <div class="home-detail-content">
                 <p class="home-detail-eyebrow">Création Coco Miracles</p>
                 <h2 id="home-detail-title"></h2>
+                <ul class="home-detail-tags" aria-label="Catégories" hidden></ul>
                 <p class="home-detail-description"></p>
                 <img class="home-detail-image" alt="" hidden>
                 <video class="home-detail-video" controls playsinline preload="none" hidden></video>
                 <p class="home-detail-status" role="status" aria-live="polite"></p>
+                <div class="home-detail-more" hidden></div>
                 <a class="home-detail-cta" href="index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
             </div>
         </dialog>
@@ -881,7 +867,7 @@
             </div>
         </section>
 
-        <section class="beauty-section" id="mise-en-beaute" aria-labelledby="beauty-title">
+        <section class="beauty-section sand-theme" id="mise-en-beaute" aria-labelledby="beauty-title">
             <header class="beauty-heading">
                 <div class="beauty-heading-title">
                     <p class="beauty-eyebrow">Bridal artistry &amp; mise en beauté</p>
@@ -1206,8 +1192,7 @@
                 <a href="event-planner.html">Event Planner</a>
                 <a href="#portfolio">Réalisations</a>
                 <a href="galerie-beaute.html">Galerie beauté</a>
-                <a href="galerie-evenements.html">Galerie événements</a>
-                <a href="galerie-portfolio.html">Galerie vidéo</a>
+                <a href="galerie-portfolio.html">Galerie d’événements</a>
                 <a href="#hero">Accueil</a>
                 <a href="#project-contact-title">Nous contacter</a>
             </nav>
@@ -1237,9 +1222,11 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js" defer></script>
     <script src="js/portfolio-videos.js?v=local-video-gallery-v3" defer></script>
-    <script src="js/portfolio-gallery.js?v=svg-icons-v1" defer></script>
+    <script src="js/portfolio-gallery.js?v=detail-sheet-v1" defer></script>
     <script src="js/beauty-videos.js?v=beauty-gallery-v2" defer></script>
-    <script src="js/main.js?v=svg-icons-v1" defer></script>
+    <script src="js/detail-content.js?v=detail-content-v3" defer></script>
+    <script src="js/stickers.js?v=stickers-v4" defer></script>
+    <script src="js/main.js?v=dedupe-v1" defer></script>
     <script src="js/chatbot.js?v=chat-shared-transition-v2" defer></script>
     <script src="js/text-roll.js?v=text-roll-v5" defer></script>
     <script src="js/nav-transition.js?v=nav-transition-v3" defer></script>

@@ -3687,6 +3687,8 @@ button.popup-request-btn:active {
 .portfolio-video-card .portfolio-video-load-button {
     width: auto;
     height: auto;
+    /* Les mots sont découpés par text-roll.js : le flex supprime les espaces, on les remet */
+    gap: 0.45em;
     white-space: nowrap;
 }
 
@@ -8977,4 +8979,465 @@ html.js.page-preloader-done .hero::after {
     #formats .formats-side-arrow {
         margin: 0 32px 8px;
     }
+}
+
+/* ===== Pop-up « Lire plus » : contenu enrichi ===== */
+.home-detail-dialog .home-detail-tags {
+    display: flex;
+    margin: 14px 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+}
+
+.home-detail-dialog .home-detail-tags[hidden] {
+    display: none;
+}
+
+.home-detail-dialog .home-detail-tags li {
+    padding: 6px 12px;
+    border: 1px solid rgba(232, 213, 165, 0.35);
+    border-radius: 999px;
+    background: rgba(232, 213, 165, 0.08);
+    color: #e8d5a5;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+}
+
+.home-detail-dialog .home-detail-description {
+    margin-top: 16px;
+    color: rgba(245, 240, 232, 0.9);
+    font-family: var(--font-title);
+    font-size: clamp(18px, 2.2vw, 21px);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.home-detail-dialog .home-detail-more {
+    margin-top: 24px;
+}
+
+.home-detail-dialog .home-detail-extended {
+    margin: 0;
+    color: rgba(245, 240, 232, 0.78);
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.home-detail-dialog .home-detail-highlights-title {
+    margin: 24px 0 12px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(245, 240, 232, 0.12);
+    color: #e8d5a5;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.home-detail-dialog .home-detail-highlights {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+    list-style: none;
+}
+
+.home-detail-dialog .home-detail-highlights li {
+    position: relative;
+    padding-left: 30px;
+    color: #f5f0e8;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Pastille dorée + coche, comme dans les formats */
+.home-detail-dialog .home-detail-highlights li::before,
+.home-detail-dialog .home-detail-highlights li::after {
+    position: absolute;
+    top: 0.05em;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    content: "";
+}
+
+.home-detail-dialog .home-detail-highlights li::before {
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f1dfb2, #c9a86a);
+}
+
+.home-detail-dialog .home-detail-highlights li::after {
+    background: #1b1511;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 18px 18px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 18px 18px no-repeat;
+}
+
+.home-detail-dialog .home-detail-cta {
+    margin-top: 28px;
+}
+
+/* Appréciations : photo de la personnalité dans le cercle quand elle est disponible */
+.testimonials-section .testimonial-avatar.has-photo {
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid rgba(232, 213, 165, 0.85);
+    box-shadow: 0 0 0 3px rgba(232, 213, 165, 0.12);
+}
+
+.testimonials-section .testimonial-avatar.has-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+}
+
+/* ===== Pop-up « Lire plus » : blocs de contenu variés ===== */
+.home-detail-dialog .home-detail-more {
+    display: grid;
+    margin-top: 26px;
+    gap: 22px;
+}
+
+.home-detail-dialog .home-detail-more[hidden] {
+    display: none;
+}
+
+.home-detail-dialog .home-detail-paragraph {
+    margin: 0;
+    color: rgba(245, 240, 232, 0.8);
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+/* Citation entendue dans la vidéo */
+.home-detail-dialog .home-detail-quote {
+    margin: 0;
+    padding: 18px 20px;
+    border-left: 2px solid #d6bd8c;
+    border-radius: 0 14px 14px 0;
+    background: rgba(232, 213, 165, 0.07);
+}
+
+.home-detail-dialog .home-detail-quote blockquote {
+    margin: 0;
+    color: #f5f0e8;
+    font-family: var(--font-title);
+    font-size: clamp(19px, 2.4vw, 22px);
+    font-style: italic;
+    line-height: 1.45;
+}
+
+.home-detail-dialog .home-detail-quote figcaption {
+    margin-top: 10px;
+    color: #e8d5a5;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.home-detail-dialog .home-detail-quote figcaption::before {
+    content: "— ";
+}
+
+/* Fiche : lieu, format… */
+.home-detail-dialog .home-detail-facts {
+    display: grid;
+    margin: 0;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid rgba(245, 240, 232, 0.12);
+    border-radius: 14px;
+    background: rgba(245, 240, 232, 0.12);
+}
+
+.home-detail-dialog .home-detail-facts > div {
+    padding: 14px 16px;
+    background: #211c18;
+}
+
+.home-detail-dialog .home-detail-facts dt {
+    color: #e8d5a5;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.home-detail-dialog .home-detail-facts dd {
+    margin: 6px 0 0;
+    color: #f5f0e8;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Titre des listes et étapes */
+.home-detail-dialog .home-detail-block-title {
+    margin: 0 0 14px;
+    color: #e8d5a5;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.home-detail-dialog .home-detail-block :is(ul, ol) {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+    list-style: none;
+}
+
+.home-detail-dialog .home-detail-block li {
+    position: relative;
+    padding-left: 34px;
+    color: #f5f0e8;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Étapes numérotées, reliées par un trait */
+.home-detail-dialog .home-detail-steps ol {
+    counter-reset: detail-step;
+}
+
+.home-detail-dialog .home-detail-steps li {
+    counter-increment: detail-step;
+}
+
+.home-detail-dialog .home-detail-steps li::before {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    display: grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    border: 1px solid rgba(214, 189, 140, 0.7);
+    border-radius: 50%;
+    color: #e8d5a5;
+    font-size: 11px;
+    content: counter(detail-step);
+}
+
+.home-detail-dialog .home-detail-steps li:not(:last-child)::after {
+    position: absolute;
+    top: 23px;
+    bottom: -13px;
+    left: 11px;
+    width: 1px;
+    background: rgba(214, 189, 140, 0.3);
+    content: "";
+}
+
+/* Liste à coches (même pastille que les formats) */
+.home-detail-dialog .home-detail-list li::before,
+.home-detail-dialog .home-detail-list li::after {
+    position: absolute;
+    top: 0.05em;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: "";
+}
+
+.home-detail-dialog .home-detail-list li::before {
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f1dfb2, #c9a86a);
+}
+
+.home-detail-dialog .home-detail-list li::after {
+    background: #1b1511;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 20px 20px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 20px 20px no-repeat;
+}
+
+/* =====================================================================
+   Fond sable #dcd5cf : de « Nos prestations » à « Mise en beauté »
+   Le site force le texte clair en !important : on repasse en foncé ici.
+   ===================================================================== */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    background: #dcd5cf !important;
+    color: #2b231c;
+}
+
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(
+    h1, h2, h3, h4, h5, h6, p, a, li, span, strong, small,
+    blockquote, figcaption, label, legend, button, dt, dd, summary
+) {
+    color: #2b231c !important;
+}
+
+/* Textes secondaires un peu plus doux */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(
+    .prestations-intro, .prestation-card-description, .realisations-heading p,
+    .beauty-intro, .beauty-step p, .portfolio-video-card figcaption p,
+    .beauty-video-detail-description
+) {
+    color: #5c5147 !important;
+}
+
+/* Sur-titres et accents en or plus soutenu, lisible sur le sable */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(h1, h2, h3, h4, h5, h6) em,
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(
+    .prestations-eyebrow, .portfolio-eyebrow, .realisations-eyebrow, .beauty-eyebrow,
+    .prestation-card-category
+) {
+    color: #9a7845 !important;
+}
+
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) .universe-divider {
+    background: #b39869;
+}
+
+/* Bordures et cartes : traits foncés au lieu de traits clairs */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(
+    .prestation-card, .realisation-card, .beauty-step
+) {
+    border-color: rgba(43, 35, 28, 0.18) !important;
+}
+
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) .prestation-card {
+    background: rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 10px 30px rgba(43, 35, 28, 0.08);
+}
+
+/* Tout ce qui est posé sur une photo ou une vidéo garde un texte clair */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) :is(
+    .prestation-card-meta, .prestation-card-visual,
+    .portfolio-video-media, .portfolio-play-button,
+    .beauty-video-overlay-controls, .beauty-video-teaser,
+    .realisation-card-media, .realisation-card figure
+) :is(p, span, a, button, strong, small, figcaption) {
+    color: #fffaf2 !important;
+}
+
+/* =====================================================================
+   Stickers floraux en zigzag (js/stickers.js)
+   ===================================================================== */
+.bg-sticker {
+    position: absolute;
+    z-index: -1;
+    width: clamp(150px, 24vw, 360px);
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* À moitié hors de l'écran : seule une partie du sticker est visible */
+.bg-sticker-left {
+    left: 0;
+    transform: translate(-42%, -50%) rotate(-8deg);
+}
+
+.bg-sticker-right {
+    right: 0;
+    transform: translate(42%, -50%) rotate(8deg);
+}
+
+/* Apparition en fondu au reveal (une seule fois), puis le sticker reste affiché */
+.bg-sticker {
+    filter: blur(6px);
+    transition:
+        opacity 1400ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--sticker-delay, 0s),
+        filter 1400ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--sticker-delay, 0s);
+}
+
+.bg-sticker.is-in-view {
+    opacity: 1;
+    filter: blur(0);
+}
+
+@media (max-width: 600px) {
+    .bg-sticker {
+        width: clamp(130px, 42vw, 200px);
+    }
+
+    .bg-sticker-left {
+        transform: translate(-48%, -50%) rotate(-8deg);
+    }
+
+    .bg-sticker-right {
+        transform: translate(48%, -50%) rotate(8deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bg-sticker {
+        filter: none;
+        transition: none;
+    }
+}
+
+/* Fond sable : éléments de la section beauté à remettre dans la bonne couleur */
+html body main > section.sand-theme#mise-en-beaute :is(.beauty-video-details, .beauty-video-counter) :is(h3, p, span, button) {
+    color: #2b231c !important;
+}
+
+html body main > section.sand-theme#mise-en-beaute .beauty-video-detail-description {
+    color: #5c5147 !important;
+}
+
+html body main > section.sand-theme#mise-en-beaute .beauty-video-detail-link {
+    border-bottom-color: rgba(43, 35, 28, 0.6);
+}
+
+/* Bouton sombre « Voir toute la galerie beauté » : texte clair */
+html body main > section.sand-theme#mise-en-beaute .gallery-more-link,
+html body main > section.sand-theme#mise-en-beaute .gallery-more-link * {
+    color: #f5f0e8 !important;
+}
+
+/* Encadré sombre « Garantie haute tenue » : texte clair, label or, bouton or à texte foncé */
+html body main > section.sand-theme#mise-en-beaute .beauty-guarantee > p {
+    color: #f8f5ef !important;
+}
+
+html body main > section.sand-theme#mise-en-beaute .beauty-guarantee .beauty-guarantee-label {
+    color: #d6bd8c !important;
+}
+
+html body main > section.sand-theme#mise-en-beaute .beauty-guarantee a,
+html body main > section.sand-theme#mise-en-beaute .beauty-guarantee a * {
+    color: #211c18 !important;
+}
+
+/* Appréciations : citation + signature */
+.testimonials-section .testimonial-card-comment {
+    margin: 18px 0 10px;
+    font-size: clamp(19px, 1.7vw, 22px);
+}
+
+.testimonials-section .testimonial-card-author {
+    margin: 0 0 24px;
+    padding-left: 16px;
+    color: #e8d5a5 !important;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/* Sections sur fond sable : espacement uniforme en haut et en bas */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+    padding-top: clamp(88px, 9.5vw, 136px);
+    padding-bottom: clamp(88px, 9.5vw, 136px);
+}
+
+@media (max-width: 600px) {
+    html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+
+/* Les stickers ne débordent plus sur les sections voisines (découpés en haut et en bas aussi) */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+    overflow: clip;
 }

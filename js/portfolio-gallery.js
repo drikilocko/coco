@@ -223,8 +223,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const moreButton = document.createElement('button');
         moreButton.className = 'portfolio-gallery-more';
         moreButton.type = 'button';
-        moreButton.textContent = 'Voir plus';
-        moreButton.setAttribute('aria-label', `Voir la vidéo et les détails : ${asset.title}`);
+        moreButton.textContent = 'Lire plus';
+        moreButton.setAttribute('aria-label', `Lire plus : ${asset.title}`);
         caption.append(category, title, description, moreButton);
         card.append(media, caption);
         fragment.append(card);
@@ -252,7 +252,14 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             dialog.dataset.activeTrigger = String(index);
             dialogTitle.textContent = asset.title;
-            dialogDescription.textContent = description.textContent || '';
+            window.cocoDetailSheet?.fill({
+                title: asset.title,
+                tagsElement: dialog.querySelector('.detail-sheet-tags'),
+                leadElement: dialogDescription,
+                moreElement: dialog.querySelector('.detail-sheet-more'),
+                fallbackLead: description.textContent || ''
+            });
+            dialog.scrollTop = 0;
             dialogStatus.textContent = '';
             dialogVideo.poster = asset.poster;
             dialogVideo.src = asset.src;
@@ -282,10 +289,14 @@ window.addEventListener('DOMContentLoaded', () => {
         projectStatus instanceof HTMLElement &&
         closeButton instanceof HTMLButtonElement
     ) {
-        closeButton.addEventListener('click', () => projectDialog.close());
-        projectDialog.addEventListener('click', event => {
-            if (event.target === projectDialog) projectDialog.close();
-        });
+        if (window.cocoDetailSheet) {
+            window.cocoDetailSheet.setup(projectDialog, closeButton);
+        } else {
+            closeButton.addEventListener('click', () => projectDialog.close());
+            projectDialog.addEventListener('click', event => {
+                if (event.target === projectDialog) projectDialog.close();
+            });
+        }
         projectDialog.addEventListener('close', () => {
             projectVideo.pause();
             projectVideo.removeAttribute('src');

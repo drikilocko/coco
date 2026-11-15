@@ -819,8 +819,12 @@ window.addEventListener('DOMContentLoaded', () => {
         testimonialProjectButtons.forEach(button => {
             if (!(button instanceof HTMLButtonElement)) return;
             button.addEventListener('click', () => {
+                // Vidéo du portfolio ou, pour certaines appréciations, vidéo de la galerie beauté
                 const videoIndex = Number(button.dataset.portfolioVideoIndex);
-                const asset = Number.isInteger(videoIndex) ? window.cocoPortfolioVideos?.[videoIndex] : null;
+                const beautyIndex = Number(button.dataset.beautyVideoIndex);
+                const asset = Number.isInteger(videoIndex)
+                    ? window.cocoPortfolioVideos?.[videoIndex]
+                    : Number.isInteger(beautyIndex) ? window.cocoBeautyVideos?.[beautyIndex] : null;
                 const projectTitle = button.dataset.projectTitle;
                 const projectCaption = button.dataset.projectCaption;
                 if (!asset || typeof asset.src !== 'string' || !projectTitle || !projectCaption) {
@@ -872,6 +876,63 @@ window.addEventListener('DOMContentLoaded', () => {
         homeDetailClose instanceof HTMLButtonElement
     ) {
         let activeDetailTrigger = null;
+        // Contenu enrichi (étiquettes, paragraphe, points forts) depuis js/detail-content.js
+        const homeDetailTags = homeDetailDialog.querySelector('.home-detail-tags');
+        const homeDetailMore = homeDetailDialog.querySelector('.home-detail-more');
+        const createElement = (tag, className, text) => {
+            const element = document.createElement(tag);
+            if (className) element.className = className;
+            if (text !== undefined) element.textContent = text;
+            return element;
+        };
+        // Chaque bloc du contenu enrichi devient un élément HTML (texte inséré en textContent).
+        const renderDetailBlock = block => {
+            switch (block?.type) {
+                case 'p':
+                    return createElement('p', 'home-detail-paragraph', block.text);
+                case 'quote': {
+                    const figure = createElement('figure', 'home-detail-quote');
+                    figure.append(createElement('blockquote', '', `« ${block.text} »`));
+                    if (block.author) figure.append(createElement('figcaption', '', block.author));
+                    return figure;
+                }
+                case 'facts': {
+                    const list = createElement('dl', 'home-detail-facts');
+                    (block.items ?? []).forEach(([label, value]) => {
+                        const row = createElement('div');
+                        row.append(createElement('dt', '', label), createElement('dd', '', value));
+                        list.append(row);
+                    });
+                    return list;
+                }
+                case 'steps':
+                case 'list': {
+                    const wrapper = createElement('div', `home-detail-block home-detail-${block.type}`);
+                    if (block.title) wrapper.append(createElement('p', 'home-detail-block-title', block.title));
+                    const list = createElement(block.type === 'steps' ? 'ol' : 'ul');
+                    (block.items ?? []).forEach(item => list.append(createElement('li', '', item)));
+                    wrapper.append(list);
+                    return wrapper;
+                }
+                default:
+                    console.error('Bloc de contenu inconnu dans une pop-up « Lire plus » :', block);
+                    return null;
+            }
+        };
+        const fillHomeDetailExtras = title => {
+            const extra = window.cocoDetailContent?.[title];
+            if (extra?.lead) homeDetailDescription.textContent = extra.lead;
+            if (homeDetailTags instanceof HTMLElement) {
+                homeDetailTags.replaceChildren(...(extra?.tags ?? []).map(tag => createElement('li', '', tag)));
+                homeDetailTags.hidden = !extra?.tags?.length;
+            }
+            if (homeDetailMore instanceof HTMLElement) {
+                homeDetailMore.replaceChildren(...(extra?.blocks ?? []).map(renderDetailBlock).filter(Boolean));
+                homeDetailMore.hidden = !extra?.blocks?.length;
+            }
+            if (!extra) console.warn(`Pas de contenu enrichi pour « ${title} ».`);
+        };
+
         // Fermeture animée : le panneau redescend avant la fermeture réelle du dialogue.
         setupSheetDialog(homeDetailDialog);
         const closeHomeDetail = () => closeSheetDialog(homeDetailDialog);
@@ -905,6 +966,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 activeDetailTrigger = button;
                 homeDetailTitle.textContent = title;
                 homeDetailDescription.textContent = description;
+                fillHomeDetailExtras(title);
                 homeDetailStatus.textContent = '';
                 const beautyVideoIndex = Number(button.dataset.detailBeautyVideoIndex);
                 const portfolioVideoIndex = Number(button.dataset.detailVideoIndex);
@@ -1865,7 +1927,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 { src: 'asset/bg/Seaside Floral Arch Wedding Ceremony.webp', alt: 'Cérémonie royale sur la côte' },
                 { src: 'asset/bg/hero-optimized.jpg', alt: 'Scénographie florale monumentale' },
                 { src: 'asset/realisation/1.webp', alt: 'Dressage floral d’exception' },
-                { src: 'asset/work/1.webp', alt: 'Détail de composition florale' },
+                { src: 'asset/realisation/1.webp', alt: 'Détail de composition florale' },
                 { src: 'asset/bg/2.webp', alt: 'Ambiance nocturne et illuminations' }
             ]
         },
@@ -1879,7 +1941,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 { src: 'asset/bg/villa-event.webp', alt: 'Mise en scène villa de prestige' },
                 { src: 'asset/realisation/2.jpg', alt: 'Art de la table impérial' },
                 { src: 'asset/bg/new-optimized.webp', alt: 'Harmonie noble et visuelle' },
-                { src: 'asset/work/2.jpg', alt: 'Lumières & matières nobles' },
+                { src: 'asset/realisation/2.jpg', alt: 'Lumières & matières nobles' },
                 { src: 'asset/bg/3.webp', alt: 'Captation stylisée et ambiance' }
             ]
         },
@@ -1893,7 +1955,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 { src: 'asset/team/Equipe3.webp', alt: 'L’équipe de régie en action' },
                 { src: 'asset/bg/gala-banner.webp', alt: 'Coordination de grand banquet' },
                 { src: 'asset/realisation/3.webp', alt: 'Mise en place protocolaire' },
-                { src: 'asset/work/3.webp', alt: 'Orchestration en coulisses' },
+                { src: 'asset/realisation/3.webp', alt: 'Orchestration en coulisses' },
                 { src: 'asset/bg/4.webp', alt: 'Célébration d’élite et fluidité' }
             ]
         },
@@ -1919,7 +1981,7 @@ window.addEventListener('DOMContentLoaded', () => {
             extended: 'Écoute attentive, disponibilité constante, confidentialité absolue et anticipation de chaque souhait : nous vous accompagnons à chaque pas avec la déférence et l’attention que mérite votre projet.',
             images: [
                 { src: 'asset/team/ceo-coco-miracles.webp', alt: 'Direction de la Maison Coco Miracles' },
-                { src: 'asset/work/4.webp', alt: 'Consultations privées et esquisses' },
+                { src: 'asset/bg/5.webp', alt: 'Consultations privées et esquisses' },
                 { src: 'asset/realisation/1.webp', alt: 'Création et suivi de projet' },
                 { src: 'asset/bg/hero-optimized.jpg', alt: 'Concrétisation d’exception' },
                 { src: 'asset/bg/1.webp', alt: 'Intimité & élégance' }
@@ -1934,7 +1996,7 @@ window.addEventListener('DOMContentLoaded', () => {
             images: [
                 { src: 'asset/bg/gala-banner.webp', alt: 'Grand dîner de gala' },
                 { src: 'asset/bg/villa-event.webp', alt: 'Réception d’envergure' },
-                { src: 'asset/realisation/4.webp', alt: 'Protocole VIP' },
+                { src: 'asset/bg/5.webp', alt: 'Protocole VIP' },
                 { src: 'asset/personality/adebayor.jpg', alt: 'Hôtes d’honneur' },
                 { src: 'asset/bg/5.webp', alt: 'Scène de grand événement' }
             ]

@@ -67,8 +67,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const moreButton = document.createElement('button');
         moreButton.className = 'beauty-gallery-more';
         moreButton.type = 'button';
-        moreButton.textContent = 'Voir plus';
-        moreButton.setAttribute('aria-label', `Voir la vidéo et les détails : ${asset.title}`);
+        moreButton.textContent = 'Lire plus';
+        moreButton.setAttribute('aria-label', `Lire plus : ${asset.title}`);
         caption.append(title, description, moreButton);
         card.append(media, caption);
         fragment.append(card);
@@ -76,7 +76,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const openProject = () => {
             activeTrigger = moreButton;
             dialogTitle.textContent = asset.title;
-            dialogDescription.textContent = asset.description;
+            window.cocoDetailSheet?.fill({
+                title: asset.title,
+                tagsElement: dialog.querySelector('.detail-sheet-tags'),
+                leadElement: dialogDescription,
+                moreElement: dialog.querySelector('.detail-sheet-more'),
+                fallbackLead: asset.description
+            });
+            dialog.scrollTop = 0;
             dialogStatus.textContent = '';
             dialogVideo.poster = asset.poster;
             dialogVideo.src = asset.src;
@@ -96,10 +103,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     gallery.replaceChildren(fragment);
-    closeButton.addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', event => {
-        if (event.target === dialog) dialog.close();
-    });
+    if (window.cocoDetailSheet) {
+        window.cocoDetailSheet.setup(dialog, closeButton);
+    } else {
+        closeButton.addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', event => {
+            if (event.target === dialog) dialog.close();
+        });
+    }
     dialog.addEventListener('close', () => {
         dialogVideo.pause();
         dialogVideo.removeAttribute('src');
