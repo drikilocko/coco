@@ -243,6 +243,55 @@ window.addEventListener('DOMContentLoaded', () => {
         lenisInstance.on('scroll', () => handleScrollUpdate());
     }
 
+    // Pavé tactile au-dessus des carrousels horizontaux : chaque geste est classé dès son premier
+    // mouvement. Vertical → la page défile et le carrousel ne bouge pas (plus de « rebond »).
+    // Horizontal → le carrousel défile normalement, sans que Lenis ne l'annule.
+    const setupWheelGestures = track => {
+        let gestureAxis = null;
+        let lastWheelTime = 0;
+        let sumX = 0;
+        let sumY = 0;
+        track.addEventListener('wheel', event => {
+            if (event.ctrlKey) return; // zoom au pavé tactile
+            const canScrollX = track.scrollWidth > track.clientWidth + 1;
+            if (!canScrollX) return;
+
+            const now = performance.now();
+            if (now - lastWheelTime > 160) {
+                // Nouveau geste
+                gestureAxis = null;
+                sumX = 0;
+                sumY = 0;
+            }
+            lastWheelTime = now;
+
+            if (gestureAxis === null) {
+                // Un pavé tactile envoie souvent quelques pixels horizontaux avant le vrai mouvement :
+                // on cumule ~20 px avant de décider, sans rien faire bouger entre-temps.
+                sumX += Math.abs(event.deltaX);
+                sumY += Math.abs(event.deltaY);
+                if (sumX + sumY < 20) {
+                    if (event.cancelable) event.preventDefault();
+                    event.lenisStopPropagation = true;
+                    return;
+                }
+                // Horizontal seulement si le mouvement est nettement horizontal
+                gestureAxis = sumX > sumY * 1.5 ? 'x' : 'y';
+            }
+
+            if (gestureAxis === 'y') {
+                // Le carrousel ne bouge pas : c'est toute la page qui répond
+                if (event.cancelable) event.preventDefault();
+                if (!lenisInstance && event.deltaY) window.scrollBy(0, event.deltaY);
+            } else {
+                // Geste horizontal : on laisse le navigateur faire défiler le carrousel
+                event.lenisStopPropagation = true;
+            }
+        }, { passive: false });
+    };
+    document.querySelectorAll('.portfolio-filmstrip, #formats-track, #testimonials-track, #prestations-grid, #realisations-grid')
+        .forEach(setupWheelGestures);
+
     const serviceContent = {
         vision: {
             kicker: '01 — Conception sur mesure',

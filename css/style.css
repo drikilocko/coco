@@ -9441,3 +9441,16 @@ html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, 
 html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
     overflow: clip;
 }
+
+/* Ordinateur (souris / pavé tactile) : aimantation douce des carrousels, plus de rebond.
+   Sur mobile (doigt), l'aimantation forte reste en place. */
+@media (hover: hover) and (pointer: fine) {
+    html body .portfolio-filmstrip,
+    html body #formats-track,
+    html body #testimonials-track,
+    html body #prestations-grid,
+    html body #realisations-grid {
+        scroll-snap-type: x proximity;
+        overscroll-behavior-x: contain;
+    }
+}

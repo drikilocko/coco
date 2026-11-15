@@ -5,7 +5,6 @@ window.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const minimumBufferSeconds = 5;
     const loadIntervals = new WeakMap();
     const loadTimeouts = new WeakMap();
     const pendingPosters = new WeakMap();
@@ -112,6 +111,8 @@ window.addEventListener('DOMContentLoaded', () => {
             playButton.dataset.retry = 'true';
         };
 
+        // Lecture immédiate au clic (geste de l'utilisateur) : plus d'attente de 5 s de mise en mémoire.
+        // Le navigateur charge et lit en continu ; on affiche « Chargement… » seulement s'il attend des données.
         playButton.addEventListener('click', () => {
             if (playButton.dataset.retry === 'true') stopVideo(video);
             else if (activeVideo === video && video.classList.contains('is-ready')) return;
@@ -122,66 +123,51 @@ window.addEventListener('DOMContentLoaded', () => {
             video.dataset.loadAttempt = attempt;
             playButton.hidden = true;
             playButton.disabled = true;
-            loading.textContent = `Préparation de la vidéo… (0/${minimumBufferSeconds} s)`;
+            loading.textContent = 'Chargement de la vidéo…';
             loading.hidden = false;
             delete loading.dataset.stalled;
 
             video.hidden = false;
-            video.muted = true;
+            video.muted = false;
+            video.controls = true;
             video.preload = 'auto';
             video.src = asset.src;
+            video.classList.add('is-ready');
 
-            const checkBuffer = () => {
-                if (video.dataset.loadAttempt !== attempt || video.classList.contains('is-ready')) return;
-                let bufferedEnd = 0;
-                for (let range = 0; range < video.buffered.length; range += 1) {
-                    if (video.buffered.start(range) <= 0.25) bufferedEnd = Math.max(bufferedEnd, video.buffered.end(range));
-                }
-
-                const duration = Number.isFinite(video.duration) ? video.duration : minimumBufferSeconds;
-                const requiredSeconds = Math.min(minimumBufferSeconds, duration);
-                loading.textContent = `Préparation de la vidéo… (${Math.min(Math.floor(bufferedEnd), Math.ceil(requiredSeconds))}/${Math.ceil(requiredSeconds)} s)`;
-                if (requiredSeconds <= 0 || bufferedEnd + 0.1 < requiredSeconds) return;
-
+            const onPlaying = () => {
+                if (video.dataset.loadAttempt !== attempt) return;
                 clearLoadTimers(video);
-                video.removeEventListener('progress', checkBuffer);
-                video.removeEventListener('loadedmetadata', checkBuffer);
-                video.pause();
-                if (video.currentTime > 0) video.currentTime = 0;
-                video.muted = false;
-                video.controls = true;
-                video.classList.add('is-ready');
                 loading.hidden = true;
-                playButton.hidden = true;
-                delete playButton.dataset.retry;
-                video.play().then(() => {
-                    if (video.dataset.loadAttempt === attempt) activeVideo = video;
-                }).catch(error => {
-                    if (video.dataset.loadAttempt !== attempt || error.name === 'AbortError') return;
-                    console.error('La lecture de la vidéo locale a été refusée.', error.name);
-                    showError(attempt, 'La lecture a été bloquée. Cliquez sur Réessayer.');
-                });
             };
-
-            video.addEventListener('progress', checkBuffer);
-            video.addEventListener('loadedmetadata', checkBuffer);
+            const onWaiting = () => {
+                if (video.dataset.loadAttempt !== attempt) return;
+                loading.textContent = 'Chargement de la vidéo…';
+                loading.hidden = false;
+            };
+            video.addEventListener('playing', onPlaying);
+            video.addEventListener('waiting', onWaiting);
             video.addEventListener('error', () => {
-                showError(attempt, 'Impossible de charger cette vidéo locale. Vérifiez le fichier dans asset/video.');
+                showError(attempt, 'Impossible de charger cette vidéo. Cliquez sur Réessayer.');
             }, { once: true });
 
-            video.load();
+            // play() appelé directement dans le clic : autorisé avec le son sur tous les navigateurs
             video.play().catch(error => {
                 if (video.dataset.loadAttempt !== attempt || error.name === 'AbortError') return;
-                console.error('Le préchargement de la vidéo locale a été refusé.', error.name);
-                showError(attempt, 'Impossible de préparer la vidéo. Cliquez sur Réessayer.');
+                if (error.name === 'NotAllowedError') {
+                    // Lecture refusée : on laisse les commandes du lecteur pour lancer à la main
+                    loading.hidden = true;
+                    return;
+                }
+                console.error('La lecture de la vidéo du portfolio a échoué.', error.name);
+                showError(attempt, 'La vidéo n’a pas pu démarrer. Cliquez sur Réessayer.');
             });
 
-            loadIntervals.set(video, window.setInterval(checkBuffer, 200));
+            // Filet de sécurité : connexion très lente
             loadTimeouts.set(video, window.setTimeout(() => {
-                if (video.dataset.loadAttempt === attempt && !video.classList.contains('is-ready')) {
-                    showError(attempt, 'Le chargement est lent. Cliquez sur Réessayer pour relancer la vidéo.');
+                if (video.dataset.loadAttempt === attempt && video.readyState < 3) {
+                    loading.textContent = 'Connexion lente : la vidéo continue de charger…';
                 }
-            }, 30_000));
+            }, 12_000));
         });
 
         video.addEventListener('play', () => {
