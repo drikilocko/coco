@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const footer = document.createElement('div');
         footer.className = 'hero-menu-footer';
         footer.innerHTML = `
-            <a class="hero-menu-cta" href="./index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true">→</span></a>
+            <a class="hero-menu-cta" href="./index.html#project-contact-title">Parlons de votre projet <span aria-hidden="true"><svg class="ui-icon ui-icon-arrow-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
             <div class="hero-menu-contact">
                 <a href="tel:+22890499996">+228 90 49 99 96</a>
                 <a href="tel:+22898667878">+228 98 66 78 78</a>

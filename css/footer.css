@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Ambroise";
+    src: url("../asset/fonts/ambroise-regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 .site-footer {
     position: relative;
     display: flex;
@@ -127,5 +135,20 @@
         margin: 0 auto 0.12em;
         font-size: clamp(3.8rem, 15vw, 6rem);
         letter-spacing: -0.05em;
+    }
+}
+
+/* Signature du footer : police Ambroise (empattements raffinés) */
+.site-footer .site-footer-signature {
+    font-family: "Ambroise", "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(2.6rem, 11vw, 19rem);
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+}
+
+@media (max-width: 600px) {
+    .site-footer .site-footer-signature {
+        font-size: clamp(2.1rem, 10.6vw, 4rem);
+        letter-spacing: 0;
     }
 }

@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const playIcon = document.createElement('span');
         playIcon.className = 'beauty-gallery-play-icon';
         playIcon.setAttribute('aria-hidden', 'true');
-        playIcon.textContent = '▶';
+        playIcon.innerHTML = '<svg class="ui-icon ui-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>';
         openButton.append(poster, playIcon);
         media.append(openButton);
 

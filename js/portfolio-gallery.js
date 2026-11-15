@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (playButton instanceof HTMLButtonElement) {
             playButton.hidden = false;
             playButton.disabled = false;
-            playButton.textContent = '▶ Lire la vidéo';
+            playButton.innerHTML = '<svg class="ui-icon ui-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg> Lire la vidéo';
             delete playButton.dataset.retry;
         }
     };
@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const playButton = document.createElement('button');
         playButton.className = 'portfolio-video-load-button';
         playButton.type = 'button';
-        playButton.textContent = '▶ Lire la vidéo';
+        playButton.innerHTML = '<svg class="ui-icon ui-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg> Lire la vidéo';
         playButton.setAttribute('aria-label', `Lire ${asset.title}`);
 
         const showError = (attempt, message) => {

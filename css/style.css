@@ -8310,3 +8310,671 @@ html.js.page-preloader-done .hero::after {
         width: clamp(108px, 32vw, 132px);
     }
 }
+
+/* ===== Portfolio vidéo : défilement horizontal sans rebond ===== */
+.portfolio-filmstrip {
+    --portfolio-gutter: clamp(24px, 4.2vw, 76px);
+    /* L'aimant aligne les cartes sur la marge et non sur le bord de l'écran */
+    scroll-padding-inline: var(--portfolio-gutter);
+    /* Supprime l'effet élastique aux extrémités (iOS / Android) */
+    overscroll-behavior-x: none;
+    /* Le défilement doux est géré par les flèches en JS ; au doigt, le natif évite les à-coups */
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+}
+
+/* Espace de fin : la marge droite est prise en compte, la dernière carte peut s'aligner */
+.portfolio-video-track::after {
+    flex: 0 0 calc(var(--portfolio-gutter) - 0.25rem);
+    content: "";
+}
+
+@media (max-width: 600px) {
+    .portfolio-filmstrip {
+        --portfolio-gutter: 20px;
+    }
+
+    /* Un balayage rapide peut passer plusieurs cartes, sans être bloqué à chaque carte */
+    .portfolio-video-card {
+        scroll-snap-stop: normal;
+    }
+}
+
+/* ===== Pop-up « Lire plus » : panneau qui monte du bas, collé aux bords ===== */
+.home-detail-dialog {
+    inset: auto 0 0;
+    width: min(760px, 100vw);
+    max-width: 100vw;
+    max-height: min(92svh, 920px);
+    margin: 0 auto;
+    padding: 0 0 env(safe-area-inset-bottom);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -18px 60px rgba(0, 0, 0, 0.45);
+}
+
+.home-detail-dialog[open] {
+    animation: home-detail-sheet-in 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.home-detail-dialog.is-closing {
+    animation: home-detail-sheet-out 320ms cubic-bezier(0.55, 0, 0.75, 0.2) both;
+}
+
+.home-detail-dialog[open]::backdrop {
+    animation: home-detail-backdrop-in 420ms ease both;
+}
+
+.home-detail-dialog.is-closing::backdrop {
+    animation: home-detail-backdrop-out 320ms ease both;
+}
+
+/* Petite poignée en haut du panneau */
+.home-detail-dialog::before {
+    display: block;
+    width: 44px;
+    height: 4px;
+    margin: 10px auto 0;
+    border-radius: 999px;
+    background: rgba(245, 240, 232, 0.28);
+    content: "";
+}
+
+.home-detail-content {
+    padding: 20px clamp(20px, 5vw, 40px) 28px;
+    overflow-wrap: anywhere;
+}
+
+.home-detail-dialog .home-detail-image,
+.home-detail-dialog .home-detail-video {
+    max-width: 100%;
+}
+
+.home-detail-close {
+    top: 16px;
+    right: 16px;
+    border: 0;
+    background: rgba(245, 240, 232, 0.1);
+}
+
+.home-detail-close:hover,
+.home-detail-close:focus-visible {
+    background: rgba(245, 240, 232, 0.2);
+}
+
+.home-detail-close:focus-visible {
+    outline: 2px solid #d6bd8c;
+    outline-offset: 2px;
+}
+
+@keyframes home-detail-sheet-in {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes home-detail-sheet-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes home-detail-backdrop-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes home-detail-backdrop-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@media (min-width: 801px) {
+    .home-detail-dialog {
+        border-radius: 24px 24px 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-detail-dialog[open],
+    .home-detail-dialog.is-closing,
+    .home-detail-dialog[open]::backdrop,
+    .home-detail-dialog.is-closing::backdrop {
+        animation-duration: 0.01ms;
+    }
+}
+
+.home-detail-dialog .home-detail-eyebrow,
+.home-detail-dialog .home-detail-content h2 {
+    padding-right: 52px;
+}
+
+/* ===== « Des instants en images » : commentaire de chaque carte ===== */
+.testimonial-card-comment {
+    position: relative;
+    margin: 20px 0 22px;
+    padding-left: 16px;
+    color: rgba(245, 240, 232, 0.86) !important;
+    font-family: var(--font-title);
+    font-size: clamp(17px, 1.4vw, 19px);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.testimonial-card-comment::before {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(232, 213, 165, 0.85), rgba(232, 213, 165, 0.1));
+    content: "";
+}
+
+/* ===== Personnalités (mobile) : le rôle passe dans la colonne de droite ===== */
+@media (max-width: 600px) {
+    .personality-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 42%);
+        align-items: center;
+        column-gap: 14px;
+    }
+
+    .personality-field {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .personality-row h3 {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .personality-role {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        justify-self: end;
+        text-align: right;
+    }
+}
+
+@media (max-width: 600px) {
+    .personality-row,
+    .personality-row:hover {
+        padding-right: 4px;
+    }
+}
+
+/* Mobile : la photo flotte au-dessus de la ligne active pour ne masquer ni le nom ni le rôle */
+@media (max-width: 600px) {
+    .personality-row .personality-image {
+        top: auto;
+        right: 4px;
+        bottom: calc(100% - 10px);
+        transform: translateY(10px) scale(0.96);
+        transform-origin: bottom right;
+    }
+
+    .personality-row.is-active .personality-image {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =====================================================================
+   Formats (« Une approche sur-mesure ») : nouveau design mobile
+   ===================================================================== */
+@media (max-width: 800px) {
+    #formats .formats-track {
+        grid-auto-columns: calc(100vw - 40px);
+        align-items: stretch;
+        gap: 12px;
+        padding: 0 20px 8px;
+        overscroll-behavior-x: none;
+        scroll-behavior: auto;
+        scroll-padding-inline: 20px;
+    }
+
+    /* Les flèches ne recouvrent plus la carte : elles passent dans la barre du bas */
+    #formats .formats-side-arrow {
+        display: none;
+    }
+
+    #formats .format-card {
+        position: relative;
+        display: flex;
+        min-height: 0;
+        aspect-ratio: auto;
+        padding: 26px 22px 22px;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(232, 213, 165, 0.26) !important;
+        border-radius: 18px;
+        background:
+            radial-gradient(120% 70% at 100% 0%, rgba(232, 213, 165, 0.14), transparent 60%),
+            linear-gradient(165deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02)) !important;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+    }
+
+    #formats .format-price {
+        display: inline-flex;
+        margin: 0 0 18px;
+        padding: 8px 14px;
+        align-self: flex-start;
+        border: 1px solid rgba(232, 213, 165, 0.4);
+        border-radius: 999px;
+        background: rgba(232, 213, 165, 0.12);
+        color: #e8d5a5 !important;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        line-height: 1;
+    }
+
+    #formats .format-card h3 {
+        margin: 0 0 12px;
+        font-size: clamp(26px, 7.4vw, 30px);
+        line-height: 1.12;
+    }
+
+    #formats .format-description {
+        color: rgba(245, 240, 232, 0.76) !important;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    #formats .format-card ul {
+        margin: 20px 0 24px;
+        padding: 18px 0 0;
+        gap: 12px;
+        border-top: 1px solid rgba(245, 240, 232, 0.14);
+        border-bottom: 0;
+    }
+
+    #formats .format-card li {
+        padding-left: 28px;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+
+    #formats .format-card li::before {
+        top: 0.1em;
+        width: 16px;
+        height: 16px;
+        border-color: #d6bd8c;
+        background: rgba(214, 189, 140, 0.12);
+    }
+
+    #formats .format-card li::after {
+        top: 0.38em;
+        left: 7px;
+        border-color: #e8d5a5;
+    }
+
+    #formats .format-card > a {
+        display: flex;
+        min-height: 50px;
+        margin-top: auto;
+        padding: 0 18px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid rgba(232, 213, 165, 0.6);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        transition: background-color 200ms ease, border-color 200ms ease;
+    }
+
+    #formats .format-card > a span {
+        font-size: 16px;
+    }
+
+    #formats .format-card > a:hover,
+    #formats .format-card > a:focus-visible {
+        border-color: #e8d5a5;
+        background: #e8d5a5;
+    }
+
+    #formats .format-card > a:hover,
+    #formats .format-card > a:focus-visible,
+    #formats .format-card > a:hover span,
+    #formats .format-card > a:focus-visible span {
+        color: #1b1511 !important;
+    }
+
+    /* --- Barre de navigation : ← compteur + progression → --- */
+    #formats .formats-controls {
+        display: flex;
+        margin: 22px auto 0;
+        padding: 0 20px;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    #formats .formats-controls button {
+        width: 48px;
+        height: 48px;
+        border: 1px solid rgba(232, 213, 165, 0.55);
+        background: rgba(23, 18, 14, 0.5);
+        font-size: 18px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        transition: opacity 240ms ease, transform 200ms ease, background-color 200ms ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #formats .formats-controls button:active {
+        transform: scale(0.92);
+    }
+
+    #formats .formats-controls button:not(:disabled):hover,
+    #formats .formats-controls button:not(:disabled):focus-visible {
+        background: #e8d5a5;
+    }
+
+    #formats .formats-controls button:not(:disabled):hover span,
+    #formats .formats-controls button:not(:disabled):focus-visible span {
+        color: #1b1511 !important;
+    }
+
+    #formats .formats-controls button:disabled {
+        opacity: 0.28;
+    }
+
+    #formats .formats-count {
+        display: grid;
+        min-width: 110px;
+        gap: 10px;
+        justify-items: center;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+    }
+
+    #formats .formats-count::after {
+        width: 100%;
+        height: 2px;
+        border-radius: 2px;
+        background:
+            linear-gradient(#e8d5a5, #e8d5a5) left / calc(var(--formats-progress, 0.2) * 100%) 100% no-repeat,
+            rgba(245, 240, 232, 0.16);
+        content: "";
+        transition: background-size 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #formats .formats-count::after,
+    #formats .formats-controls button {
+        transition: none;
+    }
+}
+
+/* ===== « Des instants en images » : cartes uniformes ===== */
+.testimonials-section .testimonial-card-top {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 18px;
+}
+
+/* Le bloc titre + libellé est éclaté dans la grille */
+.testimonials-section .testimonial-card-top > div {
+    display: contents;
+}
+
+.testimonials-section .testimonial-card-top .testimonial-avatar {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.testimonials-section .testimonial-card-top p {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+}
+
+/* Titre sur toute la largeur, hauteur fixe de 2 lignes : les commentaires démarrent tous au même niveau */
+.testimonials-section .testimonial-card-top h3 {
+    display: -webkit-box;
+    min-height: calc(2 * 1.15em);
+    grid-column: 1 / -1;
+    grid-row: 2;
+    overflow: hidden;
+    font-size: clamp(22px, 6vw, 26px);
+    line-height: 1.15;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.testimonials-section .testimonial-card-comment {
+    margin: 18px 0 24px;
+}
+
+/* « Voir la vidéo » : lien texte, sans fond ni flou */
+.testimonials-section .testimonial-project-button,
+.testimonials-section .testimonial-project-button:hover,
+.testimonials-section .testimonial-project-button:focus-visible {
+    background: transparent !important;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* ===== Pop-up vidéo : même panneau du bas que « Lire plus » ===== */
+.testimonial-project-dialog {
+    inset: auto 0 0;
+    width: min(760px, 100vw);
+    max-width: 100vw;
+    max-height: min(94svh, 940px);
+    margin: 0 auto;
+    padding: 0 0 env(safe-area-inset-bottom);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    border-radius: 22px 22px 0 0;
+    background: #211c18;
+    box-shadow: 0 -18px 60px rgba(0, 0, 0, 0.45);
+}
+
+.testimonial-project-dialog[open] {
+    animation: home-detail-sheet-in 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.testimonial-project-dialog.is-closing {
+    animation: home-detail-sheet-out 320ms cubic-bezier(0.55, 0, 0.75, 0.2) both;
+}
+
+.testimonial-project-dialog[open]::backdrop {
+    animation: home-detail-backdrop-in 420ms ease both;
+}
+
+.testimonial-project-dialog.is-closing::backdrop {
+    animation: home-detail-backdrop-out 320ms ease both;
+}
+
+.testimonial-project-dialog .testimonial-project-media {
+    border-radius: 22px 22px 0 0;
+}
+
+.testimonial-project-dialog .testimonial-project-media::before {
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    left: 50%;
+    width: 44px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(245, 240, 232, 0.4);
+    content: "";
+    transform: translateX(-50%);
+}
+
+.testimonial-project-dialog .testimonial-project-caption {
+    padding: 22px clamp(20px, 5vw, 40px) 8px;
+    overflow-wrap: anywhere;
+}
+
+.testimonial-project-dialog .testimonial-project-description {
+    font-size: 14px;
+}
+
+.testimonial-project-dialog .testimonial-project-status {
+    padding: 0 clamp(20px, 5vw, 40px) 24px;
+}
+
+.testimonial-project-dialog .testimonial-project-close {
+    top: 22px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    background: rgba(23, 18, 14, 0.6);
+}
+
+/* ===== Pop-ups en panneau : barre de défilement verticale masquée ===== */
+.home-detail-dialog,
+.testimonial-project-dialog {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.home-detail-dialog::-webkit-scrollbar,
+.testimonial-project-dialog::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .testimonial-project-dialog {
+        width: 100vw;
+        border-radius: 22px 22px 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .testimonial-project-dialog[open],
+    .testimonial-project-dialog.is-closing,
+    .testimonial-project-dialog[open]::backdrop,
+    .testimonial-project-dialog.is-closing::backdrop {
+        animation-duration: 0.01ms;
+    }
+}
+
+.testimonial-project-dialog .testimonial-project-cta {
+    top: 26px;
+}
+
+/* ===== Formats : nouvelle icône de liste (pastille dorée + coche SVG) ===== */
+#formats .format-card li {
+    padding-left: 32px;
+}
+
+#formats .format-card li::before {
+    top: 0.05em;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f1dfb2, #c9a86a);
+    box-shadow: 0 2px 8px rgba(201, 168, 106, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+#formats .format-card li::after {
+    top: 0.05em;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background: #1b1511;
+    transform: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 20px 20px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 12.5 3 3 6-6.5'/%3E%3C/svg%3E") center / 20px 20px no-repeat;
+}
+
+/* ===== Formats (mobile) : flèches centrées sur la hauteur de la carte ===== */
+@media (max-width: 800px) {
+    #formats .formats-carousel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #formats .formats-track {
+        grid-area: 1 / 1;
+    }
+
+    #formats .formats-side-arrow {
+        position: relative;
+        z-index: 3;
+        top: auto;
+        right: auto;
+        left: auto;
+        display: grid;
+        grid-area: 1 / 1;
+        align-self: center;
+        /* 8px en bas = marge basse de la piste : centrage exact sur la carte */
+        margin: 0 12px 8px;
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(245, 240, 232, 0.4);
+        background: rgba(23, 18, 14, 0.55);
+        font-size: 18px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        transform: none;
+        transition: opacity 260ms ease, transform 200ms ease, background-color 200ms ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #formats .formats-side-prev {
+        justify-self: start;
+    }
+
+    #formats .formats-side-next {
+        justify-self: end;
+    }
+
+    #formats .formats-side-arrow:active {
+        transform: scale(0.92);
+    }
+
+    #formats .formats-side-arrow:disabled {
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.85);
+    }
+
+    /* La barre du bas ne garde que le compteur et la progression */
+    #formats .formats-controls {
+        grid-area: 2 / 1;
+    }
+
+    #formats .formats-controls button {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    /* 20px de marge de la carte + 12px à l'intérieur de la carte */
+    #formats .formats-side-arrow {
+        margin: 0 32px 8px;
+    }
+}

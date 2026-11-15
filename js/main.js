@@ -751,6 +751,39 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    // Pop-ups en panneau (« Lire plus », vidéo) : défilement interne + fermeture animée vers le bas.
+    const setupSheetDialog = dialog => {
+        // Lenis intercepte la molette : on le met en pause tant que le panneau est ouvert.
+        dialog.setAttribute('data-lenis-prevent', '');
+        new MutationObserver(() => {
+            if (dialog.open) lenisInstance?.stop();
+        }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+        dialog.addEventListener('close', () => {
+            if (!document.querySelector('dialog[open]')) lenisInstance?.start();
+        });
+    };
+    const closeSheetDialog = dialog => {
+        if (!dialog.open || dialog.classList.contains('is-closing')) return;
+        if (prefersReducedMotion) {
+            dialog.close();
+            return;
+        }
+        dialog.classList.add('is-closing');
+        let finished = false;
+        const finishClose = () => {
+            if (finished) return;
+            finished = true;
+            dialog.removeEventListener('animationend', onAnimationEnd);
+            dialog.classList.remove('is-closing');
+            dialog.close();
+        };
+        const onAnimationEnd = event => {
+            if (event.target === dialog && !event.pseudoElement) finishClose();
+        };
+        dialog.addEventListener('animationend', onAnimationEnd);
+        window.setTimeout(finishClose, 400);
+    };
+
     const testimonialProjectDialog = document.querySelector('#testimonial-project-dialog');
     const testimonialProjectVideo = testimonialProjectDialog?.querySelector('.testimonial-project-video');
     const testimonialProjectTitle = testimonialProjectDialog?.querySelector('#testimonial-project-title');
@@ -768,9 +801,12 @@ window.addEventListener('DOMContentLoaded', () => {
         testimonialProjectClose instanceof HTMLButtonElement
     ) {
         let activeProjectTrigger = null;
-        const closeTestimonialProject = () => {
-            if (testimonialProjectDialog.open) testimonialProjectDialog.close();
-        };
+        setupSheetDialog(testimonialProjectDialog);
+        const closeTestimonialProject = () => closeSheetDialog(testimonialProjectDialog);
+        testimonialProjectDialog.addEventListener('cancel', event => {
+            event.preventDefault();
+            closeTestimonialProject();
+        });
         const resetTestimonialProject = () => {
             testimonialProjectVideo.pause();
             testimonialProjectVideo.removeAttribute('src');
@@ -836,9 +872,13 @@ window.addEventListener('DOMContentLoaded', () => {
         homeDetailClose instanceof HTMLButtonElement
     ) {
         let activeDetailTrigger = null;
-        const closeHomeDetail = () => {
-            if (homeDetailDialog.open) homeDetailDialog.close();
-        };
+        // Fermeture animée : le panneau redescend avant la fermeture réelle du dialogue.
+        setupSheetDialog(homeDetailDialog);
+        const closeHomeDetail = () => closeSheetDialog(homeDetailDialog);
+        homeDetailDialog.addEventListener('cancel', event => {
+            event.preventDefault();
+            closeHomeDetail();
+        });
         const resetHomeDetail = () => {
             homeDetailVideo.pause();
             homeDetailVideo.removeAttribute('src');
@@ -931,6 +971,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const activeIndex = Number(activeCard?.dataset.formatIndex ?? 0);
             formatsCount.textContent =
                 `${String(activeIndex + 1).padStart(2, '0')} / ${String(formatCards.length).padStart(2, '0')}`;
+            formatsCount.style.setProperty('--formats-progress', String((activeIndex + 1) / formatCards.length));
             const atStart = formatsTrack.scrollLeft <= 1;
             const atEnd = formatsTrack.scrollLeft >= formatsTrack.scrollWidth - formatsTrack.clientWidth - 1;
             formatPreviousButtons.forEach(button => {
@@ -2161,7 +2202,9 @@ window.addEventListener('DOMContentLoaded', () => {
         const updateContactSubmitLabel = () => {
             const channel = contactForm.querySelector('input[name="channel"]:checked');
             const useEmail = channel?.value === 'email';
-            contactSubmitIcon.textContent = useEmail ? '✉' : '↗';
+            contactSubmitIcon.innerHTML = useEmail
+                ? '<svg class="ui-icon ui-icon-mail" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+                : '<svg class="ui-icon ui-icon-arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg>';
             contactSubmitLabel.textContent = useEmail
                 ? 'Envoyer ma demande par e-mail'
                 : 'Envoyer ma demande via WhatsApp';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coco-miracles-site-v15';
+const CACHE_NAME = 'coco-miracles-site-v28';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
@@ -6,24 +6,25 @@ const CORE_ASSETS = [
     './galerie-beaute.html',
     './galerie-evenements.html',
     './event-planner.html',
-    './css/style.css?v=prestations-center-v1',
+    './css/style.css?v=svg-icons-v2',
     './css/galleries.css?v=overscroll-fix-v2',
-    './css/footer.css?v=footer-v1',
-    './css/site-header.css?v=menu-pro-v2',
+    './css/footer.css?v=ambroise-v2',
+    './css/site-header.css?v=svg-icons-v1',
     './js/network.js?v=network-v1',
-    './js/site-header.js?v=menu-pro-v1',
+    './js/site-header.js?v=svg-icons-v1',
     './js/footer.js?v=footer-v1',
     './js/portfolio-videos.js?v=local-video-gallery-v3',
-    './js/portfolio-gallery.js?v=local-video-gallery-v4',
+    './js/portfolio-gallery.js?v=svg-icons-v1',
     './js/beauty-videos.js?v=beauty-gallery-v2',
-    './js/main.js?v=prestations-overlay-v1',
+    './js/main.js?v=svg-icons-v1',
     './js/chatbot.js?v=chat-shared-transition-v2',
     './js/text-roll.js?v=text-roll-v5',
     './js/nav-transition.js?v=nav-transition-v3',
     './js/rose-snow.js?v=lazy-network-v1',
     './asset/bg/new-optimized.webp',
     './gg.webp',
-    './asset/logo/logo-coco.webp'
+    './asset/logo/logo-coco.webp',
+    './asset/fonts/ambroise-regular.otf'
 ];
 
 const OFFLINE_PAGE = '<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hors connexion — Coco Miracles</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#211c18;color:#f5f0e8;font-family:Georgia,serif;text-align:center;padding:24px}button{margin-top:18px;padding:12px 22px;border:1px solid #f5f0e8;border-radius:999px;background:none;color:inherit;font:inherit;cursor:pointer}</style><body><main><h1>Connexion indisponible</h1><p>Vérifiez votre connexion, puis réessayez.</p><button onclick="location.reload()">Réessayer</button></main></body></html>';
