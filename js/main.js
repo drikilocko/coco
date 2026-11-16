@@ -937,7 +937,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 testimonialProjectDescription.textContent = projectCaption;
                 testimonialProjectStatus.textContent = '';
                 testimonialProjectVideo.poster = asset.poster;
-                testimonialProjectVideo.src = asset.src;
+                // data-video-start : la vidéo démarre au moment où la personne de la carte prend la parole
+                const startSeconds = Number(button.dataset.videoStart);
+                testimonialProjectVideo.src = startSeconds > 0 ? `${asset.src}#t=${startSeconds}` : asset.src;
                 testimonialProjectVideo.load();
                 testimonialProjectDialog.showModal();
                 testimonialProjectVideo.play().catch(error => {

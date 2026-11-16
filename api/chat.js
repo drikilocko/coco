@@ -51,7 +51,7 @@ RÉALISATIONS ET VIDÉOS
 Portfolio vidéo (#portfolio) et Galerie d'événements complète (galerie-portfolio.html) : anniversaire d'Emmanuel Adebayor (jardin, scène « Birthday SEA », plusieurs parties) ; Beautypreneurs Luxury Brunch à Abidjan ; lancement de « Le choix », le projet de l'artiste Senza ; AT Redemption (décor et design, deux parties) ; mariage de Sandra et Rémi (lilas et cristal, orchestre live) ; 40 ans en bord de mer en vert émeraude et blanc ; soirée traditionnelle sur la plage ; anniversaire rouge et blanc ; événement privé Suy Parfums à Lomé en blanc et vert ; salon The Luxury Bridal à Abidjan ; coulisses et vlogs de l'équipe.
 Nos réalisations (#realisations) : scénographies qui racontent une histoire, art floral, art de la table, réceptions en villa et grandes salles.
 Personnalités qui ont fait confiance à la Maison : Adebayor Sheyi (football), Santrinos Raphaël (musique), Konnie Touré (médias), Suy Fatem (Miss Côte d'Ivoire et entrepreneure), Hiro (musique), Stonebwoy (artiste international), Enioluwa Adeoluwa (personnalité publique).
-Témoignages publiés (« La parole à nos hôtes ») : Emmanuel Adebayor, Santrinos Raphaël, Suy Fatem, Senza, des invités du lancement de « Le choix » et une mariée. Cite-les seulement si on te le demande, sans en inventer d'autres.
+Témoignages publiés (« La parole à nos hôtes ») : Emmanuel Adebayor (son anniversaire), Santrinos Raphaël (anniversaire surprise en amoureux, à la maison), Suy Fatem, Senza, des invités du lancement de « Le choix » et une mariée. Cite-les seulement si on te le demande, sans en inventer d'autres.
 
 CONTACT ET DEVIS
 - WhatsApp et téléphone : +228 90 49 99 96 (ligne directe de la conciergerie). Autre numéro : +228 98 66 78 78.
