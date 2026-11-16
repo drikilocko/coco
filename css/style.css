@@ -9455,37 +9455,233 @@ html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, 
     }
 }
 
-/* Un seul fond photo fixe (asset/bg/img.jpg) partagé par « En chiffres », la bande de logos et « Parlons de votre projet ».
-   Fixé sur l’écran, il paraît continu d’une section à l’autre pendant le défilement. */
-html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
-    position: relative;
-    isolation: isolate;
-    background-color: #211c18;
-    background-image:
-        linear-gradient(rgba(17, 13, 10, 0.64), rgba(17, 13, 10, 0.64)),
-        url("../asset/bg/img.jpg");
-    background-position: center, center 30%;
-    background-size: cover, cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed, fixed;
+/* Papiers peints floraux en relief à la place des stickers sur les sections sable */
+html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+    background-color: #e8e4df !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 
-/* Écrans tactiles : background-attachment: fixed n’y fonctionne pas ;
-   on utilise un calque fixe découpé à la taille de chaque section. */
-@media (hover: none) and (pointer: coarse) {
-    html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
-        background: transparent;
-        clip-path: inset(0);
+html body main > section.sand-theme#prestations,
+html body main > section.sand-theme#mise-en-beaute {
+    background-image: url("../asset/bg/2.jpg") !important;
+}
+
+html body main > section.sand-theme#portfolio {
+    background-image: url("../asset/bg/3.jpg") !important;
+}
+
+html body main > section.sand-theme#realisations {
+    background-image: url("../asset/bg/4.jpg") !important;
+}
+
+html body main > section.sand-theme .bg-sticker {
+    display: none;
+}
+
+/* Mobile / tablette : les sections sont bien plus hautes que larges ; « cover » zoomait trop l'image.
+   L'image garde la largeur de l'écran et se répète vers le bas. */
+@media (max-width: 900px) {
+    html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+        background-size: 100% auto !important;
+        background-repeat: repeat-y !important;
+    }
+}
+
+/* Cartes « Nos prestations » : pas de fond, uniquement le trait de contour */
+html body main > section.sand-theme#prestations .prestation-card,
+html body main > section.sand-theme#prestations .prestation-card:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+html body main > section.sand-theme#prestations .prestation-card {
+    border: 1px solid rgba(43, 35, 28, 0.38) !important;
+}
+
+html body main > section.sand-theme#prestations .prestation-card:hover {
+    border-color: rgba(154, 118, 62, 0.85) !important;
+}
+
+/* =====================================================================
+   « Le visage de la Maison » sur mobile : lecture structurée
+   Portrait → nom & rôle → citation → présentation → engagements → contact
+   ===================================================================== */
+@media (max-width: 900px) {
+    html body main > section#direction .direction-profile {
+        display: flex;
+        padding: 28px 0 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border-top: 0;
     }
 
-    html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact)::before {
-        position: fixed;
-        z-index: -1;
-        inset: 0;
-        background:
-            linear-gradient(rgba(17, 13, 10, 0.64), rgba(17, 13, 10, 0.64)),
-            #211c18 url("../asset/bg/img.jpg") center 30% / cover no-repeat;
-        content: "";
-        pointer-events: none;
+    html body main > section#direction .direction-portrait-column {
+        display: contents;
+    }
+
+    html body main > section#direction .direction-portrait {
+        order: 1;
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+        aspect-ratio: 4 / 5;
+        border-radius: 4px;
+    }
+
+    /* Le nom est affiché sous la photo : on garde seulement le logo et le bouton « Agrandir » sur l'image */
+    html body main > section#direction .direction-portrait-caption {
+        display: none;
+    }
+
+    html body main > section#direction .direction-identity {
+        display: block;
+        order: 2;
+        margin: 22px 0 0;
+        text-align: left;
+    }
+
+    html body main > section#direction .direction-identity :is(h3, .direction-role) {
+        text-align: left !important;
+    }
+
+    html body main > section#direction .direction-identity h3 {
+        font-size: clamp(28px, 8vw, 36px);
+        line-height: 1.1;
+    }
+
+    html body main > section#direction .direction-identity .direction-role {
+        margin-top: 8px;
+        color: var(--hero-gold) !important;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+    }
+
+    html body main > section#direction .direction-copy {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        margin: 34px 0 0;
+        padding-top: 30px;
+        border-top: 1px solid rgba(245, 240, 232, 0.16);
+    }
+
+    html body main > section#direction .direction-copy blockquote {
+        margin: 0 0 22px;
+        padding: 2px 0 2px 18px;
+        border-left: 2px solid var(--hero-gold);
+        font-size: clamp(19px, 5.4vw, 22px);
+        line-height: 1.45;
+    }
+
+    html body main > section#direction .direction-description {
+        font-size: 15px;
+        line-height: 1.75;
+        opacity: 0.86;
+    }
+
+    html body main > section#direction .direction-values {
+        display: grid;
+        order: 4;
+        margin: 34px 0 0;
+        padding: 0;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        border-top: 0;
+    }
+
+    html body main > section#direction .direction-values li,
+    html body main > section#direction .direction-values li:first-child,
+    html body main > section#direction .direction-values li:last-child {
+        display: grid;
+        padding: 18px 20px;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        border: 1px solid rgba(245, 240, 232, 0.16);
+        border-left: 2px solid var(--hero-gold);
+        border-radius: 4px;
+        background: rgba(17, 13, 10, 0.32);
+    }
+
+    html body main > section#direction .direction-values strong {
+        color: var(--hero-gold) !important;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+    }
+
+    html body main > section#direction .direction-values span {
+        font-size: 14px;
+        line-height: 1.55;
+        opacity: 0.9;
+    }
+
+    html body main > section#direction .direction-contact {
+        order: 5;
+        width: 100%;
+        min-height: 54px;
+        margin-top: 28px;
+        border-color: rgba(245, 240, 232, 0.4);
+        font-size: 11px;
+    }
+}
+
+
+/* =====================================================================
+   Fonds photo en parallax (js/parallax.js)
+   - « La parole à nos hôtes », Formats, « Nos personnalités » : réception aux lustres
+   - « En chiffres », bande de logos, « Parlons de votre projet » : photo de la mariée
+   La photo est un peu plus haute que la section et glisse doucement au défilement.
+   Seules les sections visibles sont animées (transform GPU, pas de repeinte).
+   ===================================================================== */
+html body main > :is(
+    section.testimonials-section, section.formats-section, section.personalities-section,
+    section.numbers-section, section.logo-marquee-before-formats, section.project-contact
+) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #211c18;
+}
+
+html body main > :is(
+    section.testimonials-section, section.formats-section, section.personalities-section,
+    section.numbers-section, section.logo-marquee-before-formats, section.project-contact
+)::before {
+    position: absolute;
+    z-index: -1;
+    top: -18%;
+    right: 0;
+    bottom: -18%;
+    left: 0;
+    background:
+        linear-gradient(rgba(17, 13, 10, 0.62), rgba(17, 13, 10, 0.62)),
+        #211c18 var(--parallax-image) center / cover no-repeat;
+    content: "";
+    pointer-events: none;
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+}
+
+html body main > :is(section.testimonials-section, section.formats-section, section.personalities-section) {
+    --parallax-image: url("../asset/bg/reception-lustres.jpg");
+}
+
+html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
+    --parallax-image: url("../asset/bg/img.jpg");
+}
+
+/* La bande de logos est très basse : on cadre sur le centre de la photo */
+html body main > section.logo-marquee-before-formats::before {
+    top: -60%;
+    bottom: -60%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html body main > :is(
+        section.testimonials-section, section.formats-section, section.personalities-section,
+        section.numbers-section, section.logo-marquee-before-formats, section.project-contact
+    )::before {
+        transform: none;
     }
 }
