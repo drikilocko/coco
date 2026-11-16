@@ -1,11 +1,11 @@
-const CACHE_NAME = 'coco-miracles-site-v61';
+const CACHE_NAME = 'coco-miracles-site-v62';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
     './galerie-portfolio.html',
     './galerie-beaute.html',
     './event-planner.html',
-    './css/style.css?v=wallpaper-soft-v1',
+    './css/style.css?v=sticky-back-v1',
     './css/galleries.css?v=detail-sheet-v2',
     './css/footer.css?v=ambroise-v2',
     './css/site-header.css?v=consult-v3',
@@ -16,7 +16,6 @@ const CORE_ASSETS = [
     './js/portfolio-gallery.js?v=play-now-v1',
     './js/beauty-videos.js?v=beauty-gallery-v2',
     './js/main.js?v=shared-bg-v2',
-    './js/parallax.js?v=parallax-v2',
     './js/detail-content.js?v=detail-content-v3',
     './js/detail-sheet.js?v=detail-sheet-v1',
     './js/page-reveal.js?v=page-reveal-v1',

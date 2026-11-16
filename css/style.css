@@ -9629,60 +9629,59 @@ html body main > section.sand-theme#prestations .prestation-card:hover {
 
 
 /* =====================================================================
-   Fonds photo en parallax (js/parallax.js)
+   Fonds photo FIXES (sticky), continus d’une section à l’autre :
    - « La parole à nos hôtes », Formats, « Nos personnalités » : réception aux lustres
    - « En chiffres », bande de logos, « Parlons de votre projet » : photo de la mariée
-   La photo est un peu plus haute que la section et glisse doucement au défilement.
-   Seules les sections visibles sont animées (transform GPU, pas de repeinte).
    ===================================================================== */
+html body main > :is(section.testimonials-section, section.formats-section, section.personalities-section) {
+    --sticky-image: url("../asset/bg/reception-lustres.jpg");
+    --sticky-position: center 40%;
+}
+
+html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
+    --sticky-image: url("../asset/bg/img.jpg");
+    --sticky-position: center 30%;
+}
+
 html body main > :is(
     section.testimonials-section, section.formats-section, section.personalities-section,
     section.numbers-section, section.logo-marquee-before-formats, section.project-contact
 ) {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
-    background: #211c18;
-}
-
-html body main > :is(
-    section.testimonials-section, section.formats-section, section.personalities-section,
-    section.numbers-section, section.logo-marquee-before-formats, section.project-contact
-)::before {
-    position: absolute;
-    z-index: -1;
-    top: -18%;
-    right: 0;
-    bottom: -18%;
-    left: 0;
-    background:
+    background-color: #211c18;
+    background-image:
         linear-gradient(rgba(17, 13, 10, 0.62), rgba(17, 13, 10, 0.62)),
-        #211c18 var(--parallax-image) center / cover no-repeat;
-    content: "";
-    pointer-events: none;
-    transform: translate3d(0, var(--parallax-y, 0px), 0);
+        var(--sticky-image);
+    background-position: center, var(--sticky-position);
+    background-size: cover, cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed, fixed;
 }
 
-html body main > :is(section.testimonials-section, section.formats-section, section.personalities-section) {
-    --parallax-image: url("../asset/bg/reception-lustres.jpg");
-}
+/* Écrans tactiles : background-attachment: fixed n’y fonctionne pas ;
+   un calque fixe découpé à la taille de chaque section donne le même rendu. */
+@media (hover: none) and (pointer: coarse) {
+    html body main > :is(
+        section.testimonials-section, section.formats-section, section.personalities-section,
+        section.numbers-section, section.logo-marquee-before-formats, section.project-contact
+    ) {
+        background: transparent;
+        clip-path: inset(0);
+    }
 
-html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
-    --parallax-image: url("../asset/bg/img.jpg");
-}
-
-/* La bande de logos est très basse : on cadre sur le centre de la photo */
-html body main > section.logo-marquee-before-formats::before {
-    top: -60%;
-    bottom: -60%;
-}
-
-@media (prefers-reduced-motion: reduce) {
     html body main > :is(
         section.testimonials-section, section.formats-section, section.personalities-section,
         section.numbers-section, section.logo-marquee-before-formats, section.project-contact
     )::before {
-        transform: none;
+        position: fixed;
+        z-index: -1;
+        inset: 0;
+        background:
+            linear-gradient(rgba(17, 13, 10, 0.62), rgba(17, 13, 10, 0.62)),
+            #211c18 var(--sticky-image) var(--sticky-position) / cover no-repeat;
+        content: "";
+        pointer-events: none;
     }
 }
 
