@@ -158,8 +158,9 @@ body.mobile-menu-open .site-chat {
 }
 
 .page-preloader.is-brand-visible .page-preloader-letter {
-    animation: preloader-letter-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(var(--letter-index) * 36ms);
+    /* « Bienvenue » (9 lettres) : 8 × 100 ms de décalage + 700 ms d’animation = 1,5 s */
+    animation: preloader-letter-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--letter-index) * 100ms);
 }
 
 @keyframes preloader-line-fill {

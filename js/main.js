@@ -176,8 +176,37 @@ window.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             pagePreloader.classList.add('is-brand-visible');
-            window.setTimeout(exitPreloader, prefersReducedMotion ? 20 : 1100);
+            // L'apparition lettre par lettre de « Bienvenue » dure 1,5 s (voir .page-preloader-letter)
+            window.setTimeout(exitPreloader, prefersReducedMotion ? 20 : 1500);
         };
+
+        // Attend qu'une image soit téléchargée et décodée (au plus 5 s, pour ne jamais bloquer le site)
+        const waitForImage = imageUrl => new Promise(resolve => {
+            if (!imageUrl) {
+                resolve(false);
+                return;
+            }
+            const image = new Image();
+            let settled = false;
+            const finishWaiting = loaded => {
+                if (settled) return;
+                settled = true;
+                window.clearTimeout(imageLoadTimeout);
+                resolve(loaded);
+            };
+            const imageLoadTimeout = window.setTimeout(() => finishWaiting(false), 5000);
+            const decodeImage = () => image.decode().then(() => finishWaiting(true)).catch(() => finishWaiting(image.naturalWidth > 0));
+            image.addEventListener('load', decodeImage, { once: true });
+            image.addEventListener('error', () => finishWaiting(false), { once: true });
+            image.src = imageUrl;
+            if (image.complete && image.naturalWidth > 0) decodeImage();
+        });
+
+        // Portrait de la section « Le visage de la Maison » (chargé en différé dans la page)
+        const directionPortrait = document.querySelector('.direction-portrait > img');
+        const waitForDirectionImage = () => waitForImage(
+            directionPortrait instanceof HTMLImageElement ? directionPortrait.currentSrc || directionPortrait.src : ''
+        );
 
         const waitForHeroImage = () => new Promise(resolve => {
             const preloadLink = document.querySelector('link[rel="preload"][as="image"]');
@@ -224,8 +253,10 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         Promise.all([
-            new Promise(resolve => window.setTimeout(resolve, prefersReducedMotion ? 20 : 1050)),
-            waitForHeroImage()
+            // Le trait doré se remplit en 1 050 ms dès l'affichage de la page (pas à partir d'ici)
+            new Promise(resolve => window.setTimeout(resolve, prefersReducedMotion ? 20 : Math.max(0, 1050 - performance.now()))),
+            waitForHeroImage(),
+            waitForDirectionImage()
         ]).then(([, heroImageLoaded]) => revealBrand(heroImageLoaded));
     }
 
