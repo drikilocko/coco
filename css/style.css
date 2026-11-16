@@ -9265,3 +9265,78 @@ html body :is(.portfolio-filmstrip, #testimonials-track, #formats-track) {
         overscroll-behavior-y: auto;
     }
 }
+
+/* Portfolio : carte « Voir plus » lisible (texte clair dans une pastille sombre) */
+html body main > section#portfolio .portfolio-next-link::before {
+    background: linear-gradient(180deg, rgba(28, 22, 18, 0.25), rgba(28, 22, 18, 0.78));
+}
+
+html body main > section#portfolio .portfolio-more-label {
+    display: inline-flex;
+    padding: 14px 24px;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(255, 250, 242, 0.75);
+    border-radius: 999px;
+    background: rgba(20, 16, 13, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    font-family: var(--font-title);
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1;
+}
+
+html body main > section#portfolio .portfolio-more-label,
+html body main > section#portfolio .portfolio-more-label * {
+    color: #fffaf2 !important;
+}
+
+html body main > section#portfolio .portfolio-more-arrow {
+    display: inline-flex;
+    font-size: 18px;
+}
+
+/* Portfolio : bouton « Voir plus » centré sous le carrousel */
+html body main > section#portfolio .portfolio-more-cta {
+    display: flex;
+    margin-top: clamp(28px, 4vw, 48px);
+    justify-content: center;
+}
+
+html body main > section#portfolio .portfolio-more-button {
+    display: inline-flex;
+    min-height: 54px;
+    padding: 0 34px;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #2b231c;
+    border-radius: 999px;
+    background: #2b231c;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+html body main > section#portfolio .portfolio-more-button,
+html body main > section#portfolio .portfolio-more-button * {
+    color: #fffaf2 !important;
+}
+
+html body main > section#portfolio .portfolio-more-button:hover,
+html body main > section#portfolio .portfolio-more-button:focus-visible {
+    border-color: #8c7451;
+    background: #8c7451;
+    transform: translateY(-2px);
+}
+
+/* Priorité sur la règle « texte foncé » des sections sable */
+html body main > section.sand-theme#portfolio .portfolio-more-card .portfolio-more-label,
+html body main > section.sand-theme#portfolio .portfolio-more-card .portfolio-more-label span,
+html body main > section.sand-theme#portfolio .portfolio-more-cta a.portfolio-more-button,
+html body main > section.sand-theme#portfolio .portfolio-more-cta a.portfolio-more-button span {
+    color: #fffaf2 !important;
+}
