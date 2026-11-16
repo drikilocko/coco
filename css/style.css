@@ -219,7 +219,7 @@ main {
     position: absolute;
     z-index: 0;
     inset: 0;
-    background: url("../gg.webp") center 15% / cover no-repeat;
+    background: url("../asset/bg/reception-lustres.jpg") center 15% / cover no-repeat;
     content: "";
 }
 
@@ -7916,7 +7916,7 @@ main > section {
 html.hero-image-unavailable .hero::before {
     background:
         linear-gradient(180deg, rgba(33, 28, 24, 0.4), rgba(33, 28, 24, 0.78)),
-        url("../gg.webp") center 15% / cover no-repeat,
+        url("../asset/bg/reception-lustres.jpg") center 15% / cover no-repeat,
         radial-gradient(ellipse at 50% 30%, #4a3a2e 0%, #211c18 70%);
 }
 

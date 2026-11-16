@@ -1,11 +1,11 @@
-const CACHE_NAME = 'coco-miracles-site-v72';
+const CACHE_NAME = 'coco-miracles-site-v74';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
     './galerie-portfolio.html',
     './galerie-beaute.html',
     './event-planner.html',
-    './css/style.css?v=touch-scroll-v2',
+    './css/style.css?v=hero-bg-v1',
     './css/galleries.css?v=detail-sheet-v2',
     './css/footer.css?v=ambroise-v2',
     './css/site-header.css?v=consult-v3',
@@ -25,6 +25,7 @@ const CORE_ASSETS = [
     './js/rose-snow.js?v=lazy-network-v1',
     './asset/bg/new-optimized.webp',
     './gg.webp',
+    './asset/bg/reception-lustres.jpg',
     './asset/logo/logo-coco.webp',
     './asset/fonts/ambroise-regular.otf'
 ];
