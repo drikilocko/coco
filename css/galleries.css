@@ -1067,3 +1067,36 @@ body.gallery-menu-open {
     max-height: none;
     aspect-ratio: auto;
 }
+
+/* =====================================================================
+   Galeries (événements, beauté) : papier peint floral fixe à la place du beige uni.
+   Un seul calque fixe derrière la page. L'accueil n'est pas concerné.
+   ===================================================================== */
+html:has(body.gallery-page:not(.event-planner-page)) {
+    background: #e8e4df;
+}
+
+body.gallery-page:not(.event-planner-page) {
+    background: transparent;
+}
+
+body.gallery-page:not(.event-planner-page)::before {
+    position: fixed;
+    z-index: -1;
+    inset: -8px;
+    background: #e8e4df var(--gallery-wallpaper, url("../asset/bg/3.jpg")) center top / cover no-repeat;
+    content: "";
+    pointer-events: none;
+}
+
+body.gallery-page.gallery-page-beauty::before {
+    --gallery-wallpaper: url("../asset/bg/4.jpg");
+}
+
+/* Grand écran : papier peint plus discret, comme sur l'accueil */
+@media (min-width: 1025px) and (hover: hover) {
+    body.gallery-page:not(.event-planner-page)::before {
+        filter: blur(2px);
+        opacity: 0.55;
+    }
+}

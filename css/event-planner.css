@@ -808,3 +808,64 @@
         aspect-ratio: 4 / 5;
     }
 }
+
+/* =====================================================================
+   Sections beiges : papiers peints floraux (2.jpg, 3.jpg, 4.jpg) à la place du beige uni
+   ===================================================================== */
+.event-planner-introduction,
+.event-planner-offers,
+.event-planner-backstage,
+.event-planner-gallery {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #e8e4df;
+}
+
+.event-planner-introduction::before,
+.event-planner-offers::before,
+.event-planner-backstage::before,
+.event-planner-gallery::before {
+    position: absolute;
+    z-index: -1;
+    inset: -8px;
+    background: var(--planner-wallpaper) center top / cover no-repeat;
+    content: "";
+    pointer-events: none;
+}
+
+.event-planner-introduction,
+.event-planner-gallery {
+    --planner-wallpaper: url("../asset/bg/2.jpg");
+}
+
+.event-planner-offers {
+    --planner-wallpaper: url("../asset/bg/3.jpg");
+}
+
+.event-planner-backstage {
+    --planner-wallpaper: url("../asset/bg/4.jpg");
+}
+
+/* Grand écran : plus discret (opacité réduite + léger flou), comme sur l'accueil */
+@media (min-width: 1025px) and (hover: hover) {
+    .event-planner-introduction::before,
+    .event-planner-offers::before,
+    .event-planner-backstage::before,
+    .event-planner-gallery::before {
+        filter: blur(2px);
+        opacity: 0.55;
+    }
+}
+
+/* Mobile / tablette : l'image garde la largeur de l'écran et se répète vers le bas (pas de zoom) */
+@media (max-width: 1024px) {
+    .event-planner-introduction::before,
+    .event-planner-offers::before,
+    .event-planner-backstage::before,
+    .event-planner-gallery::before {
+        inset: 0;
+        background-size: 100% auto;
+        background-repeat: repeat-y;
+    }
+}
