@@ -2024,6 +2024,7 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Coco Miracles imagine et sculpte des ambiances complètes où l’architecture du lieu s’efface au profit d’une féerie florale et lumineuse sur-mesure.',
             extended: 'Arches monumentales, voûtes végétales suspendues, drapés aériens et créations immersives : chaque scénographie est une ode à la majesté conçue pour transformer chaque instant en souvenir éternel.',
             images: [
+                { src: 'asset/event planner/erfea.jpg', alt: 'Tables rondes et compositions florales bleues' },
                 { src: 'asset/bg/Seaside Floral Arch Wedding Ceremony.webp', alt: 'Cérémonie royale sur la côte' },
                 { src: 'asset/bg/hero-optimized.jpg', alt: 'Scénographie florale monumentale' },
                 { src: 'asset/realisation/1.webp', alt: 'Dressage floral d’exception' },
@@ -2052,6 +2053,8 @@ window.addEventListener('DOMContentLoaded', () => {
             desc: 'Une planification rigoureuse et une présence feutrée en coulisses pour que chaque temps fort de votre célébration s’exécute avec une perfection millimétrée.',
             extended: 'Rétroplannings détaillés, synchronisation des artisans d’élite, gestion prédictive des flux et encadrement protocolaire : profitez sereinement de vos convives, nous maîtrisons chaque détail.',
             images: [
+                { src: 'asset/event planner/444.jpg', alt: 'Table de conférence préparée pour les participants' },
+                { src: 'asset/event planner/23r2.jpg', alt: 'Places de séminaire avec carnets et attentions' },
                 { src: 'asset/team/Equipe3.webp', alt: 'L’équipe de régie en action' },
                 { src: 'asset/bg/gala-banner.webp', alt: 'Coordination de grand banquet' },
                 { src: 'asset/realisation/3.webp', alt: 'Mise en place protocolaire' },

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coco-miracles-site-v77';
+const CACHE_NAME = 'coco-miracles-site-v79';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
@@ -15,7 +15,7 @@ const CORE_ASSETS = [
     './js/portfolio-videos.js?v=local-video-gallery-v3',
     './js/portfolio-gallery.js?v=play-now-v1',
     './js/beauty-videos.js?v=beauty-gallery-v2',
-    './js/main.js?v=touchpad-v6',
+    './js/main.js?v=evp-images-v1',
     './js/detail-content.js?v=detail-content-v3',
     './js/detail-sheet.js?v=detail-sheet-v1',
     './js/page-reveal.js?v=page-reveal-v2',

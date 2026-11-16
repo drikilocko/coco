@@ -795,3 +795,16 @@
         transition: none;
     }
 }
+
+/* Galerie à 2 photos : la photo de l'équipe occupe toute la hauteur à droite */
+.event-planner-gallery-grid .is-tall {
+    grid-row: 1 / span 2;
+}
+
+@media (max-width: 760px) {
+    .event-planner-gallery-grid .is-tall {
+        grid-column: 1 / span 2;
+        grid-row: auto;
+        aspect-ratio: 4 / 5;
+    }
+}
