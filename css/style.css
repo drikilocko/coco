@@ -9716,3 +9716,29 @@ html body main > :is(
         --wallpaper-image: url("../asset/bg/4.jpg");
     }
 }
+
+/* Chatbot ouvert sur mobile / tablette : la fenêtre colle aux bords gauche, droit et bas (aucune marge) */
+@media (max-width: 900px) {
+    html body .site-chat:has(.site-chat-panel:not([hidden])) {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        gap: 0;
+    }
+
+    html body .site-chat:has(.site-chat-panel:not([hidden])) .site-chat-launcher-group {
+        display: none;
+    }
+
+    html body .site-chat:has(.site-chat-panel:not([hidden])) .site-chat-panel {
+        width: 100%;
+        max-width: none;
+        height: min(640px, calc(100svh - 64px));
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 18px 18px 0 0;
+        /* Barre d'accueil de l'iPhone : le champ de saisie reste au-dessus */
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+}

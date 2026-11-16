@@ -274,21 +274,27 @@ window.addEventListener('DOMContentLoaded', () => {
         lenisInstance.on('scroll', () => handleScrollUpdate());
     }
 
-    // Pavé tactile au-dessus des carrousels horizontaux : chaque geste est classé dès son premier
-    // mouvement. Vertical → la page défile et le carrousel ne bouge pas (plus de « rebond »).
-    // Horizontal → le carrousel défile normalement, sans que Lenis ne l'annule.
+    // Pavé tactile au-dessus des carrousels horizontaux : SEUL un geste nettement gauche/droite
+    // fait défiler le carrousel. Tout geste vers le haut ou le bas fait défiler la page, tout de suite.
     const setupWheelGestures = track => {
         let gestureAxis = null;
         let lastWheelTime = 0;
         let sumX = 0;
         let sumY = 0;
+        let snapRestoreTimer = 0;
+        const scrollPage = event => {
+            // Le carrousel ne bouge pas : la page répond (via Lenis, ou directement sans Lenis)
+            if (event.cancelable) event.preventDefault();
+            if (!lenisInstance && event.deltaY) window.scrollBy(0, event.deltaY);
+        };
         track.addEventListener('wheel', event => {
             if (event.ctrlKey) return; // zoom au pavé tactile
-            const canScrollX = track.scrollWidth > track.clientWidth + 1;
-            if (!canScrollX) return;
+            if (track.scrollWidth <= track.clientWidth + 1) return;
 
+            const absX = Math.abs(event.deltaX);
+            const absY = Math.abs(event.deltaY);
             const now = performance.now();
-            if (now - lastWheelTime > 160) {
+            if (now - lastWheelTime > 200) {
                 // Nouveau geste
                 gestureAxis = null;
                 sumX = 0;
@@ -297,27 +303,38 @@ window.addEventListener('DOMContentLoaded', () => {
             lastWheelTime = now;
 
             if (gestureAxis === null) {
-                // Un pavé tactile envoie souvent quelques pixels horizontaux avant le vrai mouvement :
-                // on cumule ~20 px avant de décider, sans rien faire bouger entre-temps.
-                sumX += Math.abs(event.deltaX);
-                sumY += Math.abs(event.deltaY);
-                if (sumX + sumY < 20) {
+                sumX += absX;
+                sumY += absY;
+                if (sumY >= sumX) {
+                    // Dès qu'il y a autant de vertical que d'horizontal : c'est un défilement de page
+                    gestureAxis = 'y';
+                } else if (sumX < 12) {
+                    // Tout petit mouvement horizontal : on attend la suite sans bloquer la page
                     if (event.cancelable) event.preventDefault();
-                    event.lenisStopPropagation = true;
                     return;
+                } else {
+                    // Horizontal seulement s'il est au moins 2 fois plus fort que le vertical
+                    gestureAxis = sumX > sumY * 2 ? 'x' : 'y';
                 }
-                // Horizontal seulement si le mouvement est nettement horizontal
-                gestureAxis = sumX > sumY * 1.5 ? 'x' : 'y';
             }
 
+            // En plein geste horizontal, un vrai mouvement vertical rend la main à la page
+            if (gestureAxis === 'x' && absY > 6 && absY > absX * 1.5) gestureAxis = 'y';
+
             if (gestureAxis === 'y') {
-                // Le carrousel ne bouge pas : c'est toute la page qui répond
-                if (event.cancelable) event.preventDefault();
-                if (!lenisInstance && event.deltaY) window.scrollBy(0, event.deltaY);
-            } else {
-                // Geste horizontal : on laisse le navigateur faire défiler le carrousel
-                event.lenisStopPropagation = true;
+                scrollPage(event);
+                return;
             }
+
+            // Geste horizontal : le navigateur fait défiler le carrousel, Lenis n'intervient pas.
+            // L'aimantation est coupée pendant le geste (sinon chaque petit cran est ramené en arrière),
+            // puis rétablie : le carrousel se cale alors sur la carte la plus proche.
+            event.lenisStopPropagation = true;
+            track.style.scrollSnapType = 'none';
+            window.clearTimeout(snapRestoreTimer);
+            snapRestoreTimer = window.setTimeout(() => {
+                track.style.scrollSnapType = '';
+            }, 220);
         }, { passive: false });
     };
     document.querySelectorAll('.portfolio-filmstrip, #formats-track, #testimonials-track, #prestations-grid, #realisations-grid')
@@ -2192,12 +2209,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         // Défilement horizontal fluide avec la molette de souris
-        popupGallery.addEventListener('wheel', event => {
-            if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-                event.preventDefault();
-                popupGallery.scrollLeft += event.deltaY * 1.35;
-            }
-        }, { passive: false });
+        // Pavé tactile : le haut/bas fait défiler la pop-up, seul le gauche/droite fait défiler les photos (comportement natif)
 
         // Glissement à la souris (Drag to scroll)
         let dragStartX = null;
