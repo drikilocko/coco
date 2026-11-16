@@ -9685,3 +9685,34 @@ html body main > section.logo-marquee-before-formats::before {
         transform: none;
     }
 }
+
+/* Grand écran : papiers peints floraux plus discrets (opacité réduite + léger flou).
+   L'image passe sur un calque ::before pour ne pas toucher au texte ni aux cartes. */
+@media (min-width: 1025px) and (hover: hover) {
+    html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute) {
+        background-image: none !important;
+    }
+
+    html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, #mise-en-beaute)::before {
+        position: absolute;
+        z-index: -1;
+        inset: -8px;
+        background: var(--wallpaper-image) center top / cover no-repeat;
+        content: "";
+        filter: blur(2px);
+        opacity: 0.55;
+        pointer-events: none;
+    }
+
+    html body main > section.sand-theme:is(#prestations, #mise-en-beaute) {
+        --wallpaper-image: url("../asset/bg/2.jpg");
+    }
+
+    html body main > section.sand-theme#portfolio {
+        --wallpaper-image: url("../asset/bg/3.jpg");
+    }
+
+    html body main > section.sand-theme#realisations {
+        --wallpaper-image: url("../asset/bg/4.jpg");
+    }
+}
