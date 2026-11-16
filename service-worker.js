@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coco-miracles-site-v81';
+const CACHE_NAME = 'coco-miracles-site-v82';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
