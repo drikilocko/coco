@@ -435,7 +435,7 @@ window.addEventListener('DOMContentLoaded', () => {
             '.portfolio-heading',
             '.portfolio-video-card',
             '.portfolio-feature',
-            '.logo-marquee-before-formats',
+            '.logo-marquee-before-formats .logo-marquee-track',
             '.formats-heading',
             '.format-card',
             '.beauty-heading',
@@ -461,10 +461,13 @@ window.addEventListener('DOMContentLoaded', () => {
                 entries.forEach(entry => {
                     if (!initialPreloaderFinished) return;
                     if (!entry.isIntersecting) return;
+                    // Les éléments bien plus larges que l'écran (rangée de logos) n'atteignent jamais 12 % visibles
+                    const isWiderThanScreen = entry.boundingClientRect.width > window.innerWidth * 1.5;
+                    if (!isWiderThanScreen && entry.intersectionRatio < 0.12) return;
                     entry.target.classList.add('is-revealed');
                     revealObserver.unobserve(entry.target);
                 });
-            }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+            }, { threshold: [0, 0.12], rootMargin: '0px 0px -6% 0px' });
             revealTargets.forEach(target => revealObserver.observe(target));
 
             releasePageReveals = () => {

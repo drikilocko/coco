@@ -46,7 +46,7 @@ body::before {
     inset: -16px;
     background: #211c18 url("../asset/bg/new-optimized.webp") center / cover no-repeat;
     content: "";
-    filter: blur(8px) brightness(0.32) saturate(0.72);
+    filter: blur(3px) brightness(0.32) saturate(0.72);
     pointer-events: none;
 }
 
@@ -9452,5 +9452,40 @@ html body main > section.sand-theme:is(#prestations, #portfolio, #realisations, 
     html body #realisations-grid {
         scroll-snap-type: x proximity;
         overscroll-behavior-x: contain;
+    }
+}
+
+/* Un seul fond photo fixe (asset/bg/img.jpg) partagé par « En chiffres », la bande de logos et « Parlons de votre projet ».
+   Fixé sur l’écran, il paraît continu d’une section à l’autre pendant le défilement. */
+html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
+    position: relative;
+    isolation: isolate;
+    background-color: #211c18;
+    background-image:
+        linear-gradient(rgba(17, 13, 10, 0.64), rgba(17, 13, 10, 0.64)),
+        url("../asset/bg/img.jpg");
+    background-position: center, center 30%;
+    background-size: cover, cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed, fixed;
+}
+
+/* Écrans tactiles : background-attachment: fixed n’y fonctionne pas ;
+   on utilise un calque fixe découpé à la taille de chaque section. */
+@media (hover: none) and (pointer: coarse) {
+    html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact) {
+        background: transparent;
+        clip-path: inset(0);
+    }
+
+    html body main > :is(section.numbers-section, section.logo-marquee-before-formats, section.project-contact)::before {
+        position: fixed;
+        z-index: -1;
+        inset: 0;
+        background:
+            linear-gradient(rgba(17, 13, 10, 0.64), rgba(17, 13, 10, 0.64)),
+            #211c18 url("../asset/bg/img.jpg") center 30% / cover no-repeat;
+        content: "";
+        pointer-events: none;
     }
 }
