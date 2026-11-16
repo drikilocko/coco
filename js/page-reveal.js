@@ -15,7 +15,10 @@ window.addEventListener('DOMContentLoaded', () => {
         '.event-planner-offer',
         '.event-planner-experience-image',
         '.event-planner-experience-copy',
-        '.event-planner-cta > *',
+        '.event-planner-cta > :not(img)',
+        '.event-planner-mosaic figure',
+        '.event-planner-backstage-grid figure',
+        '.event-planner-gallery-grid figure',
         // Toutes les pages
         '.site-footer'
     ];

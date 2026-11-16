@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coco-miracles-site-v74';
+const CACHE_NAME = 'coco-miracles-site-v77';
 const NAVIGATION_TIMEOUT_MS = 4000;
 const CORE_ASSETS = [
     './index.html',
@@ -18,8 +18,9 @@ const CORE_ASSETS = [
     './js/main.js?v=touchpad-v6',
     './js/detail-content.js?v=detail-content-v3',
     './js/detail-sheet.js?v=detail-sheet-v1',
-    './js/page-reveal.js?v=page-reveal-v1',
-    './js/chatbot.js?v=chat-shared-transition-v2',
+    './js/page-reveal.js?v=page-reveal-v2',
+    './js/chatbot.js?v=chat-all-pages-v1',
+    './css/chat.css?v=chat-v1',
     './js/text-roll.js?v=text-roll-v5',
     './js/nav-transition.js?v=nav-transition-v3',
     './js/rose-snow.js?v=lazy-network-v1',

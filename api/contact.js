@@ -39,7 +39,7 @@ const confirmationEmail = (name, fields) => {
 <tr><td style="padding:8px 34px 28px;"><p style="margin:0 0 12px;color:#806e4e;font-size:11px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;">Récapitulatif de votre demande</p>
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #eee8de;">${details}</table></td></tr>
 <tr><td style="padding:22px 34px;background:#f4f0e8;color:#766e64;font-size:12px;line-height:1.7;">
-Une question ? Écrivez-nous à <a href="mailto:cocomiracless@gmail.com" style="color:#806e4e;">cocomiracless@gmail.com</a> ou appelez le <a href="tel:+22890499996" style="color:#806e4e;">+228 90 49 99 96</a>.<br>
+Une question ? Écrivez-nous à <a href="mailto:cocomiracles@gmail.com" style="color:#806e4e;">cocomiracles@gmail.com</a> ou appelez le <a href="tel:+22890499996" style="color:#806e4e;">+228 90 49 99 96</a>.<br>
 Avec élégance,<br><strong style="color:#33291f;">L’équipe Coco Miracles</strong></td></tr>
 </table></td></tr></table></body></html>`;
 };
@@ -93,7 +93,7 @@ module.exports = async (req, res) => {
 
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.RESEND_FROM_EMAIL;
-    const to = process.env.CONTACT_TO_EMAIL || 'drikilocko@gmail.com';
+    const to = process.env.CONTACT_TO_EMAIL || 'cocomiracles@gmail.com';
     if (!apiKey || !from) {
         console.error('Resend email settings are not configured.');
         return sendJson(res, 503, { error: 'L’envoi d’e-mails n’est pas encore configuré. Réessayez plus tard ou contactez-nous directement.' });
@@ -142,14 +142,14 @@ module.exports = async (req, res) => {
             to: [email],
             subject: 'Nous avons bien reçu votre demande — Coco Miracles',
             html: confirmationEmail(fields['Nom & prénom'], fields),
-            text: `Bonjour ${fields['Nom & prénom']},\n\nNous avons bien reçu votre demande. Notre équipe Coco Miracles reviendra vers vous dans les meilleurs délais. Cet e-mail confirme la réception de votre demande ; il ne constitue pas une réservation.\n\n${textFromFields(fields)}\n\nL’équipe Coco Miracles\ncocomiracless@gmail.com`
+            text: `Bonjour ${fields['Nom & prénom']},\n\nNous avons bien reçu votre demande. Notre équipe Coco Miracles reviendra vers vous dans les meilleurs délais. Cet e-mail confirme la réception de votre demande ; il ne constitue pas une réservation.\n\n${textFromFields(fields)}\n\nL’équipe Coco Miracles\ncocomiracles@gmail.com`
         });
     } catch (error) {
         console.error('Contact email delivery failed:', error.name || 'Error');
         return sendJson(res, 502, {
             error: notificationSent
-                ? 'Votre demande a bien été transmise à notre équipe, mais l’e-mail de confirmation n’a pas pu être envoyé. Écrivez-nous à cocomiracless@gmail.com si besoin.'
-                : 'Votre demande n’a pas pu être envoyée par e-mail. Réessayez ou contactez-nous à cocomiracless@gmail.com.'
+                ? 'Votre demande a bien été transmise à notre équipe, mais l’e-mail de confirmation n’a pas pu être envoyé. Écrivez-nous à cocomiracles@gmail.com si besoin.'
+                : 'Votre demande n’a pas pu être envoyée par e-mail. Réessayez ou contactez-nous à cocomiracles@gmail.com.'
         });
     }
 
