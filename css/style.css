@@ -9742,3 +9742,19 @@ html body main > :is(
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 }
+
+/* Carrousels horizontaux : jamais de défilement vertical interne.
+   Quelques pixels de contenu dépassaient en hauteur : le carrousel « captait » alors le geste vertical
+   du doigt et la page ne défilait plus. Le surplus était déjà masqué, rien ne change à l'écran. */
+html body :is(.portfolio-filmstrip, #testimonials-track, #formats-track) {
+    overflow-y: hidden !important;
+    overscroll-behavior-y: auto;
+}
+
+/* Prestations et Réalisations ne sont des carrousels que sur mobile (grilles sur grand écran) */
+@media (max-width: 800px) {
+    html body :is(#prestations-grid, #realisations-grid) {
+        overflow-y: hidden !important;
+        overscroll-behavior-y: auto;
+    }
+}
