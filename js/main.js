@@ -492,7 +492,7 @@ window.addEventListener('DOMContentLoaded', () => {
             '.numbers-eyebrow',
             '.number-item',
             '.project-contact-layout',
-            '.site-footer'
+            '.site-footer > *'
         ].join(', ')));
         const revealIndexes = new Map();
         revealTargets.forEach(target => {

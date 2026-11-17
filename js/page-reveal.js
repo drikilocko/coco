@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
         '.event-planner-backstage-grid figure',
         '.event-planner-gallery-grid figure',
         // Toutes les pages
-        '.site-footer'
+        '.site-footer > *'
     ];
     const targets = Array.from(document.querySelectorAll(selectors.join(', ')));
     if (!targets.length) return;
